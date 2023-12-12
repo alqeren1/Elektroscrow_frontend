@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
-/constants1
+
 
 # testing
 /coverage
@@ -16,6 +16,9 @@
 
 # production
 /build
+/constants1
+constants1
+/constants1/
 
 # misc
 .DS_Store
