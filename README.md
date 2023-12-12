@@ -2,9 +2,13 @@
 
 -try to add live and ended labels to old escrows on drop-down
 
--input check yap, amount a boşluk girince cokuyor. adresleri de kontrol et
 
--escrow bittikten sonra buyer-seller geçişi bozuluyor neden bilinmez (her zamanmış)
+
+-pancakeswap gibi console errorlarını altta gösterme ekle
+
+-dropdown a basınca en üstte arama yeri olsun
+
+-startescrow button dışındakilerde handlesuccess calısmıyor
 
 
 

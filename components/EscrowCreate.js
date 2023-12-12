@@ -13,7 +13,7 @@ const abi_ERC20 = require("../constants1/abi_ERC20.json")
 export default function EscrowFactory() {
     const { chainId: chainIdHex, isWeb3Enabled, account } = useMoralis()
 
-    console.log(parseInt(chainIdHex))
+    //console.log(parseInt(chainIdHex))
     const chainId = parseInt(chainIdHex)
     const latest_address = chainId in escrowAddress ? escrowAddress[chainId].length : null
     const factoryAddress =
@@ -27,7 +27,6 @@ export default function EscrowFactory() {
 
     const [seller, setSeller] = useState("")
     const [amountInput, setAmountInput] = useState("")
-    const [amount, setAmount] = useState("0")
 
     const [i_amount, seti_amount] = useState("0")
     const [i_amount2, seti_amount2] = useState("0")
@@ -52,8 +51,12 @@ export default function EscrowFactory() {
 
     const [getTokenContract, setGetTokenContract] = useState("")
     const [balance, setBalance] = useState("")
+    const [tokenDecimals, setTokenDecimals] = useState("")
+    const [tokenName, setTokenName] = useState("")
+    const [tokenSymbol, setTokenSymbol] = useState("")
 
     const [isApproving, setIsApproving] = useState(false)
+    const [isTokenValid, setIsTokenValid] = useState()
     const [isFunding, setIsFunding] = useState(false)
     const [isWithdrawing, setIsWithdrawing] = useState(false)
     const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -147,6 +150,21 @@ export default function EscrowFactory() {
 
         functionName: "getTokenContract",
     })
+    const { runContractFunction: checkToken1 } = useWeb3Contract({
+        abi: abi_ERC20,
+
+        functionName: "decimals",
+    })
+    const { runContractFunction: checkToken2 } = useWeb3Contract({
+        abi: abi_ERC20,
+
+        functionName: "name",
+    })
+    const { runContractFunction: checkToken3 } = useWeb3Contract({
+        abi: abi_ERC20,
+
+        functionName: "symbol",
+    })
 
     const {
         runContractFunction: escrowFactory,
@@ -222,8 +240,7 @@ export default function EscrowFactory() {
                 const paymentStatus = await getCheckPayment({
                     params: { contractAddress: currentEscrow, params: { account: account } },
                 })
-                console.log("amount: " + _amount)
-                console.log("payment" + paymentStatus)
+
                 let i_amount2 = _amount.mul(2)
                 const escrow_ended = await gets_escrowComplete({
                     params: { contractAddress: currentEscrow },
@@ -244,7 +261,6 @@ export default function EscrowFactory() {
                     setIsFunded(false)
                     setIsWithdrawing(false)
                 }
-                console.log("funded?: " + isFunded)
 
                 const decisions = await getDecisions()
 
@@ -314,17 +330,73 @@ export default function EscrowFactory() {
         anyEscrows,
         currentEscrow,
         isFunded,
-        buyerState,
         showInputFields,
         isApproved,
     ])
+    useEffect(() => {
+        if (isWeb3Enabled) {
+            fixCurrentEscrow()
+        }
+    }, [isWeb3Enabled, buyerState, account, anyEscrows])
+
+    useEffect(() => {
+        if (isWeb3Enabled || ethers.isAddress(tokenContract)) {
+            tokenContractCheck()
+        }
+    }, [isWeb3Enabled, tokenContract])
+
+    async function tokenContractCheck() {
+        const decimals = await checkToken1({ params: { contractAddress: tokenContract } })
+        const name = await checkToken2({ params: { contractAddress: tokenContract } })
+        const symbol = await checkToken3({ params: { contractAddress: tokenContract } })
+
+        if (!decimals || !name || !symbol) {
+            console.log("Not a valid ERC-20 token")
+            setIsTokenValid(false)
+            return
+        }
+        setIsTokenValid(true)
+        setTokenName(name)
+        setTokenDecimals(decimals)
+        setTokenSymbol(symbol)
+        console.log(`Token details: ${name} (${symbol}), Decimals: ${decimals}`)
+    }
+
+    async function fixCurrentEscrow() {
+        let anyEscrowsFromCall
+        if (buyerState) {
+            anyEscrowsFromCall = await getBuyerEscrows()
+            setPreviousEscrowsBuyer(anyEscrowsFromCall)
+        }
+        if (!buyerState) {
+            anyEscrowsFromCall = await getSellerEscrows()
+            setPreviousEscrowsSeller(anyEscrowsFromCall)
+        }
+        if (!anyEscrowsFromCall || anyEscrowsFromCall.length === 0) {
+            setAnyEscrows("No current escrows")
+            setCurrentEscrow("No current escrows")
+            setShowInputFields(true)
+        } else {
+            const latestEscrow = anyEscrowsFromCall[anyEscrowsFromCall.length - 1]
+            setAnyEscrows(latestEscrow)
+            setCurrentEscrow(latestEscrow)
+
+            if (currentEscrow == "No current escrows") {
+                setCurrentEscrow(anyEscrows)
+            }
+            if (currentEscrow == "Initial") {
+                setCurrentEscrow(latestEscrow)
+            }
+        }
+    }
+
     const checkApproval = async () => {
         if (ethers.getAddress(account) == i_buyer) {
             try {
                 const approvedAmount = await allowance({
                     params: { params: { owner: account, spender: currentEscrow } },
                 })
-                console.log("Approved amount and i_amount: " + approvedAmount + " " + i_amount2)
+
                 if (approvedAmount >= i_amount2) {
                     setIsApproved(true)
                     setIsApproving(false)
@@ -332,8 +404,6 @@ export default function EscrowFactory() {
                     setIsApproved(false)
                 }
             } catch (error) {
-                console.log("Approved amount and i_amount: " + approvedAmount + " " + i_amount2)
-
                 console.error("Error checking approval:", error)
             }
         }
@@ -353,34 +423,39 @@ export default function EscrowFactory() {
             }
         }
     }
-    const handlesuccess = async function (tx) {
+    const handlesuccessNewEscrow = async function (tx) {
         await tx.wait(1)
-
+        setShowInputFields(false)
         handleNewNotification(tx)
         updateUI()
     }
     const startEscrowButton = async () => {
         // Call your contract function here using the inputs as parameters
+        if (!ethers.isAddress(seller)) {
+            console.error("Invalid seller contract address")
+            return
+        }
+        if (ethers.getAddress(seller) == ethers.getAddress(account)) {
+            console.error("You can not be both buyer and seller")
+            return
+        }
+        if (!ethers.isAddress(tokenContract)) {
+            console.error("Invalid token contract address")
+            return
+        }
+
         if (amountInput >= 0) {
             try {
-                await setAmount(amountInput)
-
                 await escrowFactory({
-                    onSuccess: handlesuccess,
+                    onSuccess: handlesuccessNewEscrow,
                     onError: (error) => console.error("Error occurred:", error),
                 })
-                setShowInputFields(false)
-                console.log("Seller:", seller)
-                console.log("Amount:", amount)
-                console.log("Token Contract:", tokenContract)
-                console.log("Balance:", balance)
-                console.log("escrow:", currentEscrow)
             } catch (error) {
                 console.error("Error occurred:", error)
             }
         }
     }
-    const startEscrowButtonNew = async () => {
+    const startEscrowButtonNew = () => {
         setCurrentEscrow("Creating new escrow contract")
 
         setShowInputFields(true)
@@ -401,11 +476,6 @@ export default function EscrowFactory() {
                     setIsFunding(false)
                 },
             })
-            console.log("Seller:", seller)
-            console.log("Amount:", amount)
-            console.log("Token Contract:", tokenContract)
-            console.log("Balance:", balance)
-            console.log("escrow:", anyEscrows)
         } catch (error) {
             console.error("Error occurred:", error)
             setIsFunding(false)
@@ -431,9 +501,7 @@ export default function EscrowFactory() {
             setIsWithdrawing(false)
         }
     }
-    const buyerStateButton = async () => {
-        // Call your contract function here using the inputs as parameters
-
+    const buyerStateButton = () => {
         if (buyerState) {
             setBuyerState(false)
         } else {
@@ -442,9 +510,6 @@ export default function EscrowFactory() {
     }
 
     const approveButton = async () => {
-        // Call your contract function here using the inputs as parameters
-        console.log(ethers.getAddress(account))
-        console.log(ethers.getAddress(i_buyer))
         setIsApproving(true)
         if (ethers.getAddress(account) == i_buyer) {
             try {
@@ -564,7 +629,7 @@ export default function EscrowFactory() {
         <div className="p-5">
             {isWeb3Enabled ? (
                 <>
-                    Hi from Decentralized escrow! {anyEscrows} previous buyer:
+                    Hi from Decentralized escrow! anyescrow: {anyEscrows}
                     {escrowAddress ? (
                         <div className="mb-4">
                             <div className=" text-lg font-bold mt-4">Current escrow</div>
@@ -577,7 +642,7 @@ export default function EscrowFactory() {
                                 >
                                     {currentEscrow}
                                 </div>
-                                {anyEscrows != "No current escrows" && (
+                                {anyEscrows != "No current escrows" && buyerState && (
                                     <button
                                         className="bg-blue-500 hover:bg-blue-700 text-white  text-sm ml-2 font-bold py-2 px-4 rounded ml-right flex items-center justify-center"
                                         onClick={startEscrowButtonNew}
@@ -679,32 +744,79 @@ export default function EscrowFactory() {
                                     <>
                                         {/* Input fields */}
                                         <input
-                                            className="w-full rounded ml-auto py-2 px-4 mb-2 border-2 border-blue-500"
+                                            className={`w-full rounded ml-auto py-2 px-4 mb-2 border-2 ${
+                                                ethers.isAddress(seller.trim()) || !seller
+                                                    ? "border-blue-500"
+                                                    : "border-red-500"
+                                            }`}
                                             type="text"
                                             value={seller}
                                             onChange={(e) => setSeller(e.target.value)}
                                             placeholder="Enter seller address"
+                                            maxLength={42} // Ethereum addresses are 42 characters long
                                         />
+
+                                        <div className="flex items-center border-2 border-blue-500 rounded ml-auto mb-2">
+                                            <input
+                                                className="w-full py-2 px-4 rounded-l bg-white"
+                                                type="text"
+                                                value={amountInput}
+                                                onChange={(e) =>
+                                                    setAmountInput(
+                                                        e.target.value.replace(/[^0-9]/g, ""),
+                                                    )
+                                                }
+                                                placeholder="Enter escrow amount (How many tokens)"
+                                            />
+                                            <span className="px-3  text-gray-600 text-opacity-50 ">
+                                                ${tokenSymbol}
+                                            </span>
+                                        </div>
+
                                         <input
-                                            className="w-full rounded ml-auto py-2 px-4  mb-2 border-2 border-blue-500"
-                                            type="text"
-                                            value={amountInput}
-                                            onChange={(e) => setAmountInput(e.target.value)}
-                                            placeholder="Enter escrow amount (How many tokens)"
-                                        />
-                                        <input
-                                            className="w-full rounded ml-auto py-2 px-4 mb-4 border-2 border-blue-500"
+                                            className={`w-full rounded ml-auto py-2 px-4 mb-2 border-2 ${
+                                                ethers.isAddress(tokenContract.trim())
+                                                    ? "border-blue-500"
+                                                    : "border-red-500"
+                                            }`}
                                             type="text"
                                             value={tokenContract}
                                             onChange={(e) => setTokenContract(e.target.value)}
                                             placeholder="Enter token contract to be used for escrow"
+                                            maxLength={42} // Ethereum addresses are 42 characters long
                                         />
+                                        {isTokenValid ? (
+                                            <div className="mb-4 text-xs text-gray-500">
+                                                {tokenName} ({tokenSymbol}), Decimals:{" "}
+                                                {tokenDecimals}
+                                            </div>
+                                        ) : (
+                                            <div className="mb-4 text-xs text-red-500">
+                                                Enter a valid token address
+                                            </div>
+                                        )}
 
                                         {/* Start Escrow Button */}
                                         <button
-                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-right mr-4 flex items-center justify-center"
+                                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-right mr-4 flex items-center justify-center ${
+                                                isLoading ||
+                                                isFetching ||
+                                                !seller ||
+                                                !amountInput ||
+                                                !tokenContract ||
+                                                !isTokenValid
+                                                    ? "opacity-50 cursor-not-allowed"
+                                                    : ""
+                                            }`}
                                             onClick={startEscrowButton}
-                                            disabled={isLoading || isFetching}
+                                            disabled={
+                                                isLoading ||
+                                                isFetching ||
+                                                !seller ||
+                                                !amountInput ||
+                                                !tokenContract ||
+                                                !isTokenValid
+                                            }
                                         >
                                             {isLoading || isFetching ? (
                                                 <>
@@ -756,9 +868,13 @@ export default function EscrowFactory() {
                                 !showInputFields &&
                                 currentEscrow != "Creating new escrow contract" && (
                                     <button
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-right mr-4 mt-4  flex items-center justify-center"
+                                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-right mr-4 mt-4  flex items-center justify-center ${
+                                            isLoading || isFetching || isApproving
+                                                ? "opacity-50 cursor-not-allowed"
+                                                : ""
+                                        }`}
                                         onClick={approveButton}
-                                        disabled={isLoading || isFetching}
+                                        disabled={isLoading || isFetching || isApproving}
                                     >
                                         {isApproving ? (
                                             <>
@@ -795,9 +911,13 @@ export default function EscrowFactory() {
                                 !isEscrowEnded &&
                                 !showInputFields && (
                                     <button
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-right mr-4 mt-4 flex items-center justify-center"
+                                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-right mr-4 mt-4 flex items-center justify-center ${
+                                            isLoading || isFetching || isFunding
+                                                ? "opacity-50 cursor-not-allowed"
+                                                : ""
+                                        }`}
                                         onClick={fundButton}
-                                        disabled={isLoading || isFetching}
+                                        disabled={isLoading || isFetching || isFunding}
                                     >
                                         {isFunding ? (
                                             <>
@@ -834,9 +954,13 @@ export default function EscrowFactory() {
                                 !initializeState &&
                                 !showInputFields && (
                                     <button
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded ml-right mr-4 flex items-center justify-center"
+                                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded ml-right mr-4 flex items-center justify-center ${
+                                            isLoading || isFetching || isWithdrawing
+                                                ? "opacity-50 cursor-not-allowed"
+                                                : ""
+                                        }`}
                                         onClick={withdrawButton}
-                                        disabled={isLoading || isFetching}
+                                        disabled={isLoading || isFetching || isWithdrawing}
                                     >
                                         {isWithdrawing ? (
                                             <>
@@ -874,17 +998,38 @@ export default function EscrowFactory() {
                                     !isEscrowEnded &&
                                     !showInputFields && (
                                         <button
-                                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mt-4 rounded ml-right mr-4 flex items-center justify-center"
-                                            onClick={acceptButton}
-                                            disabled={
-                                                ethers.getAddress(account) ==
-                                                ethers.getAddress(i_buyer)
+                                            className={`bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mt-4 rounded ml-right mr-4 flex items-center justify-center ${
+                                                i_buyer &&
+                                                ethers.isAddress(i_buyer) &&
+                                                ethers.getAddress(account) ===
+                                                    ethers.getAddress(i_buyer)
                                                     ? isLoading ||
                                                       isFetching ||
-                                                      decisionBuyer == "Accept"
+                                                      decisionBuyer == "Accept" ||
+                                                      isAccepting
+                                                        ? "opacity-50 cursor-not-allowed hover:bg-green-500"
+                                                        : ""
+                                                    : isLoading ||
+                                                        isFetching ||
+                                                        decisionSeller == "Accept" ||
+                                                        isAccepting
+                                                      ? "opacity-50 cursor-not-allowed hover:bg-green-500"
+                                                      : ""
+                                            }`}
+                                            onClick={acceptButton}
+                                            disabled={
+                                                i_buyer &&
+                                                ethers.isAddress(i_buyer) &&
+                                                ethers.getAddress(account) ===
+                                                    ethers.getAddress(i_buyer)
+                                                    ? isLoading ||
+                                                      isFetching ||
+                                                      decisionBuyer == "Accept" ||
+                                                      isAccepting
                                                     : isLoading ||
                                                       isFetching ||
-                                                      decisionSeller == "Accept"
+                                                      decisionSeller == "Accept" ||
+                                                      isAccepting
                                             }
                                         >
                                             {isAccepting ? (
@@ -922,17 +1067,38 @@ export default function EscrowFactory() {
                                     !isEscrowEnded &&
                                     !showInputFields && (
                                         <button
-                                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mt-4 rounded ml-right mr-4 flex items-center justify-center"
-                                            onClick={declineButton}
-                                            disabled={
-                                                ethers.getAddress(account) ==
-                                                ethers.getAddress(i_buyer)
+                                            className={`bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mt-4 rounded ml-right mr-4 flex items-center justify-center ${
+                                                i_buyer &&
+                                                ethers.isAddress(i_buyer) &&
+                                                ethers.getAddress(account) ===
+                                                    ethers.getAddress(i_buyer)
                                                     ? isLoading ||
                                                       isFetching ||
-                                                      decisionBuyer == "Decline"
+                                                      decisionBuyer == "Decline" ||
+                                                      isDeclining
+                                                        ? "opacity-50 cursor-not-allowed hover:bg-red-500"
+                                                        : ""
+                                                    : isLoading ||
+                                                        isFetching ||
+                                                        decisionSeller == "Decline" ||
+                                                        isDeclining
+                                                      ? "opacity-50 cursor-not-allowed hover:bg-red-500"
+                                                      : ""
+                                            }`}
+                                            onClick={declineButton}
+                                            disabled={
+                                                i_buyer &&
+                                                ethers.isAddress(i_buyer) &&
+                                                ethers.getAddress(account) ===
+                                                    ethers.getAddress(i_buyer)
+                                                    ? isLoading ||
+                                                      isFetching ||
+                                                      decisionBuyer == "Decline" ||
+                                                      isDeclining
                                                     : isLoading ||
                                                       isFetching ||
-                                                      decisionSeller == "Decline"
+                                                      decisionSeller == "Decline" ||
+                                                      isDeclining
                                             }
                                         >
                                             {isDeclining ? (
@@ -970,17 +1136,38 @@ export default function EscrowFactory() {
                                     initializeState &&
                                     !showInputFields && (
                                         <button
-                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded ml-right mr-4 flex items-center justify-center"
+                                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded ml-right mr-4 flex items-center justify-center ${
+                                                i_buyer &&
+                                                ethers.isAddress(i_buyer) &&
+                                                ethers.getAddress(account) ===
+                                                    ethers.getAddress(i_buyer)
+                                                    ? isLoading ||
+                                                      isFetching ||
+                                                      decisionBuyer == "Refund" ||
+                                                      isRefunding
+                                                        ? "opacity-50 cursor-not-allowed hover:bg-blue-500"
+                                                        : ""
+                                                    : isLoading ||
+                                                        isFetching ||
+                                                        decisionSeller == "Refund" ||
+                                                        isRefunding
+                                                      ? "opacity-50 cursor-not-allowed hover:bg-blue-500"
+                                                      : ""
+                                            }`}
                                             onClick={refundButton}
                                             disabled={
-                                                isLoading ||
-                                                isFetching ||
-                                                (ethers.getAddress(account) ===
-                                                    ethers.getAddress(i_buyer) &&
-                                                    decisionBuyer === "Refund") ||
-                                                (ethers.getAddress(account) ===
-                                                    ethers.getAddress(i_seller) &&
-                                                    decisionSeller === "Refund")
+                                                i_buyer &&
+                                                ethers.isAddress(i_buyer) &&
+                                                ethers.getAddress(account) ===
+                                                    ethers.getAddress(i_buyer)
+                                                    ? isLoading ||
+                                                      isFetching ||
+                                                      decisionBuyer == "Refund" ||
+                                                      isRefunding
+                                                    : isLoading ||
+                                                      isFetching ||
+                                                      decisionSeller == "Refund" ||
+                                                      isRefunding
                                             }
                                         >
                                             {isRefunding ? (
