@@ -10,3 +10,9 @@ display: none;
 -ms-overflow-style: none;  /* IE and Edge */
 scrollbar-width: none;  /* Firefox */
 }
+
+@media (min-width: 480px) {
+    .min-480px-width {
+      width: 480px; /* Set your desired minimum width for screens larger than 480px */
+    }
+  }

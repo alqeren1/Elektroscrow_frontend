@@ -420,6 +420,12 @@ export default function EscrowFactory() {
         handleNewNotification(tx)
         updateUI()
     }
+    const handlesuccess = async function (tx) {
+        await tx.wait(1)
+
+        handleNewNotification(tx)
+        updateUI()
+    }
     const handleTokenValidation = (isValid) => {
         setIsTokenValid(isValid)
     }
@@ -444,7 +450,9 @@ export default function EscrowFactory() {
         if (amountInput >= 0) {
             try {
                 await escrowFactory({
-                    onSuccess: handlesuccessNewEscrow,
+                    onSuccess: (tx) => {
+                        handlesuccessNewEscrow(tx)
+                    },
                     onError: (error) => console.error("Error occurred:", error),
                 })
             } catch (error) {
@@ -464,8 +472,8 @@ export default function EscrowFactory() {
 
         try {
             await initialize({
-                onSuccess: () => {
-                    handlesuccess
+                onSuccess: (tx) => {
+                    handlesuccess(tx)
                 },
 
                 onError: (error) => {
@@ -484,8 +492,8 @@ export default function EscrowFactory() {
 
         try {
             await withdraw({
-                onSuccess: () => {
-                    handlesuccess
+                onSuccess: (tx) => {
+                    handlesuccess(tx)
                 },
 
                 onError: (error) => {
@@ -511,8 +519,8 @@ export default function EscrowFactory() {
         if (ethers.getAddress(account) == i_buyer) {
             try {
                 await approve({
-                    onSuccess: () => {
-                        handlesuccess
+                    onSuccess: (tx) => {
+                        handlesuccess(tx)
                     },
                     onError: (error) => {
                         console.error("Error occurred:", error), setIsApproving(false)
@@ -545,8 +553,8 @@ export default function EscrowFactory() {
         try {
             await finishEscrow({
                 params: { params: { decision: 1 } },
-                onSuccess: () => {
-                    handlesuccess
+                onSuccess: (tx) => {
+                    handlesuccess(tx)
                 },
 
                 onError: (error) => {
@@ -566,8 +574,8 @@ export default function EscrowFactory() {
         try {
             await finishEscrow({
                 params: { params: { decision: 0 } },
-                onSuccess: () => {
-                    handlesuccess
+                onSuccess: (tx) => {
+                    handlesuccess(tx)
                 },
 
                 onError: (error) => {
@@ -587,8 +595,8 @@ export default function EscrowFactory() {
         try {
             await finishEscrow({
                 params: { params: { decision: 2 } },
-                onSuccess: () => {
-                    handlesuccess
+                onSuccess: (tx) => {
+                    handlesuccess(tx)
                 },
 
                 onError: (error) => {
@@ -627,14 +635,45 @@ export default function EscrowFactory() {
             {isWeb3Enabled ? (
                 <>
                     {escrowAddress ? (
-                        <div className="fixed inset-0  z-50 flex justify-center items-end md:items-center">
-                            <div className="relative bg-gray-100 p-4  border-2 rounded shadow-lg w-full md:w-1/2 lg:w-1/4 h-2/3  rounded-3xl">
+                        <div className="fixed inset-0  z-50 flex justify-center mt-40 items-top md:mt-0 md:items-center ">
+                            <div className="relative bg-gray-100 p-4  border-2 rounded shadow-lg w-full min-480px-width h-[613px]  rounded-3xl">
+                                {buyerState ? (
+                                    <div className="flex items-center">
+                                        <button
+                                            className="bg-gray-300 rounded-xl mb-2  font-medium text-gray-700  hover:bg-gray-300 font-base py-2 px-4 "
+                                            disabled={buyerState}
+                                        >
+                                            Buyer
+                                        </button>
+                                        <button
+                                            onClick={buyerStateButton}
+                                            className="  rounded-xl mb-2  hover:bg-gray-200 text-gray-700  py-2 px-4 "
+                                        >
+                                            Seller
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center">
+                                        <button
+                                            className="rounded-xl mb-2  text-gray-700  hover:bg-gray-200 font-base py-2 px-4 "
+                                            onClick={buyerStateButton}
+                                        >
+                                            Buyer
+                                        </button>
+                                        <button
+                                            disabled={!buyerState}
+                                            className="bg-gray-300  rounded-xl mb-2  text-gray-700 font-medium py-2 px-4 "
+                                        >
+                                            Seller
+                                        </button>
+                                    </div>
+                                )}
                                 <div className=" text-lg text-gray-700 ml-1 font-bold ">
                                     Current escrow
                                 </div>
                                 <div className="flex  items-center">
                                     <div
-                                        className={` mt-1 bg-gray-200 rounded-xl w-full py-3 p-2 my-2 inline-block ${
+                                        className={` mt-1 bg-gray-200 rounded-xl overflow-hidden text-ellipsis whitespace-nowrap w-full text-sm py-3 p-2 my-2 inline-block ${
                                             currentEscrow == "No current escrows" ||
                                             currentEscrow == "Creating new escrow contract"
                                                 ? currentEscrow == "Creating new escrow contract"
@@ -649,15 +688,17 @@ export default function EscrowFactory() {
                                     >
                                         {currentEscrow}
                                     </div>
-                                    {anyEscrows != "No current escrows" && buyerState && (
-                                        <button
-                                            className="bg-blue-500 hover:bg-blue-700 text-white  text-sm ml-1 font-bold py-3.5  mb-1 px-4 rounded-xl  "
-                                            onClick={startEscrowButtonNew}
-                                            disabled={isLoading || isFetching}
-                                        >
-                                            New
-                                        </button>
-                                    )}
+                                    <div className="">
+                                        {anyEscrows != "No current escrows" && buyerState && (
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-700 text-white  text-sm ml-1 font-bold py-3.5  mb-1 px-4 rounded-xl  "
+                                                onClick={startEscrowButtonNew}
+                                                disabled={isLoading || isFetching}
+                                            >
+                                                New
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
                                 {dropdownOpen && buyerState && (
                                     <div className="origin-top-right absolute ml-right mt-2 w-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
@@ -723,25 +764,11 @@ export default function EscrowFactory() {
                                         </div>
                                     </div>
                                 )}
-                                {buyerState ? (
-                                    <button
-                                        className="bg-blue-500 hover:bg-blue-700 rounded-xl mb-2 text-sm text-white font-bold py-2 px-4 rounded"
-                                        onClick={buyerStateButton}
-                                    >
-                                        Buyer
-                                    </button>
-                                ) : (
-                                    <button
-                                        className="bg-red-500 hover:bg-red-700 rounded-xl mb-2 text-sm text-white font-bold py-2 px-4 rounded"
-                                        onClick={buyerStateButton}
-                                    >
-                                        Seller
-                                    </button>
-                                )}
+
                                 {/* Escrow Information */}
                                 {currentEscrow != "Creating new escrow contract" &&
-                                    !isEscrowEnded &&
-                                    currentEscrow != "No current escrows" && (
+                                    currentEscrow != "No current escrows" &&
+                                    currentEscrow != "Initial" && (
                                         <div>
                                             <div className="flex items-center mb-2 ">
                                                 <div className="flex w-full rounded ml-auto  py-2 px-4   rounded-xl text-gray-700 bg-white border-2 items-center">
@@ -764,15 +791,27 @@ export default function EscrowFactory() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className=" w-full rounded ml-auto  py-3 px-4 mb-2   rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                <div className=" font-bold text-sm ">
-                                                    Seller address
+                                            {ethers.getAddress(account) == i_seller ? (
+                                                <div className=" w-full rounded ml-auto  py-3 px-4 mb-2  overflow-hidden text-ellipsis whitespace-nowrap rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className=" font-bold text-sm ">
+                                                        Buyer address
+                                                    </div>
+                                                    <div className="font-normal  text-lg  ">
+                                                        {i_buyer}
+                                                    </div>
                                                 </div>
-                                                <div className="font-normal  text-lg  ">
-                                                    {i_seller}
+                                            ) : (
+                                                <div className=" w-full rounded ml-auto  py-3 px-4 mb-2  overflow-hidden text-ellipsis whitespace-nowrap rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className=" font-bold text-sm ">
+                                                        Seller address
+                                                    </div>
+                                                    <div className="font-normal  text-lg  ">
+                                                        {i_seller}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className=" w-full rounded ml-auto  py-3 px-4  mb-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                            )}
+
+                                            <div className=" w-full rounded ml-auto overflow-hidden text-ellipsis whitespace-nowrap py-3 px-4  mb-1 rounded-xl text-gray-700 bg-white border-2 items-center">
                                                 <div className=" font-bold text-sm ">
                                                     Token contract
                                                 </div>
@@ -806,48 +845,82 @@ export default function EscrowFactory() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center mt-10">
-                                                <div className=" w-full rounded ml-auto  py-1 px-2  rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                    <div className=" font-bold text-sm ">
-                                                        Escrow status
+                                            <div className=" mt-7">
+                                                <div className="flex mb-1 items-center text-sm">
+                                                    <div className="  mr-2 rounded-xl  ml-1 font-medium flex items-center">
+                                                        Buyer:
+                                                        <div
+                                                            className={`ml-1 ${
+                                                                decisionBuyer == "Decline"
+                                                                    ? "text-red-600"
+                                                                    : decisionBuyer == "Accept"
+                                                                      ? "text-green-600"
+                                                                      : "text-blue-600"
+                                                            }`}
+                                                        >
+                                                            {decisionBuyer}
+                                                        </div>
                                                     </div>
-                                                    <div className="flex items-center">
-                                                        <div className="font-normal  text-xl">
-                                                            {escrowStatus}
+
+                                                    <div className="justify-end  w-96 rounded-xl mr-2  font-medium flex">
+                                                        Seller:
+                                                        <div
+                                                            className={`ml-1 ${
+                                                                decisionSeller == "Decline"
+                                                                    ? "text-red-600"
+                                                                    : decisionSeller == "Accept"
+                                                                      ? "text-green-600"
+                                                                      : "text-blue-600"
+                                                            }`}
+                                                        >
+                                                            {decisionSeller}
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className=" w-full rounded ml-auto  py-1 px-2  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                    <div className=" font-bold text-sm ">
-                                                        Escrow amount
-                                                    </div>
-                                                    <div className="flex items-center">
-                                                        <div className="font-normal  text-xl">
-                                                            {i_amount / 10 ** 18}
+                                                <div className="flex items-center ">
+                                                    <div className=" w-full rounded ml-auto whitespace-nowrap py-1 px-2  rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                        <div className=" font-bold text-sm ">
+                                                            Escrow status
                                                         </div>
-                                                        <div className=" font-normal ml-1 text-xl">
-                                                            {tokenSymbol}
+                                                        <div className="flex items-center">
+                                                            <div className="font-normal  text-xl">
+                                                                {escrowStatus}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div className=" w-full rounded ml-auto  py-1 px-2 mr-0.5 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                    <div className=" font-bold text-sm ">
-                                                        Deposit amount
-                                                    </div>
-                                                    <div className="flex items-center">
-                                                        {ethers.getAddress(account) ==
-                                                        ethers.getAddress(i_seller) ? (
+                                                    <div className=" w-full rounded ml-auto whitespace-nowrap py-1 px-2  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                        <div className=" font-bold text-sm ">
+                                                            Escrow amount
+                                                        </div>
+                                                        <div className="flex items-center">
                                                             <div className="font-normal  text-xl">
                                                                 {i_amount / 10 ** 18}
                                                             </div>
-                                                        ) : (
-                                                            <div className="font-normal  text-xl">
-                                                                {(2 * i_amount) / 10 ** 18}
+                                                            <div className=" font-normal ml-1 text-xl">
+                                                                {tokenSymbol}
                                                             </div>
-                                                        )}
+                                                        </div>
+                                                    </div>
+                                                    <div className=" w-full rounded ml-auto  whitespace-nowrap py-1 px-2 mr-0.5 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                        <div className=" font-bold text-sm ">
+                                                            Deposit amount
+                                                        </div>
+                                                        <div className="flex items-center">
+                                                            {i_seller &&
+                                                            ethers.getAddress(account) ==
+                                                                ethers.getAddress(i_seller) ? (
+                                                                <div className="font-normal  text-xl">
+                                                                    {i_amount / 10 ** 18}
+                                                                </div>
+                                                            ) : (
+                                                                <div className="font-normal  text-xl">
+                                                                    {(2 * i_amount) / 10 ** 18}
+                                                                </div>
+                                                            )}
 
-                                                        <div className=" font-normal ml-1 text-xl">
-                                                            {tokenSymbol}
+                                                            <div className=" font-normal ml-1 text-xl">
+                                                                {tokenSymbol}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -979,16 +1052,17 @@ export default function EscrowFactory() {
 
                                 {/* Conditional Buttons */}
                                 {!isApproved &&
+                                    currentEscrow != "Initial" &&
                                     anyEscrows != "No current escrows" &&
                                     !isFunded &&
                                     !isEscrowEnded &&
                                     !showInputFields &&
                                     currentEscrow != "Creating new escrow contract" && (
                                         <button
-                                            className={`bg-blue-500 hover:bg-blue-700 w-full rounded-xl text-white font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
+                                            className={`bg-blue-500  w-full rounded-xl text-white font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
                                                 isLoading || isFetching || isApproving
                                                     ? "opacity-50 "
-                                                    : ""
+                                                    : "hover:bg-blue-700"
                                             }`}
                                             onClick={approveButton}
                                             disabled={isLoading || isFetching || isApproving}
@@ -1028,10 +1102,10 @@ export default function EscrowFactory() {
                                     !isEscrowEnded &&
                                     !showInputFields && (
                                         <button
-                                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded-xl ml-right mr-4 mt-4 flex items-center justify-center ${
+                                            className={`bg-blue-500  text-white font-bold py-2 px-4 w-full rounded-xl ml-right mr-4 mt-4 flex items-center justify-center ${
                                                 isLoading || isFetching || isFunding
                                                     ? "opacity-50 "
-                                                    : ""
+                                                    : "hover:bg-blue-700"
                                             }`}
                                             onClick={fundButton}
                                             disabled={isLoading || isFetching || isFunding}
@@ -1060,6 +1134,8 @@ export default function EscrowFactory() {
                                                     </svg>
                                                     Processing...
                                                 </>
+                                            ) : balance > 0 ? (
+                                                "Fund and Initialize"
                                             ) : (
                                                 "Fund"
                                             )}
@@ -1071,10 +1147,10 @@ export default function EscrowFactory() {
                                     !initializeState &&
                                     !showInputFields && (
                                         <button
-                                            className={`bg-blue-500 hover:bg-blue-700 text-white  font-bold py-2 px-4 mt-4 w-full rounded-xl ml-right mr-4 flex items-center justify-center ${
+                                            className={`bg-blue-500  text-white  font-bold py-2 px-4 mt-4 w-full rounded-xl ml-right mr-4 flex items-center justify-center ${
                                                 isLoading || isFetching || isWithdrawing
                                                     ? "opacity-50 "
-                                                    : ""
+                                                    : "hover:bg-blue-700"
                                             }`}
                                             onClick={withdrawButton}
                                             disabled={isLoading || isFetching || isWithdrawing}
@@ -1117,7 +1193,7 @@ export default function EscrowFactory() {
                                         <div>
                                             <div className=" flex items-center mt-2">
                                                 <button
-                                                    className={`bg-green-500 hover:bg-green-700 mr-2 w-full text-white font-bold py-2   rounded-xl   ${
+                                                    className={`bg-green-500  mr-2 w-full text-white font-bold py-2   rounded-xl   ${
                                                         i_buyer &&
                                                         ethers.isAddress(i_buyer) &&
                                                         ethers.getAddress(account) ===
@@ -1126,14 +1202,14 @@ export default function EscrowFactory() {
                                                               isFetching ||
                                                               decisionBuyer == "Accept" ||
                                                               isAccepting
-                                                                ? "opacity-50  hover:bg-green-500"
-                                                                : ""
+                                                                ? "opacity-50 "
+                                                                : "hover:bg-green-700"
                                                             : isLoading ||
                                                                 isFetching ||
                                                                 decisionSeller == "Accept" ||
                                                                 isAccepting
-                                                              ? "opacity-50  hover:bg-green-500"
-                                                              : ""
+                                                              ? "opacity-50 "
+                                                              : "hover:bg-green-700"
                                                     }`}
                                                     onClick={acceptButton}
                                                     disabled={
@@ -1153,34 +1229,36 @@ export default function EscrowFactory() {
                                                 >
                                                     {isAccepting ? (
                                                         <>
-                                                            <svg
-                                                                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                            >
-                                                                <circle
-                                                                    className="opacity-25"
-                                                                    cx="12"
-                                                                    cy="12"
-                                                                    r="10"
-                                                                    stroke="currentColor"
-                                                                    strokeWidth="4"
-                                                                ></circle>
-                                                                <path
-                                                                    className="opacity-75"
-                                                                    fill="currentColor"
-                                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                                ></path>
-                                                            </svg>
-                                                            Processing...
+                                                            <div className="flex items-center justify-center">
+                                                                <svg
+                                                                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                >
+                                                                    <circle
+                                                                        className="opacity-25"
+                                                                        cx="12"
+                                                                        cy="12"
+                                                                        r="10"
+                                                                        stroke="currentColor"
+                                                                        strokeWidth="4"
+                                                                    ></circle>
+                                                                    <path
+                                                                        className="opacity-75"
+                                                                        fill="currentColor"
+                                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                                    ></path>
+                                                                </svg>
+                                                                Processing...
+                                                            </div>
                                                         </>
                                                     ) : (
                                                         "Accept"
                                                     )}
                                                 </button>
                                                 <button
-                                                    className={`bg-red-500 hover:bg-red-700  w-full text-white font-bold py-2   rounded-xl ${
+                                                    className={`bg-red-500   w-full text-white font-bold py-2   rounded-xl ${
                                                         i_buyer &&
                                                         ethers.isAddress(i_buyer) &&
                                                         ethers.getAddress(account) ===
@@ -1189,14 +1267,14 @@ export default function EscrowFactory() {
                                                               isFetching ||
                                                               decisionBuyer == "Decline" ||
                                                               isDeclining
-                                                                ? "opacity-50  hover:bg-red-500"
-                                                                : ""
+                                                                ? "opacity-50  "
+                                                                : "hover:bg-red-700"
                                                             : isLoading ||
                                                                 isFetching ||
                                                                 decisionSeller == "Decline" ||
                                                                 isDeclining
-                                                              ? "opacity-50  hover:bg-red-500"
-                                                              : ""
+                                                              ? "opacity-50 "
+                                                              : "hover:bg-red-700"
                                                     }`}
                                                     onClick={declineButton}
                                                     disabled={
@@ -1216,6 +1294,73 @@ export default function EscrowFactory() {
                                                 >
                                                     {isDeclining ? (
                                                         <>
+                                                            <div className="flex items-center justify-center">
+                                                                <svg
+                                                                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                >
+                                                                    <circle
+                                                                        className="opacity-25"
+                                                                        cx="12"
+                                                                        cy="12"
+                                                                        r="10"
+                                                                        stroke="currentColor"
+                                                                        strokeWidth="4"
+                                                                    ></circle>
+                                                                    <path
+                                                                        className="opacity-75"
+                                                                        fill="currentColor"
+                                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                                    ></path>
+                                                                </svg>
+                                                                Processing...
+                                                            </div>
+                                                        </>
+                                                    ) : (
+                                                        "Decline"
+                                                    )}
+                                                </button>
+                                            </div>
+                                            <button
+                                                className={`bg-blue-500  w-full text-white font-bold py-2 mt-2  rounded-xl ${
+                                                    i_buyer &&
+                                                    ethers.isAddress(i_buyer) &&
+                                                    ethers.getAddress(account) ===
+                                                        ethers.getAddress(i_buyer)
+                                                        ? isLoading ||
+                                                          isFetching ||
+                                                          decisionBuyer == "Refund" ||
+                                                          isRefunding
+                                                            ? "opacity-50 "
+                                                            : "hover:bg-blue-700"
+                                                        : isLoading ||
+                                                            isFetching ||
+                                                            decisionSeller == "Refund" ||
+                                                            isRefunding
+                                                          ? "opacity-50 "
+                                                          : "hover:bg-blue-700"
+                                                }`}
+                                                onClick={refundButton}
+                                                disabled={
+                                                    i_buyer &&
+                                                    ethers.isAddress(i_buyer) &&
+                                                    ethers.getAddress(account) ===
+                                                        ethers.getAddress(i_buyer)
+                                                        ? isLoading ||
+                                                          isFetching ||
+                                                          decisionBuyer == "Refund" ||
+                                                          isRefunding
+                                                        : isLoading ||
+                                                          isFetching ||
+                                                          decisionSeller == "Refund" ||
+                                                          isRefunding
+                                                }
+                                            >
+                                                {isRefunding ? (
+                                                    <>
+                                                        <div className="flex items-center justify-center">
                                                             <svg
                                                                 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                                                                 xmlns="http://www.w3.org/2000/svg"
@@ -1237,106 +1382,12 @@ export default function EscrowFactory() {
                                                                 ></path>
                                                             </svg>
                                                             Processing...
-                                                        </>
-                                                    ) : (
-                                                        "Decline"
-                                                    )}
-                                                </button>
-                                            </div>
-                                            <button
-                                                className={`bg-blue-500 hover:bg-blue-700 w-full text-white font-bold py-2 mt-2  rounded-xl ${
-                                                    i_buyer &&
-                                                    ethers.isAddress(i_buyer) &&
-                                                    ethers.getAddress(account) ===
-                                                        ethers.getAddress(i_buyer)
-                                                        ? isLoading ||
-                                                          isFetching ||
-                                                          decisionBuyer == "Refund" ||
-                                                          isRefunding
-                                                            ? "opacity-50  hover:bg-blue-500"
-                                                            : ""
-                                                        : isLoading ||
-                                                            isFetching ||
-                                                            decisionSeller == "Refund" ||
-                                                            isRefunding
-                                                          ? "opacity-50  hover:bg-blue-500"
-                                                          : ""
-                                                }`}
-                                                onClick={refundButton}
-                                                disabled={
-                                                    i_buyer &&
-                                                    ethers.isAddress(i_buyer) &&
-                                                    ethers.getAddress(account) ===
-                                                        ethers.getAddress(i_buyer)
-                                                        ? isLoading ||
-                                                          isFetching ||
-                                                          decisionBuyer == "Refund" ||
-                                                          isRefunding
-                                                        : isLoading ||
-                                                          isFetching ||
-                                                          decisionSeller == "Refund" ||
-                                                          isRefunding
-                                                }
-                                            >
-                                                {isRefunding ? (
-                                                    <>
-                                                        <svg
-                                                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                        >
-                                                            <circle
-                                                                className="opacity-25"
-                                                                cx="12"
-                                                                cy="12"
-                                                                r="10"
-                                                                stroke="currentColor"
-                                                                strokeWidth="4"
-                                                            ></circle>
-                                                            <path
-                                                                className="opacity-75"
-                                                                fill="currentColor"
-                                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                            ></path>
-                                                        </svg>
-                                                        Processing...
+                                                        </div>
                                                     </>
                                                 ) : (
                                                     "Refund"
                                                 )}
                                             </button>
-                                            <div className="flex items-center mt-1 text-sm">
-                                                <div className=" w-full mr-2 rounded-xl  ml-0.2 font-medium flex items-center">
-                                                    Buyer:
-                                                    <div
-                                                        className={`ml-1 ${
-                                                            decisionBuyer == "Decline"
-                                                                ? "text-red-600"
-                                                                : decisionBuyer == "Accept"
-                                                                  ? "text-green-600"
-                                                                  : "text-blue-600"
-                                                        }`}
-                                                    >
-                                                        {decisionBuyer}
-                                                    </div>
-                                                </div>
-
-                                                <div className=" w-full rounded-xl ml-24 px-14 font-medium flex">
-                                                    Seller:{" "}
-                                                    <div
-                                                        className={`ml-1 ${
-                                                            decisionSeller == "Decline"
-                                                                ? "text-red-600"
-                                                                : decisionSeller == "Accept"
-                                                                  ? "text-green-600"
-                                                                  : "text-blue-600"
-                                                        }`}
-                                                    >
-                                                        {decisionSeller}
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     )}
                             </div>

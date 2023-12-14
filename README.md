@@ -1,6 +1,6 @@
 
 
--try to add live and ended labels to old escrows on drop-down
+
 
 
 
@@ -8,25 +8,34 @@
 
 
 
--startescrow button dışındakilerde handlesuccess calısmıyor
+-notification ı customise et
 
 
 -network selector ekle
 
 -custom token fotosu yap, ekle
 
--tokenlerin yanında current balance göstersin
+
 
 
 -old escrows dropdown u da modal yap
+---tokenlerin yanında current balance göstersin
+---try to add live and ended labels to old escrows on drop-down
 
--new tuşuna basınca hareket ediyor çöz
 
--buyer dugmesini switch yap
--tuşlar processingde iken hover ile renkleri değişmesin
--tuşların processing i erken bitiyor
--accept tuşlarında donen şey bi garip
--escrow ended kısmı boş
+
+
+
+-ana container boyu max içindekiler kadar uzun olmalı, değişmeli
+
+
+-escrow initialized üzerine bi info soru işareti gelebilir, withdraw olayını acıklayan
+
+
+LOW PRIORITY:
+
+-responsiveness biraz cozuldu, telefonlar yan modda sıcıyo, kucuk telefonlarda asagı kaydırma olmalı
+
 
 
 

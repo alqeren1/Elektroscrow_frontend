@@ -155,7 +155,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent 
                 <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-end md:items-center">
                     <div
                         ref={modalRef}
-                        className="relative bg-white p-4 rounded shadow-lg w-full md:w-1/2 lg:w-1/4 h-2/3  rounded-3xl"
+                        className="relative bg-white p-4 rounded shadow-lg w-full md:w-[480px]  h-[613px]  rounded-3xl"
                     >
                         <div className="sticky top-0 bg-white pt-2 pb-4 z-10">
                             <div className="flex justify-between items-center mt-1  mb-4">
