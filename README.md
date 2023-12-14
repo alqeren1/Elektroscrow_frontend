@@ -6,15 +6,27 @@
 
 -pancakeswap gibi console errorlarını altta gösterme ekle
 
--dropdown a basınca en üstte arama yeri olsun
+
 
 -startescrow button dışındakilerde handlesuccess calısmıyor
 
 
+-network selector ekle
+
+-custom token fotosu yap, ekle
+
+-tokenlerin yanında current balance göstersin
 
 
+-old escrows dropdown u da modal yap
 
+-new tuşuna basınca hareket ediyor çöz
 
+-buyer dugmesini switch yap
+-tuşlar processingde iken hover ile renkleri değişmesin
+-tuşların processing i erken bitiyor
+-accept tuşlarında donen şey bi garip
+-escrow ended kısmı boş
 
 
 

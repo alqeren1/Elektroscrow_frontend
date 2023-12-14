@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { ethers } from "ethers"
 import { useNotification, Icon } from "web3uikit"
 import { Bell } from "@web3uikit/icons"
+import TokenInput from "./TokenInput"
 
 const abi_factory = require("../constants1/abi_factory.json") // Adjust the path to your ABI file
 const abi_logic = require("../constants1/abi_logic.json") // Adjust the path to your ABI file
@@ -155,6 +156,7 @@ export default function EscrowFactory() {
 
         functionName: "decimals",
     })
+
     const { runContractFunction: checkToken2 } = useWeb3Contract({
         abi: abi_ERC20,
 
@@ -318,6 +320,9 @@ export default function EscrowFactory() {
         if (isWeb3Enabled) {
             updateUI()
             checkApproval()
+            if (getTokenContract) {
+                getTokenSymbol()
+            }
         }
     }, [
         isWeb3Enabled,
@@ -339,27 +344,13 @@ export default function EscrowFactory() {
         }
     }, [isWeb3Enabled, buyerState, account, anyEscrows])
 
-    useEffect(() => {
-        if (isWeb3Enabled || ethers.isAddress(tokenContract)) {
-            tokenContractCheck()
-        }
-    }, [isWeb3Enabled, tokenContract])
-
-    async function tokenContractCheck() {
-        const decimals = await checkToken1({ params: { contractAddress: tokenContract } })
-        const name = await checkToken2({ params: { contractAddress: tokenContract } })
-        const symbol = await checkToken3({ params: { contractAddress: tokenContract } })
-
-        if (!decimals || !name || !symbol) {
-            console.log("Not a valid ERC-20 token")
-            setIsTokenValid(false)
-            return
-        }
-        setIsTokenValid(true)
-        setTokenName(name)
-        setTokenDecimals(decimals)
+    async function getTokenSymbol() {
+        const symbol = await checkToken3({ params: { contractAddress: getTokenContract } })
+        const decimals = await checkToken1({ params: { contractAddress: getTokenContract } })
+        const name = await checkToken2({ params: { contractAddress: getTokenContract } })
         setTokenSymbol(symbol)
-        console.log(`Token details: ${name} (${symbol}), Decimals: ${decimals}`)
+        setTokenDecimals(decimals)
+        setTokenName(name)
     }
 
     async function fixCurrentEscrow() {
@@ -428,6 +419,12 @@ export default function EscrowFactory() {
         setShowInputFields(false)
         handleNewNotification(tx)
         updateUI()
+    }
+    const handleTokenValidation = (isValid) => {
+        setIsTokenValid(isValid)
+    }
+    const handleTokenSymbol = (symbol) => {
+        setTokenSymbol(symbol)
     }
     const startEscrowButton = async () => {
         // Call your contract function here using the inputs as parameters
@@ -629,196 +626,374 @@ export default function EscrowFactory() {
         <div className="p-5">
             {isWeb3Enabled ? (
                 <>
-                    Hi from Decentralized escrow! anyescrow: {anyEscrows}
                     {escrowAddress ? (
-                        <div className="mb-4">
-                            <div className=" text-lg font-bold mt-4">Current escrow</div>
-                            <div className="flex  items-center">
-                                <div
-                                    className="cursor-pointer bg-gray-200 rounded-lg p-2 my-2 inline-block "
-                                    onClick={() => {
-                                        setDropdownOpen(!dropdownOpen)
-                                    }}
-                                >
-                                    {currentEscrow}
+                        <div className="fixed inset-0  z-50 flex justify-center items-end md:items-center">
+                            <div className="relative bg-gray-100 p-4  border-2 rounded shadow-lg w-full md:w-1/2 lg:w-1/4 h-2/3  rounded-3xl">
+                                <div className=" text-lg text-gray-700 ml-1 font-bold ">
+                                    Current escrow
                                 </div>
-                                {anyEscrows != "No current escrows" && buyerState && (
-                                    <button
-                                        className="bg-blue-500 hover:bg-blue-700 text-white  text-sm ml-2 font-bold py-2 px-4 rounded ml-right flex items-center justify-center"
-                                        onClick={startEscrowButtonNew}
-                                        disabled={isLoading || isFetching}
+                                <div className="flex  items-center">
+                                    <div
+                                        className={` mt-1 bg-gray-200 rounded-xl w-full py-3 p-2 my-2 inline-block ${
+                                            currentEscrow == "No current escrows" ||
+                                            currentEscrow == "Creating new escrow contract"
+                                                ? currentEscrow == "Creating new escrow contract"
+                                                    ? "cursor-pointer font-medium  text-gray-500"
+                                                    : "font-medium  text-gray-500"
+                                                : "cursor-pointer font-medium  text-gray-700"
+                                        }`}
+                                        onClick={() => {
+                                            setDropdownOpen(!dropdownOpen)
+                                        }}
+                                        disabled={currentEscrow == "No current escrows"}
                                     >
-                                        New Escrow
+                                        {currentEscrow}
+                                    </div>
+                                    {anyEscrows != "No current escrows" && buyerState && (
+                                        <button
+                                            className="bg-blue-500 hover:bg-blue-700 text-white  text-sm ml-1 font-bold py-3.5  mb-1 px-4 rounded-xl  "
+                                            onClick={startEscrowButtonNew}
+                                            disabled={isLoading || isFetching}
+                                        >
+                                            New
+                                        </button>
+                                    )}
+                                </div>
+                                {dropdownOpen && buyerState && (
+                                    <div className="origin-top-right absolute ml-right mt-2 w-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                                        <div
+                                            className="py-1 overflow-y-auto"
+                                            style={{ maxHeight: "200px" }}
+                                        >
+                                            {" "}
+                                            {/* Adjust maxHeight as needed */}
+                                            {previousEscrowsBuyer
+                                                .slice()
+                                                .reverse()
+                                                .map((address, index, array) => (
+                                                    <div
+                                                        key={address}
+                                                        className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                                                        onClick={() => {
+                                                            setCurrentEscrow(address)
+                                                            setDropdownOpen(false)
+                                                            setShowInputFields(false)
+                                                        }}
+                                                    >
+                                                        {address}{" "}
+                                                        {index === 0 && ( // Changed from array.length - 1 to 0 for the first item
+                                                            <span className="text-green-500 text-xs ml-4">
+                                                                Latest
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    </div>
+                                )}
+                                {dropdownOpen && !buyerState && (
+                                    <div className="origin-top-right absolute ml-right mt-2 w-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                                        <div
+                                            className="py-1 overflow-y-auto"
+                                            style={{ maxHeight: "200px" }}
+                                        >
+                                            {" "}
+                                            {/* Adjust maxHeight as needed */}
+                                            {previousEscrowsSeller
+                                                .slice()
+                                                .reverse()
+                                                .map((address, index, array) => (
+                                                    <div
+                                                        key={address}
+                                                        className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                                                        onClick={() => {
+                                                            setCurrentEscrow(address)
+                                                            setDropdownOpen(false)
+                                                            setShowInputFields(false)
+                                                        }}
+                                                    >
+                                                        {address}{" "}
+                                                        {index === 0 && ( // Changed from array.length - 1 to 0 for the first item
+                                                            <span className="text-green-500 text-xs ml-4">
+                                                                Latest
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    </div>
+                                )}
+                                {buyerState ? (
+                                    <button
+                                        className="bg-blue-500 hover:bg-blue-700 rounded-xl mb-2 text-sm text-white font-bold py-2 px-4 rounded"
+                                        onClick={buyerStateButton}
+                                    >
+                                        Buyer
+                                    </button>
+                                ) : (
+                                    <button
+                                        className="bg-red-500 hover:bg-red-700 rounded-xl mb-2 text-sm text-white font-bold py-2 px-4 rounded"
+                                        onClick={buyerStateButton}
+                                    >
+                                        Seller
                                     </button>
                                 )}
-                            </div>
-                            {dropdownOpen && buyerState && (
-                                <div className="origin-top-right absolute ml-right mt-2 w-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                                    <div
-                                        className="py-1 overflow-y-auto"
-                                        style={{ maxHeight: "200px" }}
-                                    >
-                                        {" "}
-                                        {/* Adjust maxHeight as needed */}
-                                        {previousEscrowsBuyer
-                                            .slice()
-                                            .reverse()
-                                            .map((address, index, array) => (
-                                                <div
-                                                    key={address}
-                                                    className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
-                                                    onClick={() => {
-                                                        setCurrentEscrow(address)
-                                                        setDropdownOpen(false)
-                                                        setShowInputFields(false)
-                                                    }}
-                                                >
-                                                    {address}{" "}
-                                                    {index === 0 && ( // Changed from array.length - 1 to 0 for the first item
-                                                        <span className="text-green-500 text-xs ml-4">
-                                                            Latest
-                                                        </span>
-                                                    )}
+                                {/* Escrow Information */}
+                                {currentEscrow != "Creating new escrow contract" &&
+                                    !isEscrowEnded &&
+                                    currentEscrow != "No current escrows" && (
+                                        <div>
+                                            <div className="flex items-center mb-2 ">
+                                                <div className="flex w-full rounded ml-auto  py-2 px-4   rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className=" font-bold text-sm">
+                                                        Escrow initialized
+                                                    </div>
+                                                    <div className="font-medium ml-2 text-sm  ">
+                                                        {initializeStateString}
+                                                    </div>
                                                 </div>
-                                            ))}
-                                    </div>
-                                </div>
-                            )}
-                            {dropdownOpen && !buyerState && (
-                                <div className="origin-top-right absolute ml-right mt-2 w-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                                    <div
-                                        className="py-1 overflow-y-auto"
-                                        style={{ maxHeight: "200px" }}
-                                    >
-                                        {" "}
-                                        {/* Adjust maxHeight as needed */}
-                                        {previousEscrowsSeller
-                                            .slice()
-                                            .reverse()
-                                            .map((address, index, array) => (
-                                                <div
-                                                    key={address}
-                                                    className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
-                                                    onClick={() => {
-                                                        setCurrentEscrow(address)
-                                                        setDropdownOpen(false)
-                                                        setShowInputFields(false)
-                                                    }}
-                                                >
-                                                    {address}{" "}
-                                                    {index === 0 && ( // Changed from array.length - 1 to 0 for the first item
-                                                        <span className="text-green-500 text-xs ml-4">
-                                                            Latest
-                                                        </span>
-                                                    )}
+                                                <div className="flex w-full rounded ml-auto  py-2 px-4  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className=" font-bold text-sm ">
+                                                        Escrow balance
+                                                    </div>
+                                                    <div className="font-medium ml-2 text-sm">
+                                                        {balance / 10 ** 18}
+                                                    </div>
+                                                    <div className=" font-medium ml-1 text-sm">
+                                                        {tokenSymbol}
+                                                    </div>
                                                 </div>
-                                            ))}
-                                    </div>
-                                </div>
-                            )}
-                            {currentEscrow != "Creating new escrow contract" &&
-                                !isEscrowEnded &&
-                                currentEscrow != "No current escrows" && (
-                                    <div>Escrow initialized: {initializeStateString}</div>
-                                )}
-                            {buyerState ? (
-                                <button
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-right mr-4 flex items-center justify-center"
-                                    onClick={buyerStateButton}
-                                >
-                                    Buyer
-                                </button>
-                            ) : (
-                                <button
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-right mr-4 flex items-center justify-center"
-                                    onClick={buyerStateButton}
-                                >
-                                    Seller
-                                </button>
-                            )}
-                            <div className="mb-4"></div>
-                            {(anyEscrows == "No current escrows" ||
-                                currentEscrow == "Creating new escrow contract") &&
-                                buyerState &&
-                                showInputFields && (
-                                    <>
-                                        {/* Input fields */}
-                                        <input
-                                            className={`w-full rounded ml-auto py-2 px-4 mb-2 border-2 ${
-                                                ethers.isAddress(seller.trim()) || !seller
-                                                    ? "border-blue-500"
-                                                    : "border-red-500"
-                                            }`}
-                                            type="text"
-                                            value={seller}
-                                            onChange={(e) => setSeller(e.target.value)}
-                                            placeholder="Enter seller address"
-                                            maxLength={42} // Ethereum addresses are 42 characters long
-                                        />
+                                            </div>
+                                            <div className=" w-full rounded ml-auto  py-3 px-4 mb-2   rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                <div className=" font-bold text-sm ">
+                                                    Seller address
+                                                </div>
+                                                <div className="font-normal  text-lg  ">
+                                                    {i_seller}
+                                                </div>
+                                            </div>
+                                            <div className=" w-full rounded ml-auto  py-3 px-4  mb-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                <div className=" font-bold text-sm ">
+                                                    Token contract
+                                                </div>
+                                                <div className="font-normal  text-lg  ">
+                                                    {getTokenContract}
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center mb-1">
+                                                <div className="flex w-full rounded ml-0.5  py-1 px-4   rounded-xl text-gray-700 bg-gray-200 border-2 items-center">
+                                                    <div className=" font-bold text-sm">Name:</div>
+                                                    <div className="font-medium ml-2 text-sm  ">
+                                                        {tokenName}
+                                                    </div>
+                                                </div>
+                                                <div className="flex w-full rounded   py-1 px-4  ml-1 rounded-xl text-gray-700 bg-gray-200 border-2 items-center">
+                                                    <div className=" font-bold text-sm ">
+                                                        Symbol:
+                                                    </div>
 
-                                        <div className="flex items-center border-2 border-blue-500 rounded ml-auto mb-2">
-                                            <input
-                                                className="w-full py-2 px-4 rounded-l bg-white"
-                                                type="text"
-                                                value={amountInput}
-                                                onChange={(e) =>
-                                                    setAmountInput(
-                                                        e.target.value.replace(/[^0-9]/g, ""),
-                                                    )
-                                                }
-                                                placeholder="Enter escrow amount (How many tokens)"
-                                            />
-                                            <span className="px-3  text-gray-600 text-opacity-50 ">
-                                                ${tokenSymbol}
-                                            </span>
+                                                    <div className=" font-medium ml-2 text-sm">
+                                                        {tokenSymbol}
+                                                    </div>
+                                                </div>
+                                                <div className="flex w-full rounded  mr-0.5 py-1 px-4  ml-1 rounded-xl text-gray-700 bg-gray-200 border-2 items-center">
+                                                    <div className=" font-bold text-sm ">
+                                                        Decimals:
+                                                    </div>
+
+                                                    <div className=" font-medium ml-2 text-sm">
+                                                        {tokenDecimals}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center mt-10">
+                                                <div className=" w-full rounded ml-auto  py-1 px-2  rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className=" font-bold text-sm ">
+                                                        Escrow status
+                                                    </div>
+                                                    <div className="flex items-center">
+                                                        <div className="font-normal  text-xl">
+                                                            {escrowStatus}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className=" w-full rounded ml-auto  py-1 px-2  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className=" font-bold text-sm ">
+                                                        Escrow amount
+                                                    </div>
+                                                    <div className="flex items-center">
+                                                        <div className="font-normal  text-xl">
+                                                            {i_amount / 10 ** 18}
+                                                        </div>
+                                                        <div className=" font-normal ml-1 text-xl">
+                                                            {tokenSymbol}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className=" w-full rounded ml-auto  py-1 px-2 mr-0.5 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className=" font-bold text-sm ">
+                                                        Deposit amount
+                                                    </div>
+                                                    <div className="flex items-center">
+                                                        {ethers.getAddress(account) ==
+                                                        ethers.getAddress(i_seller) ? (
+                                                            <div className="font-normal  text-xl">
+                                                                {i_amount / 10 ** 18}
+                                                            </div>
+                                                        ) : (
+                                                            <div className="font-normal  text-xl">
+                                                                {(2 * i_amount) / 10 ** 18}
+                                                            </div>
+                                                        )}
+
+                                                        <div className=" font-normal ml-1 text-xl">
+                                                            {tokenSymbol}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+                                    )}
 
-                                        <input
-                                            className={`w-full rounded ml-auto py-2 px-4 mb-2 border-2 ${
-                                                ethers.isAddress(tokenContract.trim())
-                                                    ? "border-blue-500"
-                                                    : "border-red-500"
-                                            }`}
-                                            type="text"
-                                            value={tokenContract}
-                                            onChange={(e) => setTokenContract(e.target.value)}
-                                            placeholder="Enter token contract to be used for escrow"
-                                            maxLength={42} // Ethereum addresses are 42 characters long
-                                        />
-                                        {isTokenValid ? (
-                                            <div className="mb-4 text-xs text-gray-500">
-                                                {tokenName} ({tokenSymbol}), Decimals:{" "}
-                                                {tokenDecimals}
-                                            </div>
-                                        ) : (
-                                            <div className="mb-4 text-xs text-red-500">
-                                                Enter a valid token address
-                                            </div>
-                                        )}
+                                {(anyEscrows == "No current escrows" ||
+                                    currentEscrow == "Creating new escrow contract") &&
+                                    buyerState &&
+                                    showInputFields && (
+                                        <>
+                                            {/* Input fields */}
+                                            <input
+                                                className={`w-full rounded ml-auto  py-4 px-4 mb-2  rounded-xl focus:outline-none border-2 ${
+                                                    ethers.isAddress(seller.trim()) || !seller
+                                                        ? seller
+                                                            ? ethers.getAddress(seller) !=
+                                                              ethers.getAddress(account)
+                                                                ? "font-medium"
+                                                                : "border-red-400 font-medium"
+                                                            : ""
+                                                        : "border-red-400 font-medium"
+                                                }`}
+                                                type="text"
+                                                value={seller}
+                                                onChange={(e) => setSeller(e.target.value)}
+                                                placeholder="Enter seller address"
+                                                maxLength={42} // Ethereum addresses are 42 characters long
+                                            />
 
-                                        {/* Start Escrow Button */}
+                                            <div className="flex items-center border-2 rounded-xl bg-gray-200 rounded ml-auto mb-2">
+                                                <input
+                                                    className={`w-full py-4 px-4 rounded-xl focus:outline-none bg-white ${
+                                                        amountInput ? "font-medium" : ""
+                                                    }`}
+                                                    type="text"
+                                                    value={amountInput}
+                                                    onChange={(e) =>
+                                                        setAmountInput(
+                                                            e.target.value.replace(/[^0-9]/g, ""),
+                                                        )
+                                                    }
+                                                    placeholder="Enter escrow amount (How many tokens)"
+                                                />
+                                                <span
+                                                    className={` font-medium text-gray-700 ${
+                                                        tokenSymbol ? "px-3" : ""
+                                                    }`}
+                                                >
+                                                    {tokenSymbol}
+                                                </span>
+                                            </div>
+                                            <TokenInput
+                                                setTokenContract={setTokenContract}
+                                                onTokenValidation={handleTokenValidation}
+                                                setTokenSymbolParent={handleTokenSymbol}
+                                            />
+                                            {isTokenValid ? (
+                                                <div className="font-thin  text-xs text-gray-500 ml-1 mt-2 mb-2">
+                                                    {tokenContract}
+                                                </div>
+                                            ) : (
+                                                <div className="font-thin text-xs text-gray-500 ml-1 mt-2 mb-2 opacity-0">
+                                                    Not a valid token
+                                                </div>
+                                            )}
+
+                                            {/* Start Escrow Button */}
+                                            <button
+                                                className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
+                                                    isLoading ||
+                                                    isFetching ||
+                                                    (ethers.isAddress(seller)
+                                                        ? ethers.getAddress(account) ==
+                                                          ethers.getAddress(seller)
+                                                        : true) ||
+                                                    !seller ||
+                                                    !amountInput ||
+                                                    !tokenContract ||
+                                                    !isTokenValid
+                                                        ? "opacity-50 "
+                                                        : "hover:bg-blue-700 "
+                                                }`}
+                                                onClick={startEscrowButton}
+                                                disabled={
+                                                    isLoading ||
+                                                    isFetching ||
+                                                    !seller ||
+                                                    !amountInput ||
+                                                    !tokenContract ||
+                                                    !isTokenValid ||
+                                                    (ethers.isAddress(seller)
+                                                        ? ethers.getAddress(account) ==
+                                                          ethers.getAddress(seller)
+                                                        : true)
+                                                }
+                                            >
+                                                {isLoading || isFetching ? (
+                                                    <>
+                                                        <svg
+                                                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <circle
+                                                                className="opacity-25"
+                                                                cx="12"
+                                                                cy="12"
+                                                                r="10"
+                                                                stroke="currentColor"
+                                                                strokeWidth="4"
+                                                            ></circle>
+                                                            <path
+                                                                className="opacity-75"
+                                                                fill="currentColor"
+                                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                            ></path>
+                                                        </svg>
+                                                        Processing...
+                                                    </>
+                                                ) : (
+                                                    "Start Escrow"
+                                                )}
+                                            </button>
+                                        </>
+                                    )}
+
+                                {/* Conditional Buttons */}
+                                {!isApproved &&
+                                    anyEscrows != "No current escrows" &&
+                                    !isFunded &&
+                                    !isEscrowEnded &&
+                                    !showInputFields &&
+                                    currentEscrow != "Creating new escrow contract" && (
                                         <button
-                                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-right mr-4 flex items-center justify-center ${
-                                                isLoading ||
-                                                isFetching ||
-                                                !seller ||
-                                                !amountInput ||
-                                                !tokenContract ||
-                                                !isTokenValid
-                                                    ? "opacity-50 cursor-not-allowed"
+                                            className={`bg-blue-500 hover:bg-blue-700 w-full rounded-xl text-white font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
+                                                isLoading || isFetching || isApproving
+                                                    ? "opacity-50 "
                                                     : ""
                                             }`}
-                                            onClick={startEscrowButton}
-                                            disabled={
-                                                isLoading ||
-                                                isFetching ||
-                                                !seller ||
-                                                !amountInput ||
-                                                !tokenContract ||
-                                                !isTokenValid
-                                            }
+                                            onClick={approveButton}
+                                            disabled={isLoading || isFetching || isApproving}
                                         >
-                                            {isLoading || isFetching ? (
+                                            {isApproving ? (
                                                 <>
                                                     <svg
                                                         className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
@@ -843,265 +1018,25 @@ export default function EscrowFactory() {
                                                     Processing...
                                                 </>
                                             ) : (
-                                                "Start Escrow"
-                                            )}
-                                        </button>
-                                    </>
-                                )}
-                            {/* Escrow Information */}
-                            {anyEscrows != "No current escrows" &&
-                                !showInputFields &&
-                                currentEscrow != "Creating new escrow contract" && (
-                                    <>
-                                        <div>Escrow balance: {balance / 10 ** 18}</div>
-                                        <div>Token contract: {getTokenContract}</div>
-                                        <div>Seller address: {i_seller}</div>
-                                        <div>Buyer address: {i_buyer}</div>
-                                        <div>Escrow amount: {i_amount / 10 ** 18}</div>
-                                    </>
-                                )}
-                            {/* Conditional Buttons */}
-                            {!isApproved &&
-                                anyEscrows != "No current escrows" &&
-                                !isFunded &&
-                                !isEscrowEnded &&
-                                !showInputFields &&
-                                currentEscrow != "Creating new escrow contract" && (
-                                    <button
-                                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-right mr-4 mt-4  flex items-center justify-center ${
-                                            isLoading || isFetching || isApproving
-                                                ? "opacity-50 cursor-not-allowed"
-                                                : ""
-                                        }`}
-                                        onClick={approveButton}
-                                        disabled={isLoading || isFetching || isApproving}
-                                    >
-                                        {isApproving ? (
-                                            <>
-                                                <svg
-                                                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <circle
-                                                        className="opacity-25"
-                                                        cx="12"
-                                                        cy="12"
-                                                        r="10"
-                                                        stroke="currentColor"
-                                                        strokeWidth="4"
-                                                    ></circle>
-                                                    <path
-                                                        className="opacity-75"
-                                                        fill="currentColor"
-                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                    ></path>
-                                                </svg>
-                                                Processing...
-                                            </>
-                                        ) : (
-                                            "Approve"
-                                        )}
-                                    </button>
-                                )}
-                            {isApproved &&
-                                anyEscrows != "No current escrows" &&
-                                !isFunded &&
-                                !isEscrowEnded &&
-                                !showInputFields && (
-                                    <button
-                                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-right mr-4 mt-4 flex items-center justify-center ${
-                                            isLoading || isFetching || isFunding
-                                                ? "opacity-50 cursor-not-allowed"
-                                                : ""
-                                        }`}
-                                        onClick={fundButton}
-                                        disabled={isLoading || isFetching || isFunding}
-                                    >
-                                        {isFunding ? (
-                                            <>
-                                                <svg
-                                                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <circle
-                                                        className="opacity-25"
-                                                        cx="12"
-                                                        cy="12"
-                                                        r="10"
-                                                        stroke="currentColor"
-                                                        strokeWidth="4"
-                                                    ></circle>
-                                                    <path
-                                                        className="opacity-75"
-                                                        fill="currentColor"
-                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                    ></path>
-                                                </svg>
-                                                Processing...
-                                            </>
-                                        ) : (
-                                            "Fund"
-                                        )}
-                                    </button>
-                                )}
-                            {anyEscrows != "No current escrows" &&
-                                isFunded &&
-                                !isEscrowEnded &&
-                                !initializeState &&
-                                !showInputFields && (
-                                    <button
-                                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded ml-right mr-4 flex items-center justify-center ${
-                                            isLoading || isFetching || isWithdrawing
-                                                ? "opacity-50 cursor-not-allowed"
-                                                : ""
-                                        }`}
-                                        onClick={withdrawButton}
-                                        disabled={isLoading || isFetching || isWithdrawing}
-                                    >
-                                        {isWithdrawing ? (
-                                            <>
-                                                <svg
-                                                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <circle
-                                                        className="opacity-25"
-                                                        cx="12"
-                                                        cy="12"
-                                                        r="10"
-                                                        stroke="currentColor"
-                                                        strokeWidth="4"
-                                                    ></circle>
-                                                    <path
-                                                        className="opacity-75"
-                                                        fill="currentColor"
-                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                    ></path>
-                                                </svg>
-                                                Processing...
-                                            </>
-                                        ) : (
-                                            "Withdraw"
-                                        )}
-                                    </button>
-                                )}
-                            <div className="flex">
-                                {anyEscrows != "No current escrows" &&
-                                    isFunded &&
-                                    initializeState &&
-                                    !isEscrowEnded &&
-                                    !showInputFields && (
-                                        <button
-                                            className={`bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mt-4 rounded ml-right mr-4 flex items-center justify-center ${
-                                                i_buyer &&
-                                                ethers.isAddress(i_buyer) &&
-                                                ethers.getAddress(account) ===
-                                                    ethers.getAddress(i_buyer)
-                                                    ? isLoading ||
-                                                      isFetching ||
-                                                      decisionBuyer == "Accept" ||
-                                                      isAccepting
-                                                        ? "opacity-50 cursor-not-allowed hover:bg-green-500"
-                                                        : ""
-                                                    : isLoading ||
-                                                        isFetching ||
-                                                        decisionSeller == "Accept" ||
-                                                        isAccepting
-                                                      ? "opacity-50 cursor-not-allowed hover:bg-green-500"
-                                                      : ""
-                                            }`}
-                                            onClick={acceptButton}
-                                            disabled={
-                                                i_buyer &&
-                                                ethers.isAddress(i_buyer) &&
-                                                ethers.getAddress(account) ===
-                                                    ethers.getAddress(i_buyer)
-                                                    ? isLoading ||
-                                                      isFetching ||
-                                                      decisionBuyer == "Accept" ||
-                                                      isAccepting
-                                                    : isLoading ||
-                                                      isFetching ||
-                                                      decisionSeller == "Accept" ||
-                                                      isAccepting
-                                            }
-                                        >
-                                            {isAccepting ? (
-                                                <>
-                                                    <svg
-                                                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                    >
-                                                        <circle
-                                                            className="opacity-25"
-                                                            cx="12"
-                                                            cy="12"
-                                                            r="10"
-                                                            stroke="currentColor"
-                                                            strokeWidth="4"
-                                                        ></circle>
-                                                        <path
-                                                            className="opacity-75"
-                                                            fill="currentColor"
-                                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                        ></path>
-                                                    </svg>
-                                                    Processing...
-                                                </>
-                                            ) : (
-                                                "Accept"
+                                                "Approve"
                                             )}
                                         </button>
                                     )}
-                                {anyEscrows != "No current escrows" &&
-                                    isFunded &&
-                                    initializeState &&
+                                {isApproved &&
+                                    anyEscrows != "No current escrows" &&
+                                    !isFunded &&
                                     !isEscrowEnded &&
                                     !showInputFields && (
                                         <button
-                                            className={`bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mt-4 rounded ml-right mr-4 flex items-center justify-center ${
-                                                i_buyer &&
-                                                ethers.isAddress(i_buyer) &&
-                                                ethers.getAddress(account) ===
-                                                    ethers.getAddress(i_buyer)
-                                                    ? isLoading ||
-                                                      isFetching ||
-                                                      decisionBuyer == "Decline" ||
-                                                      isDeclining
-                                                        ? "opacity-50 cursor-not-allowed hover:bg-red-500"
-                                                        : ""
-                                                    : isLoading ||
-                                                        isFetching ||
-                                                        decisionSeller == "Decline" ||
-                                                        isDeclining
-                                                      ? "opacity-50 cursor-not-allowed hover:bg-red-500"
-                                                      : ""
+                                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded-xl ml-right mr-4 mt-4 flex items-center justify-center ${
+                                                isLoading || isFetching || isFunding
+                                                    ? "opacity-50 "
+                                                    : ""
                                             }`}
-                                            onClick={declineButton}
-                                            disabled={
-                                                i_buyer &&
-                                                ethers.isAddress(i_buyer) &&
-                                                ethers.getAddress(account) ===
-                                                    ethers.getAddress(i_buyer)
-                                                    ? isLoading ||
-                                                      isFetching ||
-                                                      decisionBuyer == "Decline" ||
-                                                      isDeclining
-                                                    : isLoading ||
-                                                      isFetching ||
-                                                      decisionSeller == "Decline" ||
-                                                      isDeclining
-                                            }
+                                            onClick={fundButton}
+                                            disabled={isLoading || isFetching || isFunding}
                                         >
-                                            {isDeclining ? (
+                                            {isFunding ? (
                                                 <>
                                                     <svg
                                                         className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
@@ -1126,51 +1061,25 @@ export default function EscrowFactory() {
                                                     Processing...
                                                 </>
                                             ) : (
-                                                "Decline"
+                                                "Fund"
                                             )}
                                         </button>
                                     )}
                                 {anyEscrows != "No current escrows" &&
                                     isFunded &&
                                     !isEscrowEnded &&
-                                    initializeState &&
+                                    !initializeState &&
                                     !showInputFields && (
                                         <button
-                                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded ml-right mr-4 flex items-center justify-center ${
-                                                i_buyer &&
-                                                ethers.isAddress(i_buyer) &&
-                                                ethers.getAddress(account) ===
-                                                    ethers.getAddress(i_buyer)
-                                                    ? isLoading ||
-                                                      isFetching ||
-                                                      decisionBuyer == "Refund" ||
-                                                      isRefunding
-                                                        ? "opacity-50 cursor-not-allowed hover:bg-blue-500"
-                                                        : ""
-                                                    : isLoading ||
-                                                        isFetching ||
-                                                        decisionSeller == "Refund" ||
-                                                        isRefunding
-                                                      ? "opacity-50 cursor-not-allowed hover:bg-blue-500"
-                                                      : ""
+                                            className={`bg-blue-500 hover:bg-blue-700 text-white  font-bold py-2 px-4 mt-4 w-full rounded-xl ml-right mr-4 flex items-center justify-center ${
+                                                isLoading || isFetching || isWithdrawing
+                                                    ? "opacity-50 "
+                                                    : ""
                                             }`}
-                                            onClick={refundButton}
-                                            disabled={
-                                                i_buyer &&
-                                                ethers.isAddress(i_buyer) &&
-                                                ethers.getAddress(account) ===
-                                                    ethers.getAddress(i_buyer)
-                                                    ? isLoading ||
-                                                      isFetching ||
-                                                      decisionBuyer == "Refund" ||
-                                                      isRefunding
-                                                    : isLoading ||
-                                                      isFetching ||
-                                                      decisionSeller == "Refund" ||
-                                                      isRefunding
-                                            }
+                                            onClick={withdrawButton}
+                                            disabled={isLoading || isFetching || isWithdrawing}
                                         >
-                                            {isRefunding ? (
+                                            {isWithdrawing ? (
                                                 <>
                                                     <svg
                                                         className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
@@ -1195,27 +1104,239 @@ export default function EscrowFactory() {
                                                     Processing...
                                                 </>
                                             ) : (
-                                                "Refund"
+                                                "Withdraw"
                                             )}
                                         </button>
                                     )}
-                            </div>
-                            {(currentEscrow != "No current escrows" ||
-                                anyEscrows != "No current escrows") &&
-                                currentEscrow != "Creating new escrow contract" && (
-                                    <div className="mt-4">Escrow status: {escrowStatus}</div>
-                                )}
-                            <div className="flex">
-                                {(currentEscrow != "No current escrows" ||
-                                    anyEscrows != "No current escrows") &&
-                                    currentEscrow != "Creating new escrow contract" &&
-                                    initializeState && <div>Buyer decision: {decisionBuyer}</div>}
-                                {(currentEscrow != "No current escrows" ||
-                                    anyEscrows != "No current escrows") &&
+
+                                {anyEscrows != "No current escrows" &&
+                                    isFunded &&
                                     initializeState &&
-                                    currentEscrow != "Creating new escrow contract" && (
-                                        <div className="ml-4">
-                                            Seller decision: {decisionSeller}
+                                    !isEscrowEnded &&
+                                    !showInputFields && (
+                                        <div>
+                                            <div className=" flex items-center mt-2">
+                                                <button
+                                                    className={`bg-green-500 hover:bg-green-700 mr-2 w-full text-white font-bold py-2   rounded-xl   ${
+                                                        i_buyer &&
+                                                        ethers.isAddress(i_buyer) &&
+                                                        ethers.getAddress(account) ===
+                                                            ethers.getAddress(i_buyer)
+                                                            ? isLoading ||
+                                                              isFetching ||
+                                                              decisionBuyer == "Accept" ||
+                                                              isAccepting
+                                                                ? "opacity-50  hover:bg-green-500"
+                                                                : ""
+                                                            : isLoading ||
+                                                                isFetching ||
+                                                                decisionSeller == "Accept" ||
+                                                                isAccepting
+                                                              ? "opacity-50  hover:bg-green-500"
+                                                              : ""
+                                                    }`}
+                                                    onClick={acceptButton}
+                                                    disabled={
+                                                        i_buyer &&
+                                                        ethers.isAddress(i_buyer) &&
+                                                        ethers.getAddress(account) ===
+                                                            ethers.getAddress(i_buyer)
+                                                            ? isLoading ||
+                                                              isFetching ||
+                                                              decisionBuyer == "Accept" ||
+                                                              isAccepting
+                                                            : isLoading ||
+                                                              isFetching ||
+                                                              decisionSeller == "Accept" ||
+                                                              isAccepting
+                                                    }
+                                                >
+                                                    {isAccepting ? (
+                                                        <>
+                                                            <svg
+                                                                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                            >
+                                                                <circle
+                                                                    className="opacity-25"
+                                                                    cx="12"
+                                                                    cy="12"
+                                                                    r="10"
+                                                                    stroke="currentColor"
+                                                                    strokeWidth="4"
+                                                                ></circle>
+                                                                <path
+                                                                    className="opacity-75"
+                                                                    fill="currentColor"
+                                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                                ></path>
+                                                            </svg>
+                                                            Processing...
+                                                        </>
+                                                    ) : (
+                                                        "Accept"
+                                                    )}
+                                                </button>
+                                                <button
+                                                    className={`bg-red-500 hover:bg-red-700  w-full text-white font-bold py-2   rounded-xl ${
+                                                        i_buyer &&
+                                                        ethers.isAddress(i_buyer) &&
+                                                        ethers.getAddress(account) ===
+                                                            ethers.getAddress(i_buyer)
+                                                            ? isLoading ||
+                                                              isFetching ||
+                                                              decisionBuyer == "Decline" ||
+                                                              isDeclining
+                                                                ? "opacity-50  hover:bg-red-500"
+                                                                : ""
+                                                            : isLoading ||
+                                                                isFetching ||
+                                                                decisionSeller == "Decline" ||
+                                                                isDeclining
+                                                              ? "opacity-50  hover:bg-red-500"
+                                                              : ""
+                                                    }`}
+                                                    onClick={declineButton}
+                                                    disabled={
+                                                        i_buyer &&
+                                                        ethers.isAddress(i_buyer) &&
+                                                        ethers.getAddress(account) ===
+                                                            ethers.getAddress(i_buyer)
+                                                            ? isLoading ||
+                                                              isFetching ||
+                                                              decisionBuyer == "Decline" ||
+                                                              isDeclining
+                                                            : isLoading ||
+                                                              isFetching ||
+                                                              decisionSeller == "Decline" ||
+                                                              isDeclining
+                                                    }
+                                                >
+                                                    {isDeclining ? (
+                                                        <>
+                                                            <svg
+                                                                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                            >
+                                                                <circle
+                                                                    className="opacity-25"
+                                                                    cx="12"
+                                                                    cy="12"
+                                                                    r="10"
+                                                                    stroke="currentColor"
+                                                                    strokeWidth="4"
+                                                                ></circle>
+                                                                <path
+                                                                    className="opacity-75"
+                                                                    fill="currentColor"
+                                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                                ></path>
+                                                            </svg>
+                                                            Processing...
+                                                        </>
+                                                    ) : (
+                                                        "Decline"
+                                                    )}
+                                                </button>
+                                            </div>
+                                            <button
+                                                className={`bg-blue-500 hover:bg-blue-700 w-full text-white font-bold py-2 mt-2  rounded-xl ${
+                                                    i_buyer &&
+                                                    ethers.isAddress(i_buyer) &&
+                                                    ethers.getAddress(account) ===
+                                                        ethers.getAddress(i_buyer)
+                                                        ? isLoading ||
+                                                          isFetching ||
+                                                          decisionBuyer == "Refund" ||
+                                                          isRefunding
+                                                            ? "opacity-50  hover:bg-blue-500"
+                                                            : ""
+                                                        : isLoading ||
+                                                            isFetching ||
+                                                            decisionSeller == "Refund" ||
+                                                            isRefunding
+                                                          ? "opacity-50  hover:bg-blue-500"
+                                                          : ""
+                                                }`}
+                                                onClick={refundButton}
+                                                disabled={
+                                                    i_buyer &&
+                                                    ethers.isAddress(i_buyer) &&
+                                                    ethers.getAddress(account) ===
+                                                        ethers.getAddress(i_buyer)
+                                                        ? isLoading ||
+                                                          isFetching ||
+                                                          decisionBuyer == "Refund" ||
+                                                          isRefunding
+                                                        : isLoading ||
+                                                          isFetching ||
+                                                          decisionSeller == "Refund" ||
+                                                          isRefunding
+                                                }
+                                            >
+                                                {isRefunding ? (
+                                                    <>
+                                                        <svg
+                                                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <circle
+                                                                className="opacity-25"
+                                                                cx="12"
+                                                                cy="12"
+                                                                r="10"
+                                                                stroke="currentColor"
+                                                                strokeWidth="4"
+                                                            ></circle>
+                                                            <path
+                                                                className="opacity-75"
+                                                                fill="currentColor"
+                                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                            ></path>
+                                                        </svg>
+                                                        Processing...
+                                                    </>
+                                                ) : (
+                                                    "Refund"
+                                                )}
+                                            </button>
+                                            <div className="flex items-center mt-1 text-sm">
+                                                <div className=" w-full mr-2 rounded-xl  ml-0.2 font-medium flex items-center">
+                                                    Buyer:
+                                                    <div
+                                                        className={`ml-1 ${
+                                                            decisionBuyer == "Decline"
+                                                                ? "text-red-600"
+                                                                : decisionBuyer == "Accept"
+                                                                  ? "text-green-600"
+                                                                  : "text-blue-600"
+                                                        }`}
+                                                    >
+                                                        {decisionBuyer}
+                                                    </div>
+                                                </div>
+
+                                                <div className=" w-full rounded-xl ml-24 px-14 font-medium flex">
+                                                    Seller:{" "}
+                                                    <div
+                                                        className={`ml-1 ${
+                                                            decisionSeller == "Decline"
+                                                                ? "text-red-600"
+                                                                : decisionSeller == "Accept"
+                                                                  ? "text-green-600"
+                                                                  : "text-blue-600"
+                                                        }`}
+                                                    >
+                                                        {decisionSeller}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     )}
                             </div>
