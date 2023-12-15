@@ -152,16 +152,16 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent 
                 </span>
             </div>
             {modalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-end md:items-center">
+                <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-end wdefined:items-center">
                     <div
                         ref={modalRef}
-                        className="relative bg-white p-4 rounded shadow-lg w-full md:w-[480px]  h-[613px]  rounded-3xl"
+                        className="relative bg-white py-4  shadow-lg w-full min-480px-width h-1/2 wdefined:h-[613px] rounded-t-3xl wdefined:rounded-3xl"
                     >
-                        <div className="sticky top-0 bg-white pt-2 pb-4 z-10">
+                        <div className="sticky top-0 bg-white pt-2 px-4  rounded-3xl z-10">
                             <div className="flex justify-between items-center mt-1  mb-4">
                                 <div className="font-bold text-gray-700 ml-1">Select a token</div>
                                 <button
-                                    className="absolute  right-1 text-gray-700  text-xl font-bold"
+                                    className="absolute  right-1 text-gray-700  mr-4 text-xl font-bold"
                                     onClick={() => setModalOpen(false)}
                                 >
                                     &#10005; {/* X symbol */}
@@ -175,14 +175,15 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent 
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
                         </div>
+                        <div className=" w-full border-b-2 border-gray-300/50 mt-4 "></div>
                         <div
-                            className="overflow-y-auto  scrollbar-hide "
-                            style={{ maxHeight: "calc(100% - 95px)" }}
+                            className="overflow-y-auto px-2 scrollbar-hide "
+                            style={{ maxHeight: "calc(100% - 103px)" }}
                         >
                             {filteredTokens.map((token, index) => (
                                 <div
                                     key={index}
-                                    className="flex items-center p-2 hover:bg-gray-100 h-16 cursor-pointer rounded-xl"
+                                    className="flex items-center p-2 hover:bg-gray-200 h-16 mt-1 rounded-xl   cursor-pointer "
                                     onClick={() => handleTokenSelect(token)}
                                 >
                                     <img

@@ -18,15 +18,16 @@
 
 
 
--old escrows dropdown u da modal yap
+-old escrows dropdown u da modal yap +++
 ---tokenlerin yanında current balance göstersin
----try to add live and ended labels to old escrows on drop-down
+---old to new, new to old switch olabilir
+---hover'da live ended kısımları da shadow altına girsin
+
+
+- token select ve old escrow arama yeri tekrar tıkladığında resetlesin
 
 
 
-
-
--ana container boyu max içindekiler kadar uzun olmalı, değişmeli
 
 
 -escrow initialized üzerine bi info soru işareti gelebilir, withdraw olayını acıklayan
@@ -35,7 +36,7 @@
 LOW PRIORITY:
 
 -responsiveness biraz cozuldu, telefonlar yan modda sıcıyo, kucuk telefonlarda asagı kaydırma olmalı
-
+-yana donme yasak olmalı tellerde
 
 
 

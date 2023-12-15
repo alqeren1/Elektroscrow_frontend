@@ -141,3 +141,62 @@ return (
         )}
     </div>
 )
+
+{
+    dropdownOpen && buyerState && (
+        <div className="origin-top-right absolute ml-right mt-2 w-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div className="py-1 overflow-y-auto" style={{ maxHeight: "200px" }}>
+                {" "}
+                {/* Adjust maxHeight as needed */}
+                {previousEscrowsBuyer
+                    .slice()
+                    .reverse()
+                    .map((address, index, array) => (
+                        <div
+                            key={address}
+                            className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                            onClick={() => {
+                                setCurrentEscrow(address)
+                                setDropdownOpen(false)
+                                setShowInputFields(false)
+                            }}
+                        >
+                            {address}{" "}
+                            {index === 0 && ( // Changed from array.length - 1 to 0 for the first item
+                                <span className="text-green-500 text-xs ml-4">Latest</span>
+                            )}
+                        </div>
+                    ))}
+            </div>
+        </div>
+    )
+}
+{
+    dropdownOpen && !buyerState && (
+        <div className="origin-top-right absolute ml-right mt-2 w-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div className="py-1 overflow-y-auto" style={{ maxHeight: "200px" }}>
+                {" "}
+                {/* Adjust maxHeight as needed */}
+                {previousEscrowsSeller
+                    .slice()
+                    .reverse()
+                    .map((address, index, array) => (
+                        <div
+                            key={address}
+                            className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                            onClick={() => {
+                                setCurrentEscrow(address)
+                                setDropdownOpen(false)
+                                setShowInputFields(false)
+                            }}
+                        >
+                            {address}{" "}
+                            {index === 0 && ( // Changed from array.length - 1 to 0 for the first item
+                                <span className="text-green-500 text-xs ml-4">Latest</span>
+                            )}
+                        </div>
+                    ))}
+            </div>
+        </div>
+    )
+}
