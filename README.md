@@ -1,9 +1,6 @@
 
 
 
-
-
-
 -pancakeswap gibi console errorlarını altta gösterme ekle
 
 
@@ -13,30 +10,22 @@
 
 -network selector ekle
 
--custom token fotosu yap, ekle
+
+-arkaplan foto değiş
+
+-new düğmesi bazen inputları acmıyor
 
 
+-yeni sayfalar ekle
 
-
--old escrows dropdown u da modal yap +++
----tokenlerin yanında current balance göstersin
----old to new, new to old switch olabilir
----hover'da live ended kısımları da shadow altına girsin
-
-
-- token select ve old escrow arama yeri tekrar tıkladığında resetlesin
-
-
-
-
-
--escrow initialized üzerine bi info soru işareti gelebilir, withdraw olayını acıklayan
-
+-font değiş (belki)
 
 LOW PRIORITY:
 
--responsiveness biraz cozuldu, telefonlar yan modda sıcıyo, kucuk telefonlarda asagı kaydırma olmalı
 -yana donme yasak olmalı tellerde
+-custom token fotosu yap, ekle
+
+-açıklamadaki safety deposits'e link koy detaya gönderen
 
 
 

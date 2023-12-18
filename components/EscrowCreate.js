@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { ethers } from "ethers"
 import { useNotification, Icon } from "web3uikit"
 import { Bell } from "@web3uikit/icons"
-import TokenInput from "./TokenInput"
+import TokenInput from "./TokenSelectModal"
 import EscrowDropdownModal from "./OldEscrowsModal"
 
 const abi_factory = require("../constants1/abi_factory.json") // Adjust the path to your ABI file
@@ -35,6 +35,8 @@ export default function EscrowFactory() {
     const [i_amount2, seti_amount2] = useState("0")
     const [isApproved, setIsApproved] = useState(false)
     const [isFunded, setIsFunded] = useState(false)
+
+    const [tokenBalance, setTokenBalance] = useState("")
 
     const [decisionBuyer, setDecisionBuyer] = useState("None")
     const [decisionSeller, setDecisionSeller] = useState("None")
@@ -73,6 +75,7 @@ export default function EscrowFactory() {
         functionName: "getBuyerEscrows",
         params: { buyer: account },
     })
+
     const { runContractFunction: getSellerEscrows } = useWeb3Contract({
         abi: abi_factory,
         contractAddress: factoryAddress,
@@ -111,6 +114,11 @@ export default function EscrowFactory() {
         contractAddress: getTokenContract,
         functionName: "approve",
         params: { spender: currentEscrow, value: i_amount },
+    })
+    const { runContractFunction: balanceOf } = useWeb3Contract({
+        abi: abi_ERC20,
+
+        functionName: "balanceOf",
     })
     const { runContractFunction: initialize } = useWeb3Contract({
         abi: abi_logic,
@@ -343,8 +351,9 @@ export default function EscrowFactory() {
     useEffect(() => {
         if (isWeb3Enabled) {
             fixCurrentEscrow()
+            checkBalance(tokenContract)
         }
-    }, [isWeb3Enabled, buyerState, account, anyEscrows])
+    }, [isWeb3Enabled, buyerState, account, anyEscrows, chainId])
 
     async function getTokenSymbol() {
         const symbol = await checkToken3({ params: { contractAddress: getTokenContract } })
@@ -438,6 +447,15 @@ export default function EscrowFactory() {
     }
     const handleTokenSymbol = (symbol) => {
         setTokenSymbol(symbol)
+    }
+    async function checkBalance(address) {
+        const balance = await balanceOf({
+            params: {
+                contractAddress: address,
+                params: { account: account },
+            },
+        })
+        setTokenBalance(balance)
     }
     const startEscrowButton = async () => {
         // Call your contract function here using the inputs as parameters
@@ -636,6 +654,10 @@ export default function EscrowFactory() {
         }
         return return_
     }
+    const handleTokenSelect = (address) => {
+        setTokenContract(address)
+        checkBalance(address)
+    }
 
     return (
         <div className="p-5">
@@ -712,7 +734,7 @@ export default function EscrowFactory() {
                                         className="bg-blue-500 rounded-xl w-full py-3 text-white font-bold"
                                         onClick={buyerStateButton}
                                     >
-                                        Start a new escrow as buyer
+                                        Switch to buyer
                                     </button>
                                 )}
                                 <EscrowDropdownModal
@@ -731,26 +753,57 @@ export default function EscrowFactory() {
                                     currentEscrow != "Initial" && (
                                         <div>
                                             <div className="flex items-center mb-2 ">
-                                                <div className="flex w-full rounded ml-auto  py-2 px-4   rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                    <div className=" font-bold text-sm">
-                                                        Escrow initialized
+                                                <div className="flex w-full relative group">
+                                                    <div className="flex w-full rounded ml-auto  py-2 px-4   rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                        <div className=" font-bold text-sm">
+                                                            Escrow initialized
+                                                        </div>
+                                                        <div className="font-medium ml-2 text-sm  ">
+                                                            {initializeStateString}
+                                                        </div>
                                                     </div>
-                                                    <div className="font-medium ml-2 text-sm  ">
-                                                        {initializeStateString}
+                                                    <div className="absolute bottom-full left-0  hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
+                                                        {/* Info bar content */}
+                                                        <p className="text-gray-500 text-xs ">
+                                                            Escrow is initialized after{" "}
+                                                            <span className="font-bold text-gray-600">
+                                                                both parties
+                                                            </span>{" "}
+                                                            deposit the required funds to the
+                                                            contract. Funds are{" "}
+                                                            <span className="font-bold text-gray-600">
+                                                                withdrawable
+                                                            </span>{" "}
+                                                            before the initialization.
+                                                        </p>
                                                     </div>
                                                 </div>
-                                                <div className="flex w-full rounded ml-auto  py-2 px-4  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                    <div className=" font-bold text-sm ">
-                                                        Escrow balance
+                                                <div className="flex w-full relative group">
+                                                    <div className="flex w-full rounded ml-auto  py-2 px-4  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                        <div className=" font-bold text-sm ">
+                                                            Escrow balance
+                                                        </div>
+                                                        <div className="font-medium ml-2 text-sm">
+                                                            {(
+                                                                BigInt(balance) /
+                                                                BigInt("10") ** BigInt("18")
+                                                            ).toString()}
+                                                        </div>
+                                                        <div className=" font-medium ml-1 text-sm">
+                                                            {tokenSymbol}
+                                                        </div>
                                                     </div>
-                                                    <div className="font-medium ml-2 text-sm">
-                                                        {(
-                                                            BigInt(balance) /
-                                                            BigInt("10") ** BigInt("18")
-                                                        ).toString()}
-                                                    </div>
-                                                    <div className=" font-medium ml-1 text-sm">
-                                                        {tokenSymbol}
+                                                    <div className="absolute bottom-full left-0  hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
+                                                        {/* Info bar content */}
+                                                        <p className="text-gray-500 text-xs">
+                                                            Current balance of the contract. The
+                                                            total balance of the contract should be{" "}
+                                                            <span className="font-bold text-gray-600">
+                                                                three times
+                                                            </span>{" "}
+                                                            the escrow amount before
+                                                            initialization. (with safety deposits)
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -841,69 +894,125 @@ export default function EscrowFactory() {
                                                     </div>
                                                 </div>
                                                 <div className="flex items-center ">
-                                                    <div className=" w-full rounded ml-auto whitespace-nowrap py-1 px-2  rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                        <div className=" font-bold text-sm ">
-                                                            Escrow status
-                                                        </div>
-                                                        <div className="flex items-center">
-                                                            <div className="font-normal  text-xl">
-                                                                {escrowStatus == "Live" ? (
-                                                                    <div className="text-green-500">
-                                                                        {escrowStatus}
-                                                                    </div>
-                                                                ) : (
-                                                                    <div className="text-red-500 ">
-                                                                        {escrowStatus}
-                                                                    </div>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className=" w-full rounded ml-auto whitespace-nowrap py-1 px-2  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                        <div className=" font-bold text-sm ">
-                                                            Escrow amount
-                                                        </div>
-                                                        <div className="flex items-center">
-                                                            <div className="font-normal  text-xl">
-                                                                {(
-                                                                    BigInt(i_amount) /
-                                                                    BigInt("10") ** BigInt("18")
-                                                                ).toString()}
-                                                            </div>
-                                                            <div className=" font-normal ml-1 text-xl">
-                                                                {tokenSymbol}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {escrowStatus != "Ended" && (
-                                                        <div className=" w-full rounded ml-auto  whitespace-nowrap py-1 px-2 mr-0.5 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className="relative group w-full">
+                                                        <div className=" w-full rounded ml-auto whitespace-nowrap py-1 px-2  rounded-xl text-gray-700 bg-white border-2 items-center">
                                                             <div className=" font-bold text-sm ">
-                                                                Deposit amount
+                                                                Escrow status
                                                             </div>
                                                             <div className="flex items-center">
-                                                                {i_seller &&
-                                                                ethers.getAddress(account) ==
-                                                                    ethers.getAddress(i_seller) ? (
-                                                                    <div className="font-normal  text-xl">
-                                                                        {(
-                                                                            BigInt(i_amount) /
-                                                                            BigInt("10") **
-                                                                                BigInt("18")
-                                                                        ).toString()}
-                                                                    </div>
-                                                                ) : (
-                                                                    <div className="font-normal  text-xl">
-                                                                        {(
-                                                                            BigInt(i_amount) /
-                                                                            BigInt("10") **
-                                                                                BigInt("18")
-                                                                        ).toString() * 2}
-                                                                    </div>
-                                                                )}
-
+                                                                <div className="font-normal  text-xl">
+                                                                    {escrowStatus == "Live" ? (
+                                                                        <div className="text-green-500">
+                                                                            {escrowStatus}
+                                                                        </div>
+                                                                    ) : (
+                                                                        <div className="text-red-500 ">
+                                                                            {escrowStatus}
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="absolute bottom-full left-0  w-64 hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
+                                                            {/* Info bar content */}
+                                                            <p className="text-gray-500 text-xs">
+                                                                Shows to status of the current
+                                                                escrow contract. Escrow is ended
+                                                                when{" "}
+                                                                <span className="font-bold ">
+                                                                    both parties agree
+                                                                </span>{" "}
+                                                                on the same decision, either{" "}
+                                                                <span className="font-bold ">
+                                                                    Accept
+                                                                </span>{" "}
+                                                                or{" "}
+                                                                <span className="font-bold ">
+                                                                    Refund
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="relative group w-full">
+                                                        <div className=" w-full rounded ml-auto whitespace-nowrap py-1 px-2  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                            <div className=" font-bold text-sm ">
+                                                                Escrow amount
+                                                            </div>
+                                                            <div className="flex items-center">
+                                                                <div className="font-normal  text-xl">
+                                                                    {(
+                                                                        BigInt(i_amount) /
+                                                                        BigInt("10") **
+                                                                            BigInt("18")
+                                                                    ).toString()}
+                                                                </div>
                                                                 <div className=" font-normal ml-1 text-xl">
                                                                     {tokenSymbol}
                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="absolute bottom-full left-0   hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
+                                                            {/* Info bar content */}
+                                                            <p className="text-gray-500 text-xs">
+                                                                The{" "}
+                                                                <span className="font-bold">
+                                                                    transfer amount
+                                                                </span>{" "}
+                                                                after a successful escrow.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    {escrowStatus != "Ended" && (
+                                                        <div className="relative group w-full">
+                                                            <div className=" w-full rounded ml-auto  whitespace-nowrap py-1 px-2 mr-0.5 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                                <div className=" font-bold text-sm ">
+                                                                    Deposit amount
+                                                                </div>
+                                                                <div className="flex items-center">
+                                                                    {i_seller &&
+                                                                    ethers.getAddress(account) ==
+                                                                        ethers.getAddress(
+                                                                            i_seller,
+                                                                        ) ? (
+                                                                        <div className="font-normal  text-xl">
+                                                                            {(
+                                                                                BigInt(i_amount) /
+                                                                                BigInt("10") **
+                                                                                    BigInt("18")
+                                                                            ).toString()}
+                                                                        </div>
+                                                                    ) : (
+                                                                        <div className="font-normal  text-xl">
+                                                                            {(
+                                                                                BigInt(i_amount) /
+                                                                                BigInt("10") **
+                                                                                    BigInt("18")
+                                                                            ).toString() * 2}
+                                                                        </div>
+                                                                    )}
+
+                                                                    <div className=" font-normal ml-1 text-xl">
+                                                                        {tokenSymbol}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="absolute bottom-full left-0  w-64  hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
+                                                                {/* Info bar content */}
+                                                                <p className="text-gray-500 text-xs">
+                                                                    The amount of tokens you need
+                                                                    to deposit in order this
+                                                                    contract to initialize after
+                                                                    <span className="font-bold">
+                                                                        {" "}
+                                                                        mutual
+                                                                    </span>{" "}
+                                                                    deposits. This amount includes
+                                                                    the{" "}
+                                                                    <span className="font-bold text-blue-500">
+                                                                        safety deposit
+                                                                    </span>
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     )}
@@ -919,7 +1028,7 @@ export default function EscrowFactory() {
                                         <>
                                             {/* Input fields */}
                                             <input
-                                                className={`w-full rounded ml-auto  py-4 px-4 mb-2  rounded-xl focus:outline-none border-2 ${
+                                                className={`w-full rounded ml-auto  py-4 px-4 mb-5 rounded-xl focus:outline-none border-2 ${
                                                     ethers.isAddress(seller.trim()) || !seller
                                                         ? seller
                                                             ? ethers.getAddress(seller) !=
@@ -936,7 +1045,7 @@ export default function EscrowFactory() {
                                                 maxLength={42} // Ethereum addresses are 42 characters long
                                             />
 
-                                            <div className="flex items-center border-2 rounded-xl bg-gray-200 rounded ml-auto mb-2">
+                                            <div className="flex items-center border-2 rounded-xl bg-gray-200 rounded ml-auto mb-1">
                                                 <input
                                                     className={`w-full py-4 px-4 rounded-xl focus:outline-none bg-white ${
                                                         amountInput ? "font-medium" : ""
@@ -958,8 +1067,22 @@ export default function EscrowFactory() {
                                                     {tokenSymbol}
                                                 </span>
                                             </div>
+
+                                            <div className="flex justify-end text-xs text-gray-700 font-light mr-1 opacity-80">
+                                                <div className="opacity-0">Balance:</div>
+                                                {tokenBalance && (
+                                                    <div className="flex">
+                                                        <div className="mr-1">Balance:</div>
+                                                        {(
+                                                            BigInt(tokenBalance) /
+                                                            BigInt("10") ** BigInt("18")
+                                                        ).toString()}
+                                                    </div>
+                                                )}
+                                            </div>
+
                                             <TokenInput
-                                                setTokenContract={setTokenContract}
+                                                setTokenContract={handleTokenSelect}
                                                 onTokenValidation={handleTokenValidation}
                                                 setTokenSymbolParent={handleTokenSymbol}
                                             />

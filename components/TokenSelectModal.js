@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useRef } from "react"
-import { useWeb3Contract } from "react-moralis"
+import { useWeb3Contract, useMoralis } from "react-moralis"
 import { ethers } from "ethers"
 
 import tokens from "../default_tokens/mainnet.json"
 const abi_ERC20 = require("../constants1/abi_ERC20.json")
 
-const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent }) => {
+const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent, onClose }) => {
     const modalRef = useRef()
+    const { account } = useMoralis()
 
     const [modalOpen, setModalOpen] = useState(false)
     const [isCustomToken, setIsCustomToken] = useState(false)
     const [selectedToken, setSelectedToken] = useState(null)
     const [searchTerm, setSearchTerm] = useState("")
-    const [filteredTokens, setFilteredTokens] = useState(tokens)
+    const [filteredTokens, setFilteredTokens] = useState("")
     const [tokenContractChild, setTokenContractChild] = useState("")
     const [isTokenValid, setIsTokenValid] = useState(false)
     const [tokenName, setTokenName] = useState("")
@@ -36,6 +37,12 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent 
 
         functionName: "symbol",
     })
+    const { runContractFunction: balanceOf } = useWeb3Contract({
+        abi: abi_ERC20,
+
+        functionName: "balanceOf",
+    })
+
     async function tokenContractCheck() {
         if (!ethers.isAddress(searchTerm)) {
             return
@@ -91,7 +98,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent 
             "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
         )
     }
-
+    useEffect(() => {}, [searchTerm])
     useEffect(() => {
         const searchLowerCase = searchTerm.toLowerCase()
         const filtered = tokens.filter(
@@ -115,6 +122,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent 
     useEffect(() => {
         if (modalOpen) {
             document.addEventListener("mousedown", closeModalOnOutsideClick)
+            setSearchTerm("")
         }
 
         // Cleanup event listener
@@ -132,6 +140,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent 
         setDisplayTokenSymbol(token.symbol)
         setTokenImageUrl(token.logoURI)
         setModalOpen(false)
+        setSearchTerm("")
     }
 
     return (
@@ -158,10 +167,11 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent 
                         className="relative bg-white py-4  shadow-lg w-full min-480px-width h-1/2 wdefined:h-[613px] rounded-t-3xl wdefined:rounded-3xl"
                     >
                         <div className="sticky top-0 bg-white pt-2 px-4  rounded-3xl z-10">
-                            <div className="flex justify-between items-center mt-1  mb-4">
+                            <div className="flex  items-center mt-1  mb-4">
                                 <div className="font-bold text-gray-700 ml-1">Select a token</div>
+
                                 <button
-                                    className="absolute  right-1 text-gray-700  mr-4 text-xl font-bold"
+                                    className="absolute  right-1 text-gray-700  mr-4 text-xl font-bold "
                                     onClick={() => setModalOpen(false)}
                                 >
                                     &#10005; {/* X symbol */}
@@ -191,6 +201,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent 
                                         alt={token.symbol}
                                         className="w-9 h-9 mr-4"
                                     />
+
                                     <div>
                                         <div className="font-medium text-gray-700">
                                             {token.name}
