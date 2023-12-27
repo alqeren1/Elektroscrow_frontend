@@ -1,34 +1,40 @@
 
-
-
 -pancakeswap gibi console errorlarını altta gösterme ekle
-
-
 
 -notification ı customise et
 
+-sadece galaxy fold sıcıyor
 
--network selector ekle
+-tüm acıklama olan yerlere minik soru isareti logosu
 
+-new düğmesi bazen inputları acmıyor(bulamadım)
 
--arkaplan foto değiş
-
--new düğmesi bazen inputları acmıyor
-
+-sağda solda bir yerde aktif oluşturulan escrowları göstersin, güven verir
 
 -yeni sayfalar ekle
 
 -font değiş (belki)
 
-LOW PRIORITY:
+-cuzdan baglantısını kesince error cıkıyor, veya ağ değişince(current escrow varken)
+
+
+
+-sayfayı sıkıştırınca yukarıdaki navigatorlar 3 noktaya donuçsun veya alta gelsin
+
+
+LATER:
 
 -yana donme yasak olmalı tellerde
 -custom token fotosu yap, ekle
 
+-componentlara ayırabilirsin ilk kod cok uzun oldu
+
 -açıklamadaki safety deposits'e link koy detaya gönderen
 
-
-
+-walletconnect support
+---walletconnect icin yeni bir escrowcreate.js yapman lazım. https://wagmi.sh/react/hooks/useContractWrite burdan bakarak functionları değiş
+---https://walletconnect.com/guidelines buraya ekle dapp'i
+-trustwallet support
 
 
 

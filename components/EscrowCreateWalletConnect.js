@@ -1,5 +1,12 @@
-import { useWeb3Contract } from "react-moralis"
-import { useMoralis } from "react-moralis"
+import {
+    useContractWrite,
+    usePrepareContractWrite,
+    useContractRead,
+    useAccount,
+    useConnect,
+    useNetwork,
+} from "wagmi"
+
 import { useEffect, useState } from "react"
 import { ethers } from "ethers"
 import { useNotification, Icon } from "web3uikit"
@@ -12,15 +19,15 @@ const abi_logic = require("../constants1/abi_logic.json") // Adjust the path to 
 const escrowAddress = require("../constants1/escrowAddress.json")
 const abi_ERC20 = require("../constants1/abi_ERC20.json")
 
-export default function EscrowFactory() {
-    const { chainId: chainIdHex, isWeb3Enabled, account } = useMoralis()
-
+export default function EscrowFactoryWC() {
+    const { connector: activeConnector, isConnected } = useAccount()
+    const { connect, connectors, error, isLoading, pendingConnector } = useConnect()
+    const { chain } = useNetwork()
     //console.log(parseInt(chainIdHex))
-    let chainId = parseInt(chainIdHex)
-    let latest_address = chainId in escrowAddress ? escrowAddress[chainId].length : null
-    let factoryAddress =
+    const chainId = parseInt(chain)
+    const latest_address = chainId in escrowAddress ? escrowAddress[chainId].length : null
+    const factoryAddress =
         chainId in escrowAddress ? escrowAddress[chainId][latest_address - 1] : null
-
     const dispatch = useNotification()
     //değerin durmadan renderlanması için useState variable olmalı aşağıdaki gibi
 
@@ -70,120 +77,116 @@ export default function EscrowFactory() {
     const [previousEscrowsSeller, setPreviousEscrowsSeller] = useState([])
     const [showInputFields, setShowInputFields] = useState(false)
 
-    const { runContractFunction: getBuyerEscrows } = useWeb3Contract({
+    const { getBuyerEscrows } = useContractRead({
         abi: abi_factory,
-        contractAddress: factoryAddress,
+        address: factoryAddress,
         functionName: "getBuyerEscrows",
-        params: { buyer: account },
+        args: { buyer: activeConnector },
     })
 
-    const { runContractFunction: getSellerEscrows } = useWeb3Contract({
+    const { getSellerEscrows } = useContractRead({
         abi: abi_factory,
         contractAddress: factoryAddress,
         functionName: "getSellerEscrows",
-        params: { seller: account },
+        params: { seller: activeConnector },
     })
 
-    const { runContractFunction: getEscrowBalance } = useWeb3Contract({
+    const { getEscrowBalance } = useContractRead({
         abi: abi_logic,
 
         functionName: "getBalance",
     })
-    const { runContractFunction: getCheckPayment } = useWeb3Contract({
+    const { getCheckPayment } = useContractRead({
         abi: abi_logic,
 
         functionName: "checkPayment",
     })
-    const { runContractFunction: getDecisions } = useWeb3Contract({
+    const { getDecisions } = useContractRead({
         abi: abi_logic,
         contractAddress: currentEscrow,
         functionName: "getDecisions",
     })
-    const { runContractFunction: approve } = useWeb3Contract({
+    const { approve } = useContractWrite({
         abi: abi_ERC20,
         contractAddress: getTokenContract,
         functionName: "approve",
         params: { spender: currentEscrow, value: i_amount2 },
     })
-    const { runContractFunction: allowance } = useWeb3Contract({
+    const { allowance } = useContractRead({
         abi: abi_ERC20,
         contractAddress: getTokenContract,
         functionName: "allowance",
     })
-    const { runContractFunction: approve2 } = useWeb3Contract({
+    const { approve2 } = useContractWrite({
         abi: abi_ERC20,
         contractAddress: getTokenContract,
         functionName: "approve",
         params: { spender: currentEscrow, value: i_amount },
     })
-    const { runContractFunction: balanceOf } = useWeb3Contract({
+    const { balanceOf } = useContractRead({
         abi: abi_ERC20,
 
         functionName: "balanceOf",
     })
-    const { runContractFunction: initialize } = useWeb3Contract({
+    const { initialize } = useContractWrite({
         abi: abi_logic,
         contractAddress: currentEscrow,
         functionName: "initialize",
     })
-    const { runContractFunction: finishEscrow } = useWeb3Contract({
+    const { finishEscrow } = useContractWrite({
         abi: abi_logic,
         contractAddress: currentEscrow,
         functionName: "finishEscrow",
     })
-    const { runContractFunction: withdraw } = useWeb3Contract({
+    const { withdraw } = useContractWrite({
         abi: abi_logic,
         contractAddress: currentEscrow,
         functionName: "withdraw",
     })
-    const { runContractFunction: geti_seller } = useWeb3Contract({
+    const { geti_seller } = useContractRead({
         abi: abi_logic,
         functionName: "i_seller",
     })
-    const { runContractFunction: gets_escrowComplete } = useWeb3Contract({
+    const { gets_escrowComplete } = useContractRead({
         abi: abi_logic,
         functionName: "s_escrowComplete",
     })
-    const { runContractFunction: getInitilizeState } = useWeb3Contract({
+    const { getInitilizeState } = useContractRead({
         abi: abi_logic,
 
         functionName: "getInitilizeState",
     })
-    const { runContractFunction: geti_buyer } = useWeb3Contract({
+    const { geti_buyer } = useContractRead({
         abi: abi_logic,
         functionName: "i_buyer",
     })
-    const { runContractFunction: geti_amount } = useWeb3Contract({
+    const { geti_amount } = useContractRead({
         abi: abi_logic,
         functionName: "i_amount",
     })
-    const { runContractFunction: getEscrowToken } = useWeb3Contract({
+    const { getEscrowToken } = useContractRead({
         abi: abi_logic,
 
         functionName: "getTokenContract",
     })
-    const { runContractFunction: checkToken1 } = useWeb3Contract({
+    const { checkToken1 } = useContractRead({
         abi: abi_ERC20,
 
         functionName: "decimals",
     })
 
-    const { runContractFunction: checkToken2 } = useWeb3Contract({
+    const { checkToken2 } = useContractRead({
         abi: abi_ERC20,
 
         functionName: "name",
     })
-    const { runContractFunction: checkToken3 } = useWeb3Contract({
+    const { checkToken3 } = useContractRead({
         abi: abi_ERC20,
 
         functionName: "symbol",
     })
 
-    const {
-        runContractFunction: escrowFactory,
-        isLoading,
-        isFetching,
-    } = useWeb3Contract({
+    const { escrowFactory } = useContractWrite({
         abi: abi_factory,
         contractAddress: factoryAddress,
         functionName: "escrowFactory",
@@ -198,11 +201,6 @@ export default function EscrowFactory() {
     })
 
     async function updateUI() {
-        chainId = parseInt(chainIdHex)
-        latest_address = chainId in escrowAddress ? escrowAddress[chainId].length : null
-        factoryAddress =
-            chainId in escrowAddress ? escrowAddress[chainId][latest_address - 1] : null
-
         let anyEscrowsFromCall
         if (buyerState) {
             anyEscrowsFromCall = await getBuyerEscrows()
@@ -256,7 +254,10 @@ export default function EscrowFactory() {
                 }
                 setInitializeState(initializeState)
                 const paymentStatus = await getCheckPayment({
-                    params: { contractAddress: currentEscrow, params: { account: account } },
+                    params: {
+                        contractAddress: currentEscrow,
+                        params: { account: activeConnector },
+                    },
                 })
 
                 let i_amount2 = _amount.mul(2)
@@ -284,38 +285,38 @@ export default function EscrowFactory() {
 
                 if (decisions[0] == 0) {
                     setDecisionBuyer("Decline")
-                    if (ethers.getAddress(account) == ethers.getAddress(i_buyer)) {
+                    if (ethers.getAddress(activeConnector) == ethers.getAddress(i_buyer)) {
                         setIsDeclining(false)
                     }
                 }
                 if (decisions[0] == 1) {
                     setDecisionBuyer("Accept")
-                    if (ethers.getAddress(account) == ethers.getAddress(i_buyer)) {
+                    if (ethers.getAddress(activeConnector) == ethers.getAddress(i_buyer)) {
                         setIsAccepting(false)
                     }
                 }
                 if (decisions[0] == 2) {
                     setDecisionBuyer("Refund")
-                    if (ethers.getAddress(account) == ethers.getAddress(i_buyer)) {
+                    if (ethers.getAddress(activeConnector) == ethers.getAddress(i_buyer)) {
                         setIsRefunding(false)
                     }
                 }
 
                 if (decisions[1] == 0) {
                     setDecisionSeller("Decline")
-                    if (ethers.getAddress(account) == ethers.getAddress(i_seller)) {
+                    if (ethers.getAddress(activeConnector) == ethers.getAddress(i_seller)) {
                         setIsDeclining(false)
                     }
                 }
                 if (decisions[1] == 1) {
                     setDecisionSeller("Accept")
-                    if (ethers.getAddress(account) == ethers.getAddress(i_seller)) {
+                    if (ethers.getAddress(activeConnector) == ethers.getAddress(i_seller)) {
                         setIsAccepting(false)
                     }
                 }
                 if (decisions[1] == 2) {
                     setDecisionSeller("Refund")
-                    if (ethers.getAddress(account) == ethers.getAddress(i_seller)) {
+                    if (ethers.getAddress(activeConnector) == ethers.getAddress(i_seller)) {
                         setIsRefunding(false)
                     }
                 }
@@ -333,7 +334,7 @@ export default function EscrowFactory() {
         }
     }
     useEffect(() => {
-        if (isWeb3Enabled) {
+        if (isConnected) {
             updateUI()
             checkApproval()
             if (getTokenContract) {
@@ -341,8 +342,8 @@ export default function EscrowFactory() {
             }
         }
     }, [
-        isWeb3Enabled,
-        account,
+        isConnected,
+        activeConnector,
         i_buyer,
         i_seller,
         i_amount,
@@ -355,11 +356,11 @@ export default function EscrowFactory() {
         isApproved,
     ])
     useEffect(() => {
-        if (isWeb3Enabled) {
+        if (isConnected) {
             fixCurrentEscrow()
             checkBalance(tokenContract)
         }
-    }, [isWeb3Enabled, buyerState, account, anyEscrows, chainId])
+    }, [isConnected, buyerState, activeConnector, anyEscrows, chainId])
 
     async function getTokenSymbol() {
         const symbol = await checkToken3({ params: { contractAddress: getTokenContract } })
@@ -399,10 +400,10 @@ export default function EscrowFactory() {
     }
 
     const checkApproval = async () => {
-        if (ethers.getAddress(account) == i_buyer) {
+        if (ethers.getAddress(activeConnector) == i_buyer) {
             try {
                 const approvedAmount = await allowance({
-                    params: { params: { owner: account, spender: currentEscrow } },
+                    params: { params: { owner: activeConnector, spender: currentEscrow } },
                 })
 
                 if (approvedAmount >= i_amount2) {
@@ -415,10 +416,10 @@ export default function EscrowFactory() {
                 console.error("Error checking approval:", error)
             }
         }
-        if (ethers.getAddress(account) == i_seller) {
+        if (ethers.getAddress(activeConnector) == i_seller) {
             try {
                 const approvedAmount = await allowance({
-                    params: { params: { owner: account, spender: currentEscrow } },
+                    params: { params: { owner: activeConnector, spender: currentEscrow } },
                 })
                 if (approvedAmount >= i_amount) {
                     setIsApproved(true)
@@ -458,7 +459,7 @@ export default function EscrowFactory() {
         const balance = await balanceOf({
             params: {
                 contractAddress: address,
-                params: { account: account },
+                params: { account: activeConnector },
             },
         })
         setTokenBalance(balance)
@@ -469,7 +470,7 @@ export default function EscrowFactory() {
             console.error("Invalid seller contract address")
             return
         }
-        if (ethers.getAddress(seller) == ethers.getAddress(account)) {
+        if (ethers.getAddress(seller) == ethers.getAddress(activeConnector)) {
             console.error("You can not be both buyer and seller")
             return
         }
@@ -547,7 +548,7 @@ export default function EscrowFactory() {
 
     const approveButton = async () => {
         setIsApproving(true)
-        if (ethers.getAddress(account) == i_buyer) {
+        if (ethers.getAddress(activeConnector) == i_buyer) {
             try {
                 await approve({
                     onSuccess: (tx) => {
@@ -562,7 +563,7 @@ export default function EscrowFactory() {
                 setIsApproving(false)
             }
         }
-        if (ethers.getAddress(account) == i_seller) {
+        if (ethers.getAddress(activeConnector) == i_seller) {
             try {
                 await approve2({
                     onSuccess: () => {
@@ -650,28 +651,19 @@ export default function EscrowFactory() {
             icon: <Bell />,
         })
     }
-    const getEscrowStatus = async function () {
-        let return_
-        if (isEscrowEnded) {
-            return_ = "ended"
-        }
-        if (!isEscrowEnded) {
-            return_ = "live"
-        }
-        return return_
-    }
+
     const handleTokenSelect = (address) => {
         setTokenContract(address)
         checkBalance(address)
     }
 
     return (
-        <div className=" p-1 w-full">
-            {isWeb3Enabled ? (
+        <div className="p-5">
+            {isConnected ? (
                 <>
-                    {factoryAddress ? (
-                        <div className="   flex justify-center  mb-16">
-                            <div className="relative bg-gray-100 p-4   w-full wdefined:w-[480px] border-2 custom-shadow max-h-[613px] rounded-3xl">
+                    {escrowAddress ? (
+                        <div className="fixed inset-0  z-50 flex justify-center  items-center   ">
+                            <div className="relative bg-gray-100 p-4  border-2  shadow-lg w-full min-480px-width max-h-[613px] rounded-3xl">
                                 {buyerState ? (
                                     <div className="flex items-center">
                                         <button
@@ -728,7 +720,7 @@ export default function EscrowFactory() {
                                             <button
                                                 className="bg-blue-500 hover:bg-blue-700 text-white  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
                                                 onClick={startEscrowButtonNew}
-                                                disabled={isLoading || isFetching}
+                                                disabled={isLoading}
                                             >
                                                 New
                                             </button>
@@ -760,7 +752,7 @@ export default function EscrowFactory() {
                                         <div>
                                             <div className="flex items-center mb-2 ">
                                                 <div className="flex w-full relative group">
-                                                    <div className="flex w-full rounded ml-auto  py-2 px-4  justify-between rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className="flex w-full rounded ml-auto  py-2 px-4   rounded-xl text-gray-700 bg-white border-2 items-center">
                                                         <div className=" font-bold text-sm">
                                                             Escrow initialized
                                                         </div>
@@ -772,12 +764,12 @@ export default function EscrowFactory() {
                                                         {/* Info bar content */}
                                                         <p className="text-gray-500 text-xs ">
                                                             Escrow is initialized after{" "}
-                                                            <span className="font-bold ">
+                                                            <span className="font-bold text-gray-600">
                                                                 both parties
                                                             </span>{" "}
                                                             deposit the required funds to the
                                                             contract. Funds are{" "}
-                                                            <span className="font-bold ">
+                                                            <span className="font-bold text-gray-600">
                                                                 withdrawable
                                                             </span>{" "}
                                                             before the initialization.
@@ -785,20 +777,18 @@ export default function EscrowFactory() {
                                                     </div>
                                                 </div>
                                                 <div className="flex w-full relative group">
-                                                    <div className="flex w-full rounded ml-auto justify-between py-2 px-4  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className="flex w-full rounded ml-auto  py-2 px-4  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
                                                         <div className=" font-bold text-sm ">
                                                             Escrow balance
                                                         </div>
-                                                        <div className="flex items-center ml-4">
-                                                            <div className="font-medium  text-sm">
-                                                                {(
-                                                                    BigInt(balance) /
-                                                                    BigInt("10") ** BigInt("18")
-                                                                ).toString()}
-                                                            </div>
-                                                            <div className=" font-medium ml-3 text-sm">
-                                                                {tokenSymbol}
-                                                            </div>
+                                                        <div className="font-medium ml-2 text-sm">
+                                                            {(
+                                                                BigInt(balance) /
+                                                                BigInt("10") ** BigInt("18")
+                                                            ).toString()}
+                                                        </div>
+                                                        <div className=" font-medium ml-1 text-sm">
+                                                            {tokenSymbol}
                                                         </div>
                                                     </div>
                                                     <div className="absolute bottom-full left-0  hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
@@ -806,7 +796,7 @@ export default function EscrowFactory() {
                                                         <p className="text-gray-500 text-xs">
                                                             Current balance of the contract. The
                                                             total balance of the contract should be{" "}
-                                                            <span className="font-bold ">
+                                                            <span className="font-bold text-gray-600">
                                                                 three times
                                                             </span>{" "}
                                                             the escrow amount before
@@ -815,7 +805,7 @@ export default function EscrowFactory() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            {ethers.getAddress(account) == i_seller ? (
+                                            {ethers.getAddress(activeConnector) == i_seller ? (
                                                 <div className=" w-full rounded ml-auto  py-3 px-4 mb-2  overflow-hidden text-ellipsis whitespace-nowrap rounded-xl text-gray-700 bg-white border-2 items-center">
                                                     <div className=" font-bold text-sm ">
                                                         Buyer address
@@ -902,13 +892,10 @@ export default function EscrowFactory() {
                                                     </div>
                                                 </div>
                                                 <div className="flex items-center ">
-                                                    <div className="relative group w-full ">
-                                                        <div className=" w-full rounded ml-auto   py-1 px-2  rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                            <div className=" font-bold text-sm  ">
+                                                    <div className="relative group w-full">
+                                                        <div className=" w-full rounded ml-auto whitespace-nowrap py-1 px-2  rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                            <div className=" font-bold text-sm ">
                                                                 Escrow status
-                                                                <span className="opacity-0">
-                                                                    -...
-                                                                </span>
                                                             </div>
                                                             <div className="flex items-center">
                                                                 <div className="font-normal  text-xl">
@@ -945,12 +932,9 @@ export default function EscrowFactory() {
                                                         </div>
                                                     </div>
                                                     <div className="relative group w-full">
-                                                        <div className=" w-full rounded ml-auto py-1 px-2  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                        <div className=" w-full rounded ml-auto whitespace-nowrap py-1 px-2  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
                                                             <div className=" font-bold text-sm ">
                                                                 Escrow amount
-                                                                <span className="opacity-0">
-                                                                    -
-                                                                </span>
                                                             </div>
                                                             <div className="flex items-center">
                                                                 <div className="font-normal  text-xl">
@@ -979,13 +963,15 @@ export default function EscrowFactory() {
 
                                                     {escrowStatus != "Ended" && (
                                                         <div className="relative group w-full">
-                                                            <div className=" w-full rounded ml-auto  py-1 px-2 mr-0.5 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                            <div className=" w-full rounded ml-auto  whitespace-nowrap py-1 px-2 mr-0.5 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
                                                                 <div className=" font-bold text-sm ">
                                                                     Deposit amount
                                                                 </div>
                                                                 <div className="flex items-center">
                                                                     {i_seller &&
-                                                                    ethers.getAddress(account) ==
+                                                                    ethers.getAddress(
+                                                                        activeConnector,
+                                                                    ) ==
                                                                         ethers.getAddress(
                                                                             i_seller,
                                                                         ) ? (
@@ -1046,7 +1032,7 @@ export default function EscrowFactory() {
                                                     ethers.isAddress(seller.trim()) || !seller
                                                         ? seller
                                                             ? ethers.getAddress(seller) !=
-                                                              ethers.getAddress(account)
+                                                              ethers.getAddress(activeConnector)
                                                                 ? "font-medium"
                                                                 : "border-red-400 font-medium"
                                                             : ""
@@ -1114,9 +1100,8 @@ export default function EscrowFactory() {
                                             <button
                                                 className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
                                                     isLoading ||
-                                                    isFetching ||
                                                     (ethers.isAddress(seller)
-                                                        ? ethers.getAddress(account) ==
+                                                        ? ethers.getAddress(activeConnector) ==
                                                           ethers.getAddress(seller)
                                                         : true) ||
                                                     !seller ||
@@ -1129,18 +1114,17 @@ export default function EscrowFactory() {
                                                 onClick={startEscrowButton}
                                                 disabled={
                                                     isLoading ||
-                                                    isFetching ||
                                                     !seller ||
                                                     !amountInput ||
                                                     !tokenContract ||
                                                     !isTokenValid ||
                                                     (ethers.isAddress(seller)
-                                                        ? ethers.getAddress(account) ==
+                                                        ? ethers.getAddress(activeConnector) ==
                                                           ethers.getAddress(seller)
                                                         : true)
                                                 }
                                             >
-                                                {isLoading || isFetching ? (
+                                                {isLoading ? (
                                                     <>
                                                         <svg
                                                             className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
@@ -1181,12 +1165,12 @@ export default function EscrowFactory() {
                                     currentEscrow != "Creating new escrow contract" && (
                                         <button
                                             className={`bg-blue-500  w-full rounded-xl text-white font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
-                                                isLoading || isFetching || isApproving
+                                                isLoading || isApproving
                                                     ? "opacity-50 "
                                                     : "hover:bg-blue-700"
                                             }`}
                                             onClick={approveButton}
-                                            disabled={isLoading || isFetching || isApproving}
+                                            disabled={isLoading || isApproving}
                                         >
                                             {isApproving ? (
                                                 <>
@@ -1224,12 +1208,12 @@ export default function EscrowFactory() {
                                     !showInputFields && (
                                         <button
                                             className={`bg-blue-500  text-white font-bold py-2 px-4 w-full rounded-xl ml-right mr-4 mt-4 flex items-center justify-center ${
-                                                isLoading || isFetching || isFunding
+                                                isLoading || isFunding
                                                     ? "opacity-50 "
                                                     : "hover:bg-blue-700"
                                             }`}
                                             onClick={fundButton}
-                                            disabled={isLoading || isFetching || isFunding}
+                                            disabled={isLoading || isFunding}
                                         >
                                             {isFunding ? (
                                                 <>
@@ -1269,12 +1253,12 @@ export default function EscrowFactory() {
                                     !showInputFields && (
                                         <button
                                             className={`bg-blue-500  text-white  font-bold py-2 px-4 mt-4 w-full rounded-xl ml-right mr-4 flex items-center justify-center ${
-                                                isLoading || isFetching || isWithdrawing
+                                                isLoading || isWithdrawing
                                                     ? "opacity-50 "
                                                     : "hover:bg-blue-700"
                                             }`}
                                             onClick={withdrawButton}
-                                            disabled={isLoading || isFetching || isWithdrawing}
+                                            disabled={isLoading || isWithdrawing}
                                         >
                                             {isWithdrawing ? (
                                                 <>
@@ -1317,16 +1301,14 @@ export default function EscrowFactory() {
                                                     className={`bg-green-500  mr-2 w-full text-white font-bold py-2   rounded-xl   ${
                                                         i_buyer &&
                                                         ethers.isAddress(i_buyer) &&
-                                                        ethers.getAddress(account) ===
+                                                        ethers.getAddress(activeConnector) ===
                                                             ethers.getAddress(i_buyer)
                                                             ? isLoading ||
-                                                              isFetching ||
                                                               decisionBuyer == "Accept" ||
                                                               isAccepting
                                                                 ? "opacity-50 "
                                                                 : "hover:bg-green-700"
                                                             : isLoading ||
-                                                                isFetching ||
                                                                 decisionSeller == "Accept" ||
                                                                 isAccepting
                                                               ? "opacity-50 "
@@ -1336,14 +1318,12 @@ export default function EscrowFactory() {
                                                     disabled={
                                                         i_buyer &&
                                                         ethers.isAddress(i_buyer) &&
-                                                        ethers.getAddress(account) ===
+                                                        ethers.getAddress(activeConnector) ===
                                                             ethers.getAddress(i_buyer)
                                                             ? isLoading ||
-                                                              isFetching ||
                                                               decisionBuyer == "Accept" ||
                                                               isAccepting
                                                             : isLoading ||
-                                                              isFetching ||
                                                               decisionSeller == "Accept" ||
                                                               isAccepting
                                                     }
@@ -1382,16 +1362,14 @@ export default function EscrowFactory() {
                                                     className={`bg-red-500   w-full text-white font-bold py-2   rounded-xl ${
                                                         i_buyer &&
                                                         ethers.isAddress(i_buyer) &&
-                                                        ethers.getAddress(account) ===
+                                                        ethers.getAddress(activeConnector) ===
                                                             ethers.getAddress(i_buyer)
                                                             ? isLoading ||
-                                                              isFetching ||
                                                               decisionBuyer == "Decline" ||
                                                               isDeclining
                                                                 ? "opacity-50  "
                                                                 : "hover:bg-red-700"
                                                             : isLoading ||
-                                                                isFetching ||
                                                                 decisionSeller == "Decline" ||
                                                                 isDeclining
                                                               ? "opacity-50 "
@@ -1401,14 +1379,12 @@ export default function EscrowFactory() {
                                                     disabled={
                                                         i_buyer &&
                                                         ethers.isAddress(i_buyer) &&
-                                                        ethers.getAddress(account) ===
+                                                        ethers.getAddress(activeConnector) ===
                                                             ethers.getAddress(i_buyer)
                                                             ? isLoading ||
-                                                              isFetching ||
                                                               decisionBuyer == "Decline" ||
                                                               isDeclining
                                                             : isLoading ||
-                                                              isFetching ||
                                                               decisionSeller == "Decline" ||
                                                               isDeclining
                                                     }
@@ -1448,16 +1424,14 @@ export default function EscrowFactory() {
                                                 className={`bg-blue-500  w-full text-white font-bold py-2 mt-2  rounded-xl ${
                                                     i_buyer &&
                                                     ethers.isAddress(i_buyer) &&
-                                                    ethers.getAddress(account) ===
+                                                    ethers.getAddress(activeConnector) ===
                                                         ethers.getAddress(i_buyer)
                                                         ? isLoading ||
-                                                          isFetching ||
                                                           decisionBuyer == "Refund" ||
                                                           isRefunding
                                                             ? "opacity-50 "
                                                             : "hover:bg-blue-700"
                                                         : isLoading ||
-                                                            isFetching ||
                                                             decisionSeller == "Refund" ||
                                                             isRefunding
                                                           ? "opacity-50 "
@@ -1467,14 +1441,12 @@ export default function EscrowFactory() {
                                                 disabled={
                                                     i_buyer &&
                                                     ethers.isAddress(i_buyer) &&
-                                                    ethers.getAddress(account) ===
+                                                    ethers.getAddress(activeConnector) ===
                                                         ethers.getAddress(i_buyer)
                                                         ? isLoading ||
-                                                          isFetching ||
                                                           decisionBuyer == "Refund" ||
                                                           isRefunding
                                                         : isLoading ||
-                                                          isFetching ||
                                                           decisionSeller == "Refund" ||
                                                           isRefunding
                                                 }
@@ -1514,224 +1486,11 @@ export default function EscrowFactory() {
                             </div>
                         </div>
                     ) : (
-                        <div className="   flex justify-center  mb-16">
-                            {/* Wrong Network Decoys */}
-                            <div
-                                className="relative bg-gray-100 p-4   w-full wdefined:w-[480px] border-2 shadow-lg  max-h-[613px] rounded-3xl"
-                                disabled={true}
-                            >
-                                {buyerState ? (
-                                    <div className="flex items-center">
-                                        <button
-                                            className="bg-gray-300 rounded-xl mb-2  font-medium text-gray-700 cursor-not-allowed  font-base py-2 px-4 "
-                                            disabled={true}
-                                        >
-                                            Buyer
-                                        </button>
-                                        <button
-                                            disabled={true}
-                                            className="  rounded-xl mb-2   text-gray-700 cursor-not-allowed py-2 px-4 "
-                                        >
-                                            Seller
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div className="flex items-center">
-                                        <button
-                                            className="rounded-xl mb-2  text-gray-700  cursor-not-allowed font-base py-2 px-4 "
-                                            disabled={true}
-                                        >
-                                            Buyer
-                                        </button>
-                                        <button
-                                            disabled={true}
-                                            className="bg-gray-300  rounded-xl mb-2 cursor-not-allowed text-gray-700 font-medium py-2 px-4 "
-                                        >
-                                            Seller
-                                        </button>
-                                    </div>
-                                )}
-                                <div className=" text-lg text-gray-700 ml-1 font-bold ">
-                                    Current escrow
-                                </div>
-                                <div className="flex  items-center">
-                                    <button
-                                        className={` mt-1 bg-gray-200 rounded-xl overflow-hidden text-ellipsis whitespace-nowrap w-full text-sm py-3 p-2 my-2 inline-block ${
-                                            currentEscrow == "No current escrows" ||
-                                            currentEscrow == "Creating new escrow contract"
-                                                ? currentEscrow == "Creating new escrow contract"
-                                                    ? "cursor-pointer font-medium  text-gray-500"
-                                                    : "font-medium  text-gray-500"
-                                                : "cursor-pointer font-medium  text-gray-700"
-                                        }`}
-                                        disabled={true}
-                                    >
-                                        {currentEscrow}
-                                    </button>
-                                    <div className="">
-                                        {anyEscrows != "No current escrows" && buyerState && (
-                                            <button
-                                                className="bg-blue-500 hover:bg-blue-700 text-white  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
-                                                disabled={true}
-                                            >
-                                                New
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-                                {currentEscrow == "No current escrows" && !buyerState && (
-                                    <button
-                                        className="bg-blue-500 rounded-xl w-full py-3 text-white font-bold"
-                                        onClick={buyerStateButton}
-                                    >
-                                        Switch to buyer
-                                    </button>
-                                )}
-
-                                <>
-                                    <div className="w-full py-4 border-2 px-4 rounded-xl mb-5 bg-white cursor-not-allowed">
-                                        <div className="text-gray-400">Enter seller address</div>
-                                    </div>
-
-                                    <div className="w-full py-4 border-2 px-4 rounded-xl mb-1 bg-white cursor-not-allowed">
-                                        <div className="text-gray-400">
-                                            Enter escrow amount (How many tokens)
-                                        </div>
-                                    </div>
-
-                                    <div className="flex justify-end text-xs text-gray-700 font-light mr-1 opacity-80">
-                                        <div className="opacity-0">Balance:</div>
-                                        {tokenBalance && (
-                                            <div className="flex">
-                                                <div className="mr-1">Balance:</div>
-                                                {(
-                                                    BigInt(tokenBalance) /
-                                                    BigInt("10") ** BigInt("18")
-                                                ).toString()}
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <div className="w-full py-4 border-2 px-4 rounded-xl  bg-white cursor-not-allowed">
-                                        <div className="text-gray-400">Select Token Contract</div>
-                                    </div>
-
-                                    <div className="font-thin  text-xs text-gray-500 ml-1 mt-2 mb-2 opacity-0">
-                                        **
-                                    </div>
-
-                                    <button
-                                        className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
-                                                `}
-                                        disabled={true}
-                                    >
-                                        Wrong Network
-                                    </button>
-                                </>
-                            </div>
-                        </div>
+                        <div>No Escrow address found</div>
                     )}
                 </>
             ) : (
-                <div className="   flex justify-center  mb-16">
-                    {/* Wallet not connected decoys */}
-                    <div
-                        className="relative bg-gray-100 p-4   w-full wdefined:w-[480px] border-2 shadow-lg  max-h-[613px] rounded-3xl"
-                        disabled={true}
-                    >
-                        {buyerState ? (
-                            <div className="flex items-center">
-                                <button
-                                    className="bg-gray-300 rounded-xl mb-2  font-medium text-gray-700 cursor-not-allowed  font-base py-2 px-4 "
-                                    disabled={true}
-                                >
-                                    Buyer
-                                </button>
-                                <button
-                                    disabled={true}
-                                    className="  rounded-xl mb-2   text-gray-700 cursor-not-allowed py-2 px-4 "
-                                >
-                                    Seller
-                                </button>
-                            </div>
-                        ) : (
-                            <div className="flex items-center">
-                                <button
-                                    className="rounded-xl mb-2  text-gray-700  cursor-not-allowed font-base py-2 px-4 "
-                                    disabled={true}
-                                >
-                                    Buyer
-                                </button>
-                                <button
-                                    disabled={true}
-                                    className="bg-gray-300  rounded-xl mb-2 cursor-not-allowed text-gray-700 font-medium py-2 px-4 "
-                                >
-                                    Seller
-                                </button>
-                            </div>
-                        )}
-                        <div className=" text-lg text-gray-700 ml-1 font-bold ">
-                            Current escrow
-                        </div>
-                        <div className="flex  items-center">
-                            <button
-                                className={` mt-1 bg-gray-200 rounded-xl overflow-hidden text-ellipsis whitespace-nowrap w-full text-sm py-3 p-2 my-2 inline-block font-medium  text-gray-500`}
-                                disabled={true}
-                            >
-                                No current escrows
-                            </button>
-                        </div>
-                        {currentEscrow == "No current escrows" && !buyerState && (
-                            <button
-                                className="bg-blue-500 rounded-xl w-full py-3 text-white font-bold"
-                                onClick={buyerStateButton}
-                            >
-                                Switch to buyer
-                            </button>
-                        )}
-
-                        <>
-                            <div className="w-full py-4 border-2 px-4 rounded-xl mb-5 bg-white cursor-not-allowed">
-                                <div className="text-gray-400">Enter seller address</div>
-                            </div>
-
-                            <div className="w-full py-4 border-2 px-4 rounded-xl mb-1 bg-white cursor-not-allowed">
-                                <div className="text-gray-400">
-                                    Enter escrow amount (How many tokens)
-                                </div>
-                            </div>
-
-                            <div className="flex justify-end text-xs text-gray-700 font-light mr-1 opacity-80">
-                                <div className="opacity-0">Balance:</div>
-                                {tokenBalance && (
-                                    <div className="flex">
-                                        <div className="mr-1">Balance:</div>
-                                        {(
-                                            BigInt(tokenBalance) /
-                                            BigInt("10") ** BigInt("18")
-                                        ).toString()}
-                                    </div>
-                                )}
-                            </div>
-
-                            <div className="w-full py-4 border-2 px-4 rounded-xl  bg-white cursor-not-allowed">
-                                <div className="text-gray-400">Select Token Contract</div>
-                            </div>
-
-                            <div className="font-thin  text-xs text-gray-500 ml-1 mt-2 mb-2 opacity-0">
-                                **
-                            </div>
-
-                            <button
-                                className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
-                                            `}
-                                disabled={true}
-                            >
-                                Wallet not connected
-                            </button>
-                        </>
-                    </div>
-                </div>
+                <div>Wallet not connected</div>
             )}
         </div>
     )

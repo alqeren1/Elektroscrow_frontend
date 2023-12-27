@@ -20,30 +20,21 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="bg-[#f5f9ff]">
-                <div
-                    className="bg-cover bg-center bg-no-repeat"
-                    style={{
-                        backgroundImage: `url(${"/background.png2"})`,
-                        width: "100vw",
-                        height: "100vh",
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        zIndex: -1,
-                    }}
-                ></div>
-                <Header />
+            <div
+                className="bg-cover bg-center bg-no-repeat"
+                style={{
+                    backgroundImage: `url(${"/background.png2"})`,
+                    width: "100vw",
+                    height: "100vh",
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    zIndex: -1,
+                }}
+            ></div>
+            <Header />
 
-                <div
-                    className="flex justify-center items-center "
-                    style={{
-                        minHeight: "92vh",
-                    }}
-                >
-                    <EscrowFactory />
-                </div>
-            </div>
+            <div className="text-2xl">Welcome to how does it work!</div>
         </>
     )
 }

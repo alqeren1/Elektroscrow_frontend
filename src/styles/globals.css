@@ -28,6 +28,9 @@ scrollbar-width: none;  /* Firefox */
   }
 }
 
+.custom-shadow {
+  box-shadow: 0 0 120px 20px rgb(217, 231, 255,0.6);
+}
 .text-lsm {	font-size: 0.950rem; /* 14px */
   line-height: 1.5rem; /* 20px */}
 
@@ -53,4 +56,11 @@ border-top: 5px solid gray; /* Match the background color of the info bar */
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 5px solid white; /* Background color */
+}
+
+@media screen and (max-height: 850px) {
+  
+  .hdefinedmax\:mt-custom {
+      margin-top: 150px; /* Custom margin bottom applies to viewport heights of 800px or less */
+  }
 }
