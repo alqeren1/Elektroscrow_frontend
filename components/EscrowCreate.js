@@ -6,6 +6,8 @@ import { useNotification, Icon } from "web3uikit"
 import { Bell } from "@web3uikit/icons"
 import TokenInput from "./TokenSelectModal"
 import EscrowDropdownModal from "./OldEscrowsModal"
+import Questionmark from "../svgs/question-mark"
+import Copy from "../svgs/copy"
 
 const abi_factory = require("../constants1/abi_factory.json") // Adjust the path to your ABI file
 const abi_logic = require("../constants1/abi_logic.json") // Adjust the path to your ABI file
@@ -47,6 +49,8 @@ export default function EscrowFactory() {
     const [isRefunding, setIsRefunding] = useState(false)
     const [isEscrowEnded, setIsEscrowEnded] = useState(false)
     const [escrowStatus, setEscrowStatus] = useState("")
+    const [isCopied, setIsCopied] = useState(false)
+    const [isCopied2, setIsCopied2] = useState(false)
 
     const [tokenContract, setTokenContract] = useState("")
     const [i_seller, seti_seller] = useState("")
@@ -640,7 +644,19 @@ export default function EscrowFactory() {
             setIsRefunding(false)
         }
     }
-
+    const copyToClipboard = async (variable) => {
+        const input = document.createElement("input")
+        // Set its value to the text that you want to copy
+        input.value = variable
+        // Append it to the document
+        document.body.appendChild(input)
+        // Select the text inside the input element
+        input.select()
+        // Copy the selected text to the clipboard
+        document.execCommand("copy")
+        // Remove the temporary input from the document
+        document.body.removeChild(input)
+    }
     const handleNewNotification = function () {
         dispatch({
             type: "info",
@@ -675,14 +691,14 @@ export default function EscrowFactory() {
                                 {buyerState ? (
                                     <div className="flex items-center">
                                         <button
-                                            className="bg-gray-300 rounded-xl mb-2  font-medium text-gray-700  hover:bg-gray-300 font-base py-2 px-4 "
+                                            className="bg-gray-300 rounded-xl mb-2  font-medium text-gray-700  font-base py-2 px-4 "
                                             disabled={buyerState}
                                         >
                                             Buyer
                                         </button>
                                         <button
                                             onClick={buyerStateButton}
-                                            className="  rounded-xl mb-2  hover:bg-gray-200 text-gray-700  py-2 px-4 "
+                                            className="  rounded-xl mb-2  hover:bg-gray-200 transition duration-300 ease-in-out text-gray-700  py-2 px-4 "
                                         >
                                             Seller
                                         </button>
@@ -690,7 +706,7 @@ export default function EscrowFactory() {
                                 ) : (
                                     <div className="flex items-center">
                                         <button
-                                            className="rounded-xl mb-2  text-gray-700  hover:bg-gray-200 font-base py-2 px-4 "
+                                            className="rounded-xl mb-2  text-gray-700  hover:bg-gray-200 transition duration-300 ease-in-out font-base py-2 px-4 "
                                             onClick={buyerStateButton}
                                         >
                                             Buyer
@@ -708,13 +724,13 @@ export default function EscrowFactory() {
                                 </div>
                                 <div className="flex  items-center">
                                     <button
-                                        className={` mt-1 bg-gray-200 rounded-xl overflow-hidden text-ellipsis whitespace-nowrap w-full text-sm py-3 p-2 my-2 inline-block ${
+                                        className={` mt-1 bg-gray-200  rounded-xl overflow-hidden text-ellipsis whitespace-nowrap w-full text-sm py-3 p-2 my-2 inline-block ${
                                             currentEscrow == "No current escrows" ||
                                             currentEscrow == "Creating new escrow contract"
                                                 ? currentEscrow == "Creating new escrow contract"
-                                                    ? "cursor-pointer font-medium  text-gray-500"
+                                                    ? "cursor-pointer font-medium  text-gray-500 hover:bg-gray-300 transition duration-300"
                                                     : "font-medium  text-gray-500"
-                                                : "cursor-pointer font-medium  text-gray-700"
+                                                : "cursor-pointer font-medium  text-gray-700 hover:bg-gray-300 transition duration-300 ease-in-out"
                                         }`}
                                         onClick={() => {
                                             setModalOpen(true)
@@ -726,7 +742,7 @@ export default function EscrowFactory() {
                                     <div className="">
                                         {anyEscrows != "No current escrows" && buyerState && (
                                             <button
-                                                className="bg-blue-500 hover:bg-blue-700 text-white  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
+                                                className="bg-blue-500 hover:bg-blue-700 transition duration-300 ease-in-out text-white  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
                                                 onClick={startEscrowButtonNew}
                                                 disabled={isLoading || isFetching}
                                             >
@@ -737,7 +753,7 @@ export default function EscrowFactory() {
                                 </div>
                                 {currentEscrow == "No current escrows" && !buyerState && (
                                     <button
-                                        className="bg-blue-500 rounded-xl w-full py-3 text-white font-bold"
+                                        className="bg-blue-500 hover:bg-blue-700 transition duration-300 ease-in-out rounded-xl w-full py-3 text-white font-bold"
                                         onClick={buyerStateButton}
                                     >
                                         Switch to buyer
@@ -760,9 +776,15 @@ export default function EscrowFactory() {
                                         <div>
                                             <div className="flex items-center mb-2 ">
                                                 <div className="flex w-full relative group">
-                                                    <div className="flex w-full rounded ml-auto  py-2 px-4  justify-between rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                        <div className=" font-bold text-sm">
-                                                            Escrow initialized
+                                                    <div className="flex w-full rounded ml-auto cursor-pointer py-2 px-4  justify-between rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                        <div className="flex ">
+                                                            <div className=" font-bold text-sm ">
+                                                                Initialized
+                                                            </div>
+                                                            <div className="opacity-30 ml-0.5 mt-0.5">
+                                                                {" "}
+                                                                <Questionmark />
+                                                            </div>
                                                         </div>
                                                         <div className="font-medium ml-2 text-sm  ">
                                                             {initializeStateString}
@@ -785,9 +807,14 @@ export default function EscrowFactory() {
                                                     </div>
                                                 </div>
                                                 <div className="flex w-full relative group">
-                                                    <div className="flex w-full rounded ml-auto justify-between py-2 px-4  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                        <div className=" font-bold text-sm ">
-                                                            Escrow balance
+                                                    <div className="flex w-full rounded ml-auto cursor-pointer justify-between py-2 px-4  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                        <div className="flex ">
+                                                            <div className=" font-bold text-sm ">
+                                                                Balance
+                                                            </div>
+                                                            <div className="opacity-30 ml-0.5 mt-0.5">
+                                                                <Questionmark />
+                                                            </div>
                                                         </div>
                                                         <div className="flex items-center ml-4">
                                                             <div className="font-medium  text-sm">
@@ -826,20 +853,68 @@ export default function EscrowFactory() {
                                                 </div>
                                             ) : (
                                                 <div className=" w-full rounded ml-auto  py-3 px-4 mb-2  overflow-hidden text-ellipsis whitespace-nowrap rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                    <div className=" font-bold text-sm ">
-                                                        Seller address
+                                                    <div className="flex items-center">
+                                                        <div className=" font-bold text-sm ">
+                                                            Seller address
+                                                        </div>
+                                                        <div
+                                                            onClick={() => {
+                                                                copyToClipboard(i_seller)
+                                                                setIsCopied(true)
+                                                                setTimeout(
+                                                                    () => setIsCopied(false),
+                                                                    1000,
+                                                                )
+                                                            }}
+                                                            className={`ml-1  hover:cursor-pointer transition duration-300 ease-in-out`}
+                                                        >
+                                                            {" "}
+                                                            {isCopied ? (
+                                                                <div className=" text-xxs  px-1  text-black opacity-50 ">
+                                                                    Copied!
+                                                                </div>
+                                                            ) : (
+                                                                <div className="opacity-30 hover:opacity-60 ">
+                                                                    <Copy />
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                    <div className="font-normal  text-lg  ">
+                                                    <div className="font-normal  text-base ">
                                                         {i_seller}
                                                     </div>
                                                 </div>
                                             )}
 
                                             <div className=" w-full rounded ml-auto overflow-hidden text-ellipsis whitespace-nowrap py-3 px-4  mb-1 rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                <div className=" font-bold text-sm ">
-                                                    Token contract
+                                                <div className="flex items-center">
+                                                    <div className=" font-bold text-sm ">
+                                                        Token contract
+                                                    </div>
+                                                    <div
+                                                        onClick={() => {
+                                                            copyToClipboard(getTokenContract)
+                                                            setIsCopied2(true)
+                                                            setTimeout(
+                                                                () => setIsCopied2(false),
+                                                                1000,
+                                                            )
+                                                        }}
+                                                        className={`ml-1  hover:cursor-pointer transition duration-300 ease-in-out`}
+                                                    >
+                                                        {" "}
+                                                        {isCopied2 ? (
+                                                            <div className=" text-xxs  px-1  text-black opacity-50 ">
+                                                                Copied!
+                                                            </div>
+                                                        ) : (
+                                                            <div className="opacity-30 hover:opacity-60 ">
+                                                                <Copy />
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                                <div className="font-normal  text-lg   ">
+                                                <div className="font-normal  text-base  ">
                                                     {getTokenContract}
                                                 </div>
                                             </div>
@@ -903,12 +978,14 @@ export default function EscrowFactory() {
                                                 </div>
                                                 <div className="flex items-center ">
                                                     <div className="relative group w-full ">
-                                                        <div className=" w-full rounded ml-auto   py-1 px-2  rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                            <div className=" font-bold text-sm  ">
-                                                                Escrow status
-                                                                <span className="opacity-0">
-                                                                    -...
-                                                                </span>
+                                                        <div className=" w-full rounded ml-auto  cursor-pointer py-1 px-2  rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                            <div className="flex ">
+                                                                <div className=" font-bold text-sm ">
+                                                                    Status
+                                                                </div>
+                                                                <div className="opacity-30 ml-0.5 mt-0.5">
+                                                                    <Questionmark />
+                                                                </div>
                                                             </div>
                                                             <div className="flex items-center">
                                                                 <div className="font-normal  text-xl">
@@ -945,12 +1022,14 @@ export default function EscrowFactory() {
                                                         </div>
                                                     </div>
                                                     <div className="relative group w-full">
-                                                        <div className=" w-full rounded ml-auto py-1 px-2  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                            <div className=" font-bold text-sm ">
-                                                                Escrow amount
-                                                                <span className="opacity-0">
-                                                                    -
-                                                                </span>
+                                                        <div className=" w-full rounded ml-auto py-1 px-2 cursor-pointer ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                            <div className="flex ">
+                                                                <div className=" font-bold text-sm ">
+                                                                    Amount
+                                                                </div>
+                                                                <div className="opacity-30 ml-0.5 mt-0.5">
+                                                                    <Questionmark />
+                                                                </div>
                                                             </div>
                                                             <div className="flex items-center">
                                                                 <div className="font-normal  text-xl">
@@ -979,9 +1058,14 @@ export default function EscrowFactory() {
 
                                                     {escrowStatus != "Ended" && (
                                                         <div className="relative group w-full">
-                                                            <div className=" w-full rounded ml-auto  py-1 px-2 mr-0.5 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                                <div className=" font-bold text-sm ">
-                                                                    Deposit amount
+                                                            <div className=" w-full rounded ml-auto cursor-pointer py-1 px-2 mr-0.5 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                                <div className="flex ">
+                                                                    <div className=" font-bold text-sm ">
+                                                                        Deposit
+                                                                    </div>
+                                                                    <div className="opacity-30 ml-0.5 mt-0.5">
+                                                                        <Questionmark />
+                                                                    </div>
                                                                 </div>
                                                                 <div className="flex items-center">
                                                                     {i_seller &&
@@ -1112,7 +1196,7 @@ export default function EscrowFactory() {
 
                                             {/* Start Escrow Button */}
                                             <button
-                                                className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
+                                                className={`bg-blue-500   text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
                                                     isLoading ||
                                                     isFetching ||
                                                     (ethers.isAddress(seller)
@@ -1124,7 +1208,7 @@ export default function EscrowFactory() {
                                                     !tokenContract ||
                                                     !isTokenValid
                                                         ? "opacity-50 "
-                                                        : "hover:bg-blue-700 "
+                                                        : "hover:bg-blue-700 transition duration-300 ease-in-out"
                                                 }`}
                                                 onClick={startEscrowButton}
                                                 disabled={
@@ -1183,7 +1267,7 @@ export default function EscrowFactory() {
                                             className={`bg-blue-500  w-full rounded-xl text-white font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
                                                 isLoading || isFetching || isApproving
                                                     ? "opacity-50 "
-                                                    : "hover:bg-blue-700"
+                                                    : "hover:bg-blue-700 transition duration-300 ease-in-out"
                                             }`}
                                             onClick={approveButton}
                                             disabled={isLoading || isFetching || isApproving}
@@ -1226,7 +1310,7 @@ export default function EscrowFactory() {
                                             className={`bg-blue-500  text-white font-bold py-2 px-4 w-full rounded-xl ml-right mr-4 mt-4 flex items-center justify-center ${
                                                 isLoading || isFetching || isFunding
                                                     ? "opacity-50 "
-                                                    : "hover:bg-blue-700"
+                                                    : "hover:bg-blue-700 transition duration-300 ease-in-out"
                                             }`}
                                             onClick={fundButton}
                                             disabled={isLoading || isFetching || isFunding}
@@ -1271,7 +1355,7 @@ export default function EscrowFactory() {
                                             className={`bg-blue-500  text-white  font-bold py-2 px-4 mt-4 w-full rounded-xl ml-right mr-4 flex items-center justify-center ${
                                                 isLoading || isFetching || isWithdrawing
                                                     ? "opacity-50 "
-                                                    : "hover:bg-blue-700"
+                                                    : "hover:bg-blue-700 transition duration-300 ease-in-out"
                                             }`}
                                             onClick={withdrawButton}
                                             disabled={isLoading || isFetching || isWithdrawing}
@@ -1330,7 +1414,7 @@ export default function EscrowFactory() {
                                                                 decisionSeller == "Accept" ||
                                                                 isAccepting
                                                               ? "opacity-50 "
-                                                              : "hover:bg-green-700"
+                                                              : "hover:bg-green-700 transition duration-300 ease-in-out"
                                                     }`}
                                                     onClick={acceptButton}
                                                     disabled={
@@ -1395,7 +1479,7 @@ export default function EscrowFactory() {
                                                                 decisionSeller == "Decline" ||
                                                                 isDeclining
                                                               ? "opacity-50 "
-                                                              : "hover:bg-red-700"
+                                                              : "hover:bg-red-700 transition duration-300 ease-in-out"
                                                     }`}
                                                     onClick={declineButton}
                                                     disabled={
@@ -1461,7 +1545,7 @@ export default function EscrowFactory() {
                                                             decisionSeller == "Refund" ||
                                                             isRefunding
                                                           ? "opacity-50 "
-                                                          : "hover:bg-blue-700"
+                                                          : "hover:bg-blue-700 transition duration-300 ease-in-out"
                                                 }`}
                                                 onClick={refundButton}
                                                 disabled={
@@ -1581,7 +1665,7 @@ export default function EscrowFactory() {
                                 </div>
                                 {currentEscrow == "No current escrows" && !buyerState && (
                                     <button
-                                        className="bg-blue-500 rounded-xl w-full py-3 text-white font-bold"
+                                        className="bg-blue-500 hover:bg-blue-700 transition duration-300 ease-in-out rounded-xl w-full py-3 text-white font-bold"
                                         onClick={buyerStateButton}
                                     >
                                         Switch to buyer
@@ -1683,7 +1767,7 @@ export default function EscrowFactory() {
                         </div>
                         {currentEscrow == "No current escrows" && !buyerState && (
                             <button
-                                className="bg-blue-500 rounded-xl w-full py-3 text-white font-bold"
+                                className="bg-blue-500 hover:bg-blue-700 transition duration-300 ease-in-out rounded-xl w-full py-3 text-white font-bold"
                                 onClick={buyerStateButton}
                             >
                                 Switch to buyer

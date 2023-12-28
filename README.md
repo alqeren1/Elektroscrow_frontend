@@ -5,7 +5,6 @@
 
 -sadece galaxy fold sıcıyor
 
--tüm acıklama olan yerlere minik soru isareti logosu
 
 -new düğmesi bazen inputları acmıyor(bulamadım)
 
@@ -17,7 +16,7 @@
 
 -cuzdan baglantısını kesince error cıkıyor, veya ağ değişince(current escrow varken)
 
-
+-token amount sadece tam sayı oluyor
 
 -sayfayı sıkıştırınca yukarıdaki navigatorlar 3 noktaya donuçsun veya alta gelsin
 
@@ -35,6 +34,8 @@ LATER:
 ---walletconnect icin yeni bir escrowcreate.js yapman lazım. https://wagmi.sh/react/hooks/useContractWrite burdan bakarak functionları değiş
 ---https://walletconnect.com/guidelines buraya ekle dapp'i
 -trustwallet support
+
+--testtoken i listeden kaldır, listeyi güncelle
 
 
 

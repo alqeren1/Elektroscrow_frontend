@@ -13,7 +13,7 @@ export default function Header() {
         router.push("/")
     }
     const navigateToDocs = () => {
-        router.push("/docs")
+        router.push("/docs/home")
     }
     const navigateToHow = () => {
         router.push("/how")
