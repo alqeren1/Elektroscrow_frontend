@@ -20,11 +20,11 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="bg-[#f5f9ff]">
+            <div className="bg-[#fffffd]">
                 <div
                     className="bg-cover bg-center bg-no-repeat"
                     style={{
-                        backgroundImage: `url(${"/background.png2"})`,
+                        backgroundImage: `url(${"/2elektro.png"})`,
                         width: "100vw",
                         height: "100vh",
                         position: "fixed",

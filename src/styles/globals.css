@@ -29,7 +29,7 @@ scrollbar-width: none;  /* Firefox */
 }
 
 .custom-shadow {
-  box-shadow: 0 0 120px 20px rgb(217, 231, 255,0.6);
+  box-shadow: 0 0 120px 20px #fffed9;
 }
 .text-lsm {	font-size: 0.950rem; /* 14px */
   line-height: 1.5rem; /* 20px */}

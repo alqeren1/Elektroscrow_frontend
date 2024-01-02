@@ -1,3 +1,18 @@
+ISIM FIKIR:
+-electroscrow sarı
+
+-KiteScrow
+-wavescrow
+-Wirescrow
+-hivescrow sarı
+-Tidescrow mavi
+
+-Beescrow  sarı
+
+-cranescrow orange red
+-foxscrow turuncu
+-vulturescrow kırmızı
+-------------------------------------
 
 -pancakeswap gibi console errorlarını altta gösterme ekle
 
@@ -6,19 +21,17 @@
 -sadece galaxy fold sıcıyor
 
 
--new düğmesi bazen inputları acmıyor(bulamadım)
-
--sağda solda bir yerde aktif oluşturulan escrowları göstersin, güven verir
-
--yeni sayfalar ekle
-
 -font değiş (belki)
+
+-build modda test et
 
 -cuzdan baglantısını kesince error cıkıyor, veya ağ değişince(current escrow varken)
 
 -token amount sadece tam sayı oluyor
 
 -sayfayı sıkıştırınca yukarıdaki navigatorlar 3 noktaya donuçsun veya alta gelsin
+
+
 
 
 LATER:
@@ -37,6 +50,11 @@ LATER:
 
 --testtoken i listeden kaldır, listeyi güncelle
 
+-sağda solda bir yerde aktif oluşturulan escrowları göstersin, güven verir (statistics adlı bir sekme yapılacak, kullanım başladıktan sonra)
+-promo code eklenebilir, fee indirimi olur, feenin yarısı nerden geldiyse oraya gider (pinksale). bunları değer olarak ana kontrata kaydeder. (biraz büyüdükten sonra yapılabilir yoksa çalarlar)
+
+
+****-testnetleri de deploylayıp websiteye ekle. Trust için oradan aynı işlemi test ederek siteye güvenebilirler. Bytecodelarını kıyaslayarak aynı kod olduğunu görebilirler.
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).

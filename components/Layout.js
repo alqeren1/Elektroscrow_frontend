@@ -23,27 +23,25 @@ const menuItems = [
 
 export default function Layout({ children }) {
     const router = useRouter()
-    useEffect(() => {
-        menuItems.forEach((item) => {
-            router.prefetch(item.href)
-        })
-    }, [router])
 
     return (
         <div className="min-h-screen flex">
-            <aside className="bg-[#f7f7f7] w-64  fixed inset-0  border-r border-gray-300 overflow-y-auto ">
+            <aside className="bg-[#f7f7f7] w-[300px]  fixed inset-0  border-r border-gray-300 overflow-y-auto ">
                 <nav>
-                    <div className="font-bold text-lg px-4 py-4 bg-white ">Escrow Docs</div>
+                    <div className="font-bold text-xl px-4 py-4 bg-white text-blue-700 ">
+                        Escrow Docs
+                    </div>
                     <div className="border-b w-full border-gray-300"></div>
                     <ul className="mt-5">
+                        <div className="px-4 mb-2  opacity-50 ">GENERAL</div>
                         {menuItems.map(({ href, title }) => (
-                            <li key={title} className="mb-2 ">
+                            <li key={title} className="mb-3 ">
                                 <Link
                                     href={href}
-                                    className={`block px-4 py-2  hover:bg-[#ededed] text-sm  ${
+                                    className={`block px-4 py-2  hover:bg-[#ededed] text-lsm text-gray-800 ${
                                         router.asPath == href
-                                            ? "bg-[#ededed] font-normal "
-                                            : "font-extralight"
+                                            ? " font-bold text-black"
+                                            : "font-normal"
                                     }`}
                                 >
                                     {title}

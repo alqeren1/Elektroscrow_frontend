@@ -742,7 +742,7 @@ export default function EscrowFactory() {
                                     <div className="">
                                         {anyEscrows != "No current escrows" && buyerState && (
                                             <button
-                                                className="bg-blue-500 hover:bg-blue-700 transition duration-300 ease-in-out text-white  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
+                                                className="bg-[#fff47a] hover:bg-[#e3d96d] text-gray-700 transition duration-300 ease-in-out  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
                                                 onClick={startEscrowButtonNew}
                                                 disabled={isLoading || isFetching}
                                             >
@@ -844,10 +844,34 @@ export default function EscrowFactory() {
                                             </div>
                                             {ethers.getAddress(account) == i_seller ? (
                                                 <div className=" w-full rounded ml-auto  py-3 px-4 mb-2  overflow-hidden text-ellipsis whitespace-nowrap rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                    <div className=" font-bold text-sm ">
-                                                        Buyer address
+                                                    <div className="flex items-center">
+                                                        <div className=" font-bold text-sm ">
+                                                            Buyer address
+                                                        </div>
+                                                        <div
+                                                            onClick={() => {
+                                                                copyToClipboard(i_buyer)
+                                                                setIsCopied(true)
+                                                                setTimeout(
+                                                                    () => setIsCopied(false),
+                                                                    1000,
+                                                                )
+                                                            }}
+                                                            className={`ml-1  hover:cursor-pointer transition duration-300 ease-in-out`}
+                                                        >
+                                                            {" "}
+                                                            {isCopied ? (
+                                                                <div className=" text-xxs  px-1  text-black opacity-50 ">
+                                                                    Copied!
+                                                                </div>
+                                                            ) : (
+                                                                <div className="opacity-30 hover:opacity-60 ">
+                                                                    <Copy />
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                    <div className="font-normal  text-lg  ">
+                                                    <div className="font-normal  text-base  ">
                                                         {i_buyer}
                                                     </div>
                                                 </div>
@@ -1196,7 +1220,7 @@ export default function EscrowFactory() {
 
                                             {/* Start Escrow Button */}
                                             <button
-                                                className={`bg-blue-500   text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
+                                                className={`bg-[#FFF600]   text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
                                                     isLoading ||
                                                     isFetching ||
                                                     (ethers.isAddress(seller)
@@ -1208,7 +1232,7 @@ export default function EscrowFactory() {
                                                     !tokenContract ||
                                                     !isTokenValid
                                                         ? "opacity-50 "
-                                                        : "hover:bg-blue-700 transition duration-300 ease-in-out"
+                                                        : "hover:bg-[#e8e000] transition duration-300 ease-in-out"
                                                 }`}
                                                 onClick={startEscrowButton}
                                                 disabled={
@@ -1249,7 +1273,9 @@ export default function EscrowFactory() {
                                                         Processing...
                                                     </>
                                                 ) : (
-                                                    "Start Escrow"
+                                                    <div className="text-gray-800">
+                                                        Start Escrow
+                                                    </div>
                                                 )}
                                             </button>
                                         </>
@@ -1264,10 +1290,10 @@ export default function EscrowFactory() {
                                     !showInputFields &&
                                     currentEscrow != "Creating new escrow contract" && (
                                         <button
-                                            className={`bg-blue-500  w-full rounded-xl text-white font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
+                                            className={`bg-[#fff47a]  w-full rounded-xl text-white font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
                                                 isLoading || isFetching || isApproving
                                                     ? "opacity-50 "
-                                                    : "hover:bg-blue-700 transition duration-300 ease-in-out"
+                                                    : "hover:bg-[#e3d96d] transition duration-300 ease-in-out"
                                             }`}
                                             onClick={approveButton}
                                             disabled={isLoading || isFetching || isApproving}
@@ -1297,7 +1323,7 @@ export default function EscrowFactory() {
                                                     Processing...
                                                 </>
                                             ) : (
-                                                "Approve"
+                                                <div className="text-gray-600">Approve</div>
                                             )}
                                         </button>
                                     )}
