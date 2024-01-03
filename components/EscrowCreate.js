@@ -691,14 +691,14 @@ export default function EscrowFactory() {
                                 {buyerState ? (
                                     <div className="flex items-center">
                                         <button
-                                            className="bg-gray-300 rounded-xl mb-2  font-medium text-gray-700  font-base py-2 px-4 "
+                                            className="bg-[#fff4bf] rounded-xl mb-2  font-medium text-gray-800  font-base py-2 px-4 "
                                             disabled={buyerState}
                                         >
                                             Buyer
                                         </button>
                                         <button
                                             onClick={buyerStateButton}
-                                            className="  rounded-xl mb-2  hover:bg-gray-200 transition duration-300 ease-in-out text-gray-700  py-2 px-4 "
+                                            className="  rounded-xl mb-2  hover:bg-[#fffae0] transition duration-300 ease-in-out text-gray-800  py-2 px-4 "
                                         >
                                             Seller
                                         </button>
@@ -706,14 +706,14 @@ export default function EscrowFactory() {
                                 ) : (
                                     <div className="flex items-center">
                                         <button
-                                            className="rounded-xl mb-2  text-gray-700  hover:bg-gray-200 transition duration-300 ease-in-out font-base py-2 px-4 "
+                                            className="rounded-xl mb-2  text-gray-800  hover:bg-[#fffae0] transition duration-300 ease-in-out font-base py-2 px-4 "
                                             onClick={buyerStateButton}
                                         >
                                             Buyer
                                         </button>
                                         <button
                                             disabled={!buyerState}
-                                            className="bg-gray-300  rounded-xl mb-2  text-gray-700 font-medium py-2 px-4 "
+                                            className="bg-[#fff4bf]  rounded-xl mb-2  text-gray-700 font-medium py-2 px-4 "
                                         >
                                             Seller
                                         </button>
@@ -742,7 +742,7 @@ export default function EscrowFactory() {
                                     <div className="">
                                         {anyEscrows != "No current escrows" && buyerState && (
                                             <button
-                                                className="bg-blue-500 hover:bg-blue-700 text-white transition duration-300 ease-in-out  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
+                                                className="bg-[#ffd400] hover:bg-[#e5be00] text-white transition duration-300 ease-in-out  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
                                                 onClick={startEscrowButtonNew}
                                                 disabled={isLoading || isFetching}
                                             >
@@ -1220,7 +1220,7 @@ export default function EscrowFactory() {
 
                                             {/* Start Escrow Button */}
                                             <button
-                                                className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
+                                                className={`bg-[#ffd400]    text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
                                                     isLoading ||
                                                     isFetching ||
                                                     (ethers.isAddress(seller)
@@ -1232,7 +1232,7 @@ export default function EscrowFactory() {
                                                     !tokenContract ||
                                                     !isTokenValid
                                                         ? "opacity-50 "
-                                                        : "hover:bg-blue-700 transition duration-300 ease-in-out"
+                                                        : "  hover:bg-[#e5be00] transition duration-300 ease-in-out"
                                                 }`}
                                                 onClick={startEscrowButton}
                                                 disabled={
@@ -1288,10 +1288,10 @@ export default function EscrowFactory() {
                                     !showInputFields &&
                                     currentEscrow != "Creating new escrow contract" && (
                                         <button
-                                            className={`bg-blue-500  w-full rounded-xl text-white font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
+                                            className={`bg-[#ffd400]   w-full rounded-xl text-white font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
                                                 isLoading || isFetching || isApproving
                                                     ? "opacity-50 "
-                                                    : "hover:bg-blue-700 transition duration-300 ease-in-out"
+                                                    : "  hover:bg-[#e5be00] transition duration-300 ease-in-out"
                                             }`}
                                             onClick={approveButton}
                                             disabled={isLoading || isFetching || isApproving}
