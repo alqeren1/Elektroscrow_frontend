@@ -691,14 +691,14 @@ export default function EscrowFactory() {
                                 {buyerState ? (
                                     <div className="flex items-center">
                                         <button
-                                            className="bg-[#fff4bf] rounded-xl mb-2  font-medium text-gray-800  font-base py-2 px-4 "
+                                            className="bg-gray-300 rounded-xl mb-2  font-medium text-gray-700  font-base py-2 px-4 "
                                             disabled={buyerState}
                                         >
                                             Buyer
                                         </button>
                                         <button
                                             onClick={buyerStateButton}
-                                            className="  rounded-xl mb-2  hover:bg-[#fffae0] transition duration-300 ease-in-out text-gray-800  py-2 px-4 "
+                                            className="  rounded-xl mb-2  hover:bg-gray-200 transition duration-300 ease-in-out text-gray-700  py-2 px-4 "
                                         >
                                             Seller
                                         </button>
@@ -706,14 +706,14 @@ export default function EscrowFactory() {
                                 ) : (
                                     <div className="flex items-center">
                                         <button
-                                            className="rounded-xl mb-2  text-gray-800  hover:bg-[#fffae0] transition duration-300 ease-in-out font-base py-2 px-4 "
+                                            className="rounded-xl mb-2  text-gray-700  hover:bg-gray-200 transition duration-300 ease-in-out font-base py-2 px-4 "
                                             onClick={buyerStateButton}
                                         >
                                             Buyer
                                         </button>
                                         <button
                                             disabled={!buyerState}
-                                            className="bg-[#fff4bf]  rounded-xl mb-2  text-gray-700 font-medium py-2 px-4 "
+                                            className="bg-gray-300  rounded-xl mb-2  text-gray-700 font-medium py-2 px-4 "
                                         >
                                             Seller
                                         </button>
