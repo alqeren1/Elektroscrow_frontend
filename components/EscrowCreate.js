@@ -8,6 +8,7 @@ import TokenInput from "./TokenSelectModal"
 import EscrowDropdownModal from "./OldEscrowsModal"
 import Questionmark from "../svgs/question-mark"
 import Copy from "../svgs/copy"
+import BigNumber from "bignumber.js"
 
 const abi_factory = require("../constants1/abi_factory.json") // Adjust the path to your ABI file
 const abi_logic = require("../constants1/abi_logic.json") // Adjust the path to your ABI file
@@ -249,7 +250,11 @@ export default function EscrowFactory() {
                 const i_buyer = await geti_buyer({ params: { contractAddress: currentEscrow } })
 
                 const _amount = await geti_amount({ params: { contractAddress: currentEscrow } })
-                const i_amount = _amount
+                let i_amount = "0"
+                if (_amount != null) {
+                    i_amount = new BigNumber(_amount.toString(10)).toString()
+                }
+
                 const initializeState = await getInitilizeState({
                     params: { contractAddress: currentEscrow },
                 })
@@ -262,8 +267,11 @@ export default function EscrowFactory() {
                 const paymentStatus = await getCheckPayment({
                     params: { contractAddress: currentEscrow, params: { account: account } },
                 })
+                let i_amount2 = 0
+                if (_amount != null) {
+                    i_amount2 = new BigNumber(_amount.toString(10)).multipliedBy(2).toString()
+                }
 
-                let i_amount2 = _amount.mul(2)
                 const escrow_ended = await gets_escrowComplete({
                     params: { contractAddress: currentEscrow },
                 })
@@ -286,41 +294,43 @@ export default function EscrowFactory() {
 
                 const decisions = await getDecisions()
 
-                if (decisions[0] == 0) {
-                    setDecisionBuyer("Decline")
-                    if (ethers.getAddress(account) == ethers.getAddress(i_buyer)) {
-                        setIsDeclining(false)
+                if (decisions) {
+                    if (decisions[0] == 0) {
+                        setDecisionBuyer("Decline")
+                        if (ethers.getAddress(account) == ethers.getAddress(i_buyer)) {
+                            setIsDeclining(false)
+                        }
                     }
-                }
-                if (decisions[0] == 1) {
-                    setDecisionBuyer("Accept")
-                    if (ethers.getAddress(account) == ethers.getAddress(i_buyer)) {
-                        setIsAccepting(false)
+                    if (decisions[0] == 1) {
+                        setDecisionBuyer("Accept")
+                        if (ethers.getAddress(account) == ethers.getAddress(i_buyer)) {
+                            setIsAccepting(false)
+                        }
                     }
-                }
-                if (decisions[0] == 2) {
-                    setDecisionBuyer("Refund")
-                    if (ethers.getAddress(account) == ethers.getAddress(i_buyer)) {
-                        setIsRefunding(false)
+                    if (decisions[0] == 2) {
+                        setDecisionBuyer("Refund")
+                        if (ethers.getAddress(account) == ethers.getAddress(i_buyer)) {
+                            setIsRefunding(false)
+                        }
                     }
-                }
 
-                if (decisions[1] == 0) {
-                    setDecisionSeller("Decline")
-                    if (ethers.getAddress(account) == ethers.getAddress(i_seller)) {
-                        setIsDeclining(false)
+                    if (decisions[1] == 0) {
+                        setDecisionSeller("Decline")
+                        if (ethers.getAddress(account) == ethers.getAddress(i_seller)) {
+                            setIsDeclining(false)
+                        }
                     }
-                }
-                if (decisions[1] == 1) {
-                    setDecisionSeller("Accept")
-                    if (ethers.getAddress(account) == ethers.getAddress(i_seller)) {
-                        setIsAccepting(false)
+                    if (decisions[1] == 1) {
+                        setDecisionSeller("Accept")
+                        if (ethers.getAddress(account) == ethers.getAddress(i_seller)) {
+                            setIsAccepting(false)
+                        }
                     }
-                }
-                if (decisions[1] == 2) {
-                    setDecisionSeller("Refund")
-                    if (ethers.getAddress(account) == ethers.getAddress(i_seller)) {
-                        setIsRefunding(false)
+                    if (decisions[1] == 2) {
+                        setDecisionSeller("Refund")
+                        if (ethers.getAddress(account) == ethers.getAddress(i_seller)) {
+                            setIsRefunding(false)
+                        }
                     }
                 }
 
@@ -411,7 +421,6 @@ export default function EscrowFactory() {
 
                 if (approvedAmount >= i_amount2) {
                     setIsApproved(true)
-                    setIsApproving(false)
                 } else {
                     setIsApproved(false)
                 }
@@ -426,7 +435,6 @@ export default function EscrowFactory() {
                 })
                 if (approvedAmount >= i_amount) {
                     setIsApproved(true)
-                    setIsApproving(false)
                 } else {
                     setIsApproved(false)
                 }
@@ -448,7 +456,7 @@ export default function EscrowFactory() {
     }
     const handlesuccess = async function (tx) {
         await tx.wait(1)
-
+        setIsApproving(false)
         handleNewNotification(tx)
         updateUI()
     }
@@ -465,7 +473,12 @@ export default function EscrowFactory() {
                 params: { account: account },
             },
         })
-        setTokenBalance(balance)
+
+        let balance_bigint
+        if (balance != null) {
+            balance_bigint = new BigNumber(balance.toString(10))
+        }
+        setTokenBalance(balance_bigint)
     }
     const startEscrowButton = async () => {
         // Call your contract function here using the inputs as parameters
@@ -553,6 +566,7 @@ export default function EscrowFactory() {
         setIsApproving(true)
         if (ethers.getAddress(account) == i_buyer) {
             try {
+                console.log("amouınt" + i_amount2)
                 await approve({
                     onSuccess: (tx) => {
                         handlesuccess(tx)
@@ -568,9 +582,10 @@ export default function EscrowFactory() {
         }
         if (ethers.getAddress(account) == i_seller) {
             try {
+                console.log("amouınt" + i_amount)
                 await approve2({
-                    onSuccess: () => {
-                        handlesuccess
+                    onSuccess: (tx) => {
+                        handlesuccess(tx)
                     },
                     onError: (error) => {
                         console.error("Error occurred:", error), setIsApproving(false)
@@ -818,10 +833,11 @@ export default function EscrowFactory() {
                                                         </div>
                                                         <div className="flex items-center ml-4">
                                                             <div className="font-medium  text-sm">
-                                                                {(
-                                                                    BigInt(balance) /
-                                                                    BigInt("10") ** BigInt("18")
-                                                                ).toString()}
+                                                                {BigNumber(balance)
+                                                                    .dividedBy(
+                                                                        BigNumber("10").pow(18),
+                                                                    )
+                                                                    .toString()}
                                                             </div>
                                                             <div className=" font-medium ml-3 text-sm">
                                                                 {tokenSymbol}
@@ -1057,11 +1073,13 @@ export default function EscrowFactory() {
                                                             </div>
                                                             <div className="flex items-center">
                                                                 <div className="font-normal  text-xl">
-                                                                    {(
-                                                                        BigInt(i_amount) /
-                                                                        BigInt("10") **
-                                                                            BigInt("18")
-                                                                    ).toString()}
+                                                                    {BigNumber(i_amount)
+                                                                        .dividedBy(
+                                                                            BigNumber("10").pow(
+                                                                                18,
+                                                                            ),
+                                                                        )
+                                                                        .toString()}
                                                                 </div>
                                                                 <div className=" font-normal ml-1 text-xl">
                                                                     {tokenSymbol}
@@ -1098,19 +1116,23 @@ export default function EscrowFactory() {
                                                                             i_seller,
                                                                         ) ? (
                                                                         <div className="font-normal  text-xl">
-                                                                            {(
-                                                                                BigInt(i_amount) /
-                                                                                BigInt("10") **
-                                                                                    BigInt("18")
-                                                                            ).toString()}
+                                                                            {BigNumber(i_amount)
+                                                                                .dividedBy(
+                                                                                    BigNumber(
+                                                                                        "10",
+                                                                                    ).pow(18),
+                                                                                )
+                                                                                .toString()}
                                                                         </div>
                                                                     ) : (
                                                                         <div className="font-normal  text-xl">
-                                                                            {(
-                                                                                BigInt(i_amount) /
-                                                                                BigInt("10") **
-                                                                                    BigInt("18")
-                                                                            ).toString() * 2}
+                                                                            {BigNumber(i_amount2)
+                                                                                .dividedBy(
+                                                                                    BigNumber(
+                                                                                        "10",
+                                                                                    ).pow(18),
+                                                                                )
+                                                                                .toString()}
                                                                         </div>
                                                                     )}
 
@@ -1176,7 +1198,7 @@ export default function EscrowFactory() {
                                                     value={amountInput}
                                                     onChange={(e) =>
                                                         setAmountInput(
-                                                            e.target.value.replace(/[^0-9]/g, ""),
+                                                            e.target.value.replace(/[^0-9.]/g, ""),
                                                         )
                                                     }
                                                     placeholder="Enter escrow amount (How many tokens)"
@@ -1195,10 +1217,9 @@ export default function EscrowFactory() {
                                                 {tokenBalance && (
                                                     <div className="flex">
                                                         <div className="mr-1">Balance:</div>
-                                                        {(
-                                                            BigInt(tokenBalance) /
-                                                            BigInt("10") ** BigInt("18")
-                                                        ).toString()}
+                                                        {BigNumber(tokenBalance)
+                                                            .dividedBy(BigNumber("10").pow(18))
+                                                            .toString()}
                                                     </div>
                                                 )}
                                             </div>
@@ -1625,7 +1646,7 @@ export default function EscrowFactory() {
                         <div className="   flex justify-center  mb-16">
                             {/* Wrong Network Decoys */}
                             <div
-                                className="relative bg-gray-100 p-4   w-full wdefined:w-[480px] border-2 shadow-lg  max-h-[613px] rounded-3xl"
+                                className="relative bg-gray-100 p-4   w-full wdefined:w-[480px] border-2 custom-shadow  max-h-[613px] rounded-3xl"
                                 disabled={true}
                             >
                                 {buyerState ? (
@@ -1695,47 +1716,51 @@ export default function EscrowFactory() {
                                         Switch to buyer
                                     </button>
                                 )}
-
-                                <>
-                                    <div className="w-full py-4 border-2 px-4 rounded-xl mb-5 bg-white cursor-not-allowed">
-                                        <div className="text-gray-400">Enter seller address</div>
-                                    </div>
-
-                                    <div className="w-full py-4 border-2 px-4 rounded-xl mb-1 bg-white cursor-not-allowed">
-                                        <div className="text-gray-400">
-                                            Enter escrow amount (How many tokens)
-                                        </div>
-                                    </div>
-
-                                    <div className="flex justify-end text-xs text-gray-700 font-light mr-1 opacity-80">
-                                        <div className="opacity-0">Balance:</div>
-                                        {tokenBalance && (
-                                            <div className="flex">
-                                                <div className="mr-1">Balance:</div>
-                                                {(
-                                                    BigInt(tokenBalance) /
-                                                    BigInt("10") ** BigInt("18")
-                                                ).toString()}
+                                {buyerState && (
+                                    <>
+                                        <div className="w-full py-4 border-2 px-4 rounded-xl mb-5 bg-white cursor-not-allowed">
+                                            <div className="text-gray-400">
+                                                Enter seller address
                                             </div>
-                                        )}
-                                    </div>
+                                        </div>
 
-                                    <div className="w-full py-4 border-2 px-4 rounded-xl  bg-white cursor-not-allowed">
-                                        <div className="text-gray-400">Select Token Contract</div>
-                                    </div>
+                                        <div className="w-full py-4 border-2 px-4 rounded-xl mb-1 bg-white cursor-not-allowed">
+                                            <div className="text-gray-400">
+                                                Enter escrow amount (How many tokens)
+                                            </div>
+                                        </div>
 
-                                    <div className="font-thin  text-xs text-gray-500 ml-1 mt-2 mb-2 opacity-0">
-                                        **
-                                    </div>
+                                        <div className="flex justify-end text-xs text-gray-700 font-light mr-1 opacity-80">
+                                            <div className="opacity-0">Balance:</div>
+                                            {tokenBalance && (
+                                                <div className="flex">
+                                                    <div className="mr-1">Balance:</div>
+                                                    {BigNumber(tokenBalance)
+                                                        .dividedBy(BigNumber("10").pow(18))
+                                                        .toString()}
+                                                </div>
+                                            )}
+                                        </div>
 
-                                    <button
-                                        className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
+                                        <div className="w-full py-4 border-2 px-4 rounded-xl  bg-white cursor-not-allowed">
+                                            <div className="text-gray-400">
+                                                Select Token Contract
+                                            </div>
+                                        </div>
+
+                                        <div className="font-thin  text-xs text-gray-500 ml-1 mt-2 mb-2 opacity-0">
+                                            **
+                                        </div>
+
+                                        <button
+                                            className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
                                                 `}
-                                        disabled={true}
-                                    >
-                                        Wrong Network
-                                    </button>
-                                </>
+                                            disabled={true}
+                                        >
+                                            Wrong Network
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     )}
@@ -1744,7 +1769,7 @@ export default function EscrowFactory() {
                 <div className="   flex justify-center  mb-16">
                     {/* Wallet not connected decoys */}
                     <div
-                        className="relative bg-gray-100 p-4   w-full wdefined:w-[480px] border-2 shadow-lg  max-h-[613px] rounded-3xl"
+                        className="relative bg-gray-100 p-4   w-full wdefined:w-[480px] border-2 custom-shadow  max-h-[613px] rounded-3xl"
                         disabled={true}
                     >
                         {buyerState ? (
@@ -1797,47 +1822,47 @@ export default function EscrowFactory() {
                                 Switch to buyer
                             </button>
                         )}
-
-                        <>
-                            <div className="w-full py-4 border-2 px-4 rounded-xl mb-5 bg-white cursor-not-allowed">
-                                <div className="text-gray-400">Enter seller address</div>
-                            </div>
-
-                            <div className="w-full py-4 border-2 px-4 rounded-xl mb-1 bg-white cursor-not-allowed">
-                                <div className="text-gray-400">
-                                    Enter escrow amount (How many tokens)
+                        {buyerState && (
+                            <>
+                                <div className="w-full py-4 border-2 px-4 rounded-xl mb-5 bg-white cursor-not-allowed">
+                                    <div className="text-gray-400">Enter seller address</div>
                                 </div>
-                            </div>
 
-                            <div className="flex justify-end text-xs text-gray-700 font-light mr-1 opacity-80">
-                                <div className="opacity-0">Balance:</div>
-                                {tokenBalance && (
-                                    <div className="flex">
-                                        <div className="mr-1">Balance:</div>
-                                        {(
-                                            BigInt(tokenBalance) /
-                                            BigInt("10") ** BigInt("18")
-                                        ).toString()}
+                                <div className="w-full py-4 border-2 px-4 rounded-xl mb-1 bg-white cursor-not-allowed">
+                                    <div className="text-gray-400">
+                                        Enter escrow amount (How many tokens)
                                     </div>
-                                )}
-                            </div>
+                                </div>
 
-                            <div className="w-full py-4 border-2 px-4 rounded-xl  bg-white cursor-not-allowed">
-                                <div className="text-gray-400">Select Token Contract</div>
-                            </div>
+                                <div className="flex justify-end text-xs text-gray-700 font-light mr-1 opacity-80">
+                                    <div className="opacity-0">Balance:</div>
+                                    {tokenBalance && (
+                                        <div className="flex">
+                                            <div className="mr-1">Balance:</div>
+                                            {BigNumber(tokenBalance)
+                                                .dividedBy(BigNumber("10").pow(18))
+                                                .toString()}
+                                        </div>
+                                    )}
+                                </div>
 
-                            <div className="font-thin  text-xs text-gray-500 ml-1 mt-2 mb-2 opacity-0">
-                                **
-                            </div>
+                                <div className="w-full py-4 border-2 px-4 rounded-xl  bg-white cursor-not-allowed">
+                                    <div className="text-gray-400">Select Token Contract</div>
+                                </div>
 
-                            <button
-                                className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
+                                <div className="font-thin  text-xs text-gray-500 ml-1 mt-2 mb-2 opacity-0">
+                                    **
+                                </div>
+
+                                <button
+                                    className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
                                             `}
-                                disabled={true}
-                            >
-                                Wallet not connected
-                            </button>
-                        </>
+                                    disabled={true}
+                                >
+                                    Wallet not connected
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
             )}

@@ -25,7 +25,7 @@ ISIM FIKIR:
 
 -build modda test et
 
--cuzdan baglantısını kesince error cıkıyor, veya ağ değişince(current escrow varken)
+-approve olduktan sonra sayfa yenileyince tuş değişiyor yeni geldi
 
 -token amount sadece tam sayı oluyor
 
