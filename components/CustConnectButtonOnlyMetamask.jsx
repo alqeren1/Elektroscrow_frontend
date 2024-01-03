@@ -58,7 +58,7 @@ export default function Home() {
     return (
         <div>
             {account ? (
-                <div onClick={disconnect} className="cursor-pointer bg-blue-100 py-2 px-4 text-blue-500 transition duration-300 ease-in-out hover:bg-blue-200 hover:text-blue-600 rounded-2xl font-medium">
+                <div onClick={disconnect} className="cursor-pointer bg-[#E5CFF7] py-2 px-4 text-[#713ABE] transition duration-300 ease-in-out hover:bg-[#9D76C1] hover:text-[#5B0888] rounded-2xl font-medium">
                     {account.slice(0, 5)}.....{account.slice(account.length - 5)}
                 </div>
             ) : (

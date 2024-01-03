@@ -21,7 +21,7 @@ export default function Header() {
             <div className="flex items-center">
                 <img src="/elektro_adjusted.png" alt="Logo" className="h-16 w-16 mr-2  mt-1" />
 
-                <h1 className="font-bold text-3xl text-gray-800  ">Elektroscrow</h1>
+                <h1 className="font-bold text-3xl text-[#713ABE]  ">Elektroscrow</h1>
                 <div className="flex mt-2 ml-6">
                     <div
                         onClick={navigateToEscrow}

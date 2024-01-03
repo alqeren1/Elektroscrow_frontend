@@ -742,7 +742,7 @@ export default function EscrowFactory() {
                                     <div className="">
                                         {anyEscrows != "No current escrows" && buyerState && (
                                             <button
-                                                className="bg-blue-500 hover:bg-blue-700 text-white transition duration-300 ease-in-out  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
+                                                className="bg-[#713ABE] hover:bg-[#5B0888] text-white transition duration-300 ease-in-out  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
                                                 onClick={startEscrowButtonNew}
                                                 disabled={isLoading || isFetching}
                                             >
@@ -1288,10 +1288,10 @@ export default function EscrowFactory() {
                                     !showInputFields &&
                                     currentEscrow != "Creating new escrow contract" && (
                                         <button
-                                            className={`bg-blue-500  w-full rounded-xl text-white font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
+                                            className={`bg-[#713ABE]    w-full rounded-xl text-white font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
                                                 isLoading || isFetching || isApproving
                                                     ? "opacity-50 "
-                                                    : "hover:bg-blue-700 transition duration-300 ease-in-out"
+                                                    : "  hover:bg-[#5B0888] transition duration-300 ease-in-out"
                                             }`}
                                             onClick={approveButton}
                                             disabled={isLoading || isFetching || isApproving}
