@@ -25,7 +25,7 @@ ISIM FIKIR:
 
 -build modda test et
 
--approve olduktan sonra sayfa yenileyince tuş değişiyor yeni geldi
+-approve olduktan sonra sayfa yenileyince tuş değişiyor yeni geldi bigint değişince
 
 -token amount sadece tam sayı oluyor
 
