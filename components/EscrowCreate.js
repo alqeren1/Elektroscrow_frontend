@@ -37,6 +37,8 @@ export default function EscrowFactory() {
 
     const [i_amount, seti_amount] = useState("0")
     const [i_amount2, seti_amount2] = useState("0")
+    const [i_amount_check, seti_amount_check] = useState("0")
+    const [i_amount2_check, seti_amount2_check] = useState("0")
     const [isApproved, setIsApproved] = useState(false)
     const [isFunded, setIsFunded] = useState(false)
 
@@ -250,10 +252,6 @@ export default function EscrowFactory() {
                 const i_buyer = await geti_buyer({ params: { contractAddress: currentEscrow } })
 
                 const _amount = await geti_amount({ params: { contractAddress: currentEscrow } })
-                let i_amount = "0"
-                if (_amount != null) {
-                    i_amount = new BigNumber(_amount.toString(10)).toString()
-                }
 
                 const initializeState = await getInitilizeState({
                     params: { contractAddress: currentEscrow },
@@ -267,11 +265,19 @@ export default function EscrowFactory() {
                 const paymentStatus = await getCheckPayment({
                     params: { contractAddress: currentEscrow, params: { account: account } },
                 })
+
+                let i_amount = "0"
+                if (_amount != null) {
+                    i_amount = new BigNumber(_amount.toString(10)).toString()
+                }
+
                 let i_amount2 = 0
                 if (_amount != null) {
                     i_amount2 = new BigNumber(_amount.toString(10)).multipliedBy(2).toString()
                 }
 
+                const i_amount_check = _amount
+                let i_amount2_check = _amount.mul(2)
                 const escrow_ended = await gets_escrowComplete({
                     params: { contractAddress: currentEscrow },
                 })
@@ -336,8 +342,9 @@ export default function EscrowFactory() {
 
                 seti_buyer(i_buyer)
                 seti_amount(i_amount)
+                seti_amount_check(i_amount_check)
                 seti_amount2(i_amount2)
-
+                seti_amount2_check(i_amount2_check)
                 seti_seller(i_seller)
                 setGetTokenContract(token)
                 setBalance(balanceFromCall ? balanceFromCall.toString() : "0")
@@ -361,6 +368,8 @@ export default function EscrowFactory() {
         i_seller,
         i_amount,
         i_amount2,
+        i_amount2_check,
+        i_amount_check,
         getTokenContract,
         anyEscrows,
         currentEscrow,
@@ -419,7 +428,7 @@ export default function EscrowFactory() {
                     params: { params: { owner: account, spender: currentEscrow } },
                 })
 
-                if (approvedAmount >= i_amount2) {
+                if (approvedAmount >= i_amount2_check) {
                     setIsApproved(true)
                 } else {
                     setIsApproved(false)
@@ -433,7 +442,7 @@ export default function EscrowFactory() {
                 const approvedAmount = await allowance({
                     params: { params: { owner: account, spender: currentEscrow } },
                 })
-                if (approvedAmount >= i_amount) {
+                if (approvedAmount >= i_amount_check) {
                     setIsApproved(true)
                 } else {
                     setIsApproved(false)
@@ -566,7 +575,6 @@ export default function EscrowFactory() {
         setIsApproving(true)
         if (ethers.getAddress(account) == i_buyer) {
             try {
-                console.log("amouınt" + i_amount2)
                 await approve({
                     onSuccess: (tx) => {
                         handlesuccess(tx)
@@ -681,16 +689,7 @@ export default function EscrowFactory() {
             icon: <Bell />,
         })
     }
-    const getEscrowStatus = async function () {
-        let return_
-        if (isEscrowEnded) {
-            return_ = "ended"
-        }
-        if (!isEscrowEnded) {
-            return_ = "live"
-        }
-        return return_
-    }
+
     const handleTokenSelect = (address) => {
         setTokenContract(address)
         checkBalance(address)
