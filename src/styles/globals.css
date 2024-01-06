@@ -1,6 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Custom notification settings*/
+[data-testid="test-notification-message"] {
+  font-family: inherit !important; /* This will inherit the font from the parent element */
+  font-weight: 100 !important;
+}
+[data-testid="test-notification-title"] {
+  color: #3b82f6 !important; /* Replace with your desired color */
+}
+[data-testid="test-notification"] {
+  background-color: #ffffff !important; /* This is an example using a hex code for orange color */
+}
+.sc-dSuTWQ.bDUTKM svg[data-testid="test-icon"] {
+  fill: #3b82f6 !important; /* Replace with your desired color */
+}
+
+
+/********************************************/
 
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -57,6 +74,26 @@ border-top: 5px solid gray; /* Match the background color of the info bar */
   border-right: 5px solid transparent;
   border-top: 5px solid white; /* Background color */
 }
+.info-bar2::before {
+  content: "";
+  position: absolute;
+  bottom: -5px; /* Adjust based on the size of the triangle */
+  left: 80%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid gray; /* Match the background color of the info bar */
+  }
+  .info-bar2::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 80%;
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid white; /* Background color */
+  }
 
 @media screen and (max-height: 850px) {
   

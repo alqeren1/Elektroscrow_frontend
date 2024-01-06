@@ -22,7 +22,7 @@ export default function Header() {
                 <img src="/elektro_adjusted.png" alt="Logo" className="h-16 w-16 mr-2  mt-1" />
 
                 <h1 className="font-bold text-3xl text-gray-800  ">Elektroscrow</h1>
-                <div className="flex mt-2 ml-6">
+                <div className="hidden md:flex mt-2 ml-6">
                     <div
                         onClick={navigateToEscrow}
                         className={`ml-2 cursor-pointer font-medium py-2 px-2 rounded-xl transition duration-300 ease-in-out hover:bg-gray-200  ${
@@ -35,13 +35,14 @@ export default function Header() {
                     </div>
                     <div
                         onClick={navigateToHow}
-                        className={`ml-2 cursor-pointer font-medium py-2 px-2 rounded-xl transition duration-300 ease-in-out hover:bg-gray-200  ${
+                        className={`ml-2 cursor-pointer flex items-center font-medium py-2 px-2 rounded-xl transition duration-300 ease-in-out hover:bg-gray-200  ${
                             currentPage == "/how"
                                 ? "text-gray-700 opacity-100 "
                                 : "text-gray-500 opacity-70"
                         }`}
                     >
-                        How does it work
+                        <div className="hidden lg:block">How does it work</div>
+                        <div className="lg:hidden">How?</div>
                     </div>
 
                     <div
@@ -60,7 +61,7 @@ export default function Header() {
 
             <div className="flex items-center">
                 <NetworkSelector />
-                <div className="mr-5">
+                <div className="md:mr-5">
                     <ManuelConnect />
                 </div>
             </div>

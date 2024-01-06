@@ -700,7 +700,7 @@ export default function EscrowFactory() {
             {isWeb3Enabled ? (
                 <>
                     {factoryAddress ? (
-                        <div className="   flex justify-center  mb-16">
+                        <div className="   flex justify-center  ">
                             <div className="relative bg-gray-100 p-4   w-full wdefined:w-[480px] border-2 custom-shadow max-h-[613px] rounded-3xl">
                                 {buyerState ? (
                                     <div className="flex items-center">
@@ -1140,7 +1140,7 @@ export default function EscrowFactory() {
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="absolute bottom-full left-0  w-64  hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
+                                                            <div className="absolute bottom-full  right-0 w-64  hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar2">
                                                                 {/* Info bar content */}
                                                                 <p className="text-gray-500 text-xs">
                                                                     The amount of tokens you need

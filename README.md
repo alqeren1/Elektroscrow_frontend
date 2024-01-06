@@ -14,9 +14,9 @@ ISIM FIKIR:
 -vulturescrow kırmızı
 -------------------------------------
 
--pancakeswap gibi console errorlarını altta gösterme ekle
+-pancakeswap gibi console errorlarını altta gösterme ekle(ekledim ama (object) olarak gosteriyo hata mesajını, düzelt.)
 
--notification ı customise et
+
 
 -sadece galaxy fold sıcıyor
 
@@ -25,11 +25,9 @@ ISIM FIKIR:
 
 -build modda test et
 
--approve olduktan sonra sayfa yenileyince tuş değişiyor yeni geldi bigint değişince
+-info bar safety deposit'e link ekle
 
--token amount sadece tam sayı oluyor
 
--sayfayı sıkıştırınca yukarıdaki navigatorlar 3 noktaya donuçsun veya alta gelsin
 
 
 
