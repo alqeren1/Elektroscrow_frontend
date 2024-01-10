@@ -27,7 +27,7 @@ ISIM FIKIR:
 
 -info bar safety deposit'e link ekle
 
-
+-index.js deki escrowcreate flex işini değiştirdiğim için optimizasyon bozuldu kucuk ekranlardaki. düzelt
 
 
 
