@@ -14,6 +14,11 @@ module.exports = {
                 primary: "#ffe64a",
                 hover: "#e3cd42",
                 writing: "#ffffff",
+                writingdark: "#9c9259",
+                greeen: "#7A9D54",
+                greeenhover: "#5f7a42",
+                reed: "#D83F31",
+                reedhover: "#b33529",
             },
             screens: {
                 wdefined: "480px",

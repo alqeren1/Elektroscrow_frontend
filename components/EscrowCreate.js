@@ -990,10 +990,10 @@ export default function EscrowFactory() {
                                                         <div
                                                             className={`ml-1 ${
                                                                 decisionBuyer == "Decline"
-                                                                    ? "text-red-600"
+                                                                    ? "text-reed"
                                                                     : decisionBuyer == "Accept"
-                                                                      ? "text-green-600"
-                                                                      : "text-blue-600"
+                                                                      ? "text-greeen"
+                                                                      : "text-writingdark"
                                                             }`}
                                                         >
                                                             {decisionBuyer}
@@ -1005,10 +1005,10 @@ export default function EscrowFactory() {
                                                         <div
                                                             className={`ml-1 ${
                                                                 decisionSeller == "Decline"
-                                                                    ? "text-red-600"
+                                                                    ? "text-reed"
                                                                     : decisionSeller == "Accept"
-                                                                      ? "text-green-600"
-                                                                      : "text-blue-600"
+                                                                      ? "text-greeen"
+                                                                      : "text-writingdark"
                                                             }`}
                                                         >
                                                             {decisionSeller}
@@ -1029,11 +1029,11 @@ export default function EscrowFactory() {
                                                             <div className="flex items-center">
                                                                 <div className="font-normal  text-xl">
                                                                     {escrowStatus == "Live" ? (
-                                                                        <div className="text-green-500">
+                                                                        <div className="text-greeen">
                                                                             {escrowStatus}
                                                                         </div>
                                                                     ) : (
-                                                                        <div className="text-red-500 ">
+                                                                        <div className="text-reed ">
                                                                             {escrowStatus}
                                                                         </div>
                                                                     )}
@@ -1152,7 +1152,7 @@ export default function EscrowFactory() {
                                                                     </span>{" "}
                                                                     deposits. This amount includes
                                                                     the{" "}
-                                                                    <span className="font-bold text-blue-500">
+                                                                    <span className="font-bold text-primary hover:cursor-pointer hover:underline">
                                                                         safety deposit
                                                                     </span>
                                                                 </p>
@@ -1444,7 +1444,7 @@ export default function EscrowFactory() {
                                         <div>
                                             <div className=" flex items-center mt-2">
                                                 <button
-                                                    className={`bg-green-500  mr-2 w-full text-writing font-bold py-2   rounded-xl   ${
+                                                    className={`bg-greeen  mr-2 w-full text-writing font-bold py-2   rounded-xl   ${
                                                         i_buyer &&
                                                         ethers.isAddress(i_buyer) &&
                                                         ethers.getAddress(account) ===
@@ -1454,13 +1454,13 @@ export default function EscrowFactory() {
                                                               decisionBuyer == "Accept" ||
                                                               isAccepting
                                                                 ? "opacity-50 "
-                                                                : "hover:bg-green-700"
+                                                                : "hover:bg-greeenhover"
                                                             : isLoading ||
                                                                 isFetching ||
                                                                 decisionSeller == "Accept" ||
                                                                 isAccepting
                                                               ? "opacity-50 "
-                                                              : "hover:bg-green-700 transition duration-300 ease-in-out"
+                                                              : "hover:bg-greeenhover transition duration-300 ease-in-out"
                                                     }`}
                                                     onClick={acceptButton}
                                                     disabled={
@@ -1509,7 +1509,7 @@ export default function EscrowFactory() {
                                                     )}
                                                 </button>
                                                 <button
-                                                    className={`bg-red-500   w-full text-writing font-bold py-2   rounded-xl ${
+                                                    className={`bg-reed w-full text-writing font-bold py-2   rounded-xl ${
                                                         i_buyer &&
                                                         ethers.isAddress(i_buyer) &&
                                                         ethers.getAddress(account) ===
@@ -1519,13 +1519,13 @@ export default function EscrowFactory() {
                                                               decisionBuyer == "Decline" ||
                                                               isDeclining
                                                                 ? "opacity-50  "
-                                                                : "hover:bg-red-700"
+                                                                : "hover:bg-reedhover"
                                                             : isLoading ||
                                                                 isFetching ||
                                                                 decisionSeller == "Decline" ||
                                                                 isDeclining
                                                               ? "opacity-50 "
-                                                              : "hover:bg-red-700 transition duration-300 ease-in-out"
+                                                              : "hover:bg-reedhover transition duration-300 ease-in-out"
                                                     }`}
                                                     onClick={declineButton}
                                                     disabled={

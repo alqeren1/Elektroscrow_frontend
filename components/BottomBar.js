@@ -37,7 +37,7 @@ export default function BottomBar() {
                                     : "text-gray-500 opacity-70"
                             }`}
                         >
-                            How?
+                            Guide
                         </div>
 
                         <div

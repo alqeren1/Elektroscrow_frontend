@@ -31,39 +31,39 @@ export default function Home() {
                 <div className="flex justify-center">
                     <div className="text-base text-gray-800 text-justify w-full md:w-[850px]  h-screen font-base ">
                         <h1 className="font-bold text-3xl mt-14 p-4">
-                            Introduction to Elektro Escrow
+                            Introduction to Elektroscrow
                         </h1>
                         <div className="bg-black w-[820px]  ml-4 py-[150px] items-center text-white">
                             <div className="ml-[350px]"> Image</div>
                         </div>
                         <div className="px-4 py-4">
                             <div className="mt-2">
-                                Elektro Escrow is a cutting-edge platform where trust and
-                                technology converge to facilitate secure, decentralized exchanges
-                                between buyers and sellers. It is the{" "}
+                                Elektroscrow is a cutting-edge platform where trust and technology
+                                converge to facilitate secure, decentralized exchanges between
+                                buyers and sellers. It is the{" "}
                                 <span className="font-bold">first fully decentralized</span> escrow
                                 service available. In an era where digital transactions are
-                                increasingly becoming the norm, Elektro Escrow emerges as a beacon
-                                of innovation and security in decentralized finance to solve the
+                                increasingly becoming the norm, Elektroscrow emerges as a beacon of
+                                innovation and security in decentralized finance to solve the
                                 problem of trusting centralized escrow services and dispose the
                                 need for trusting a third party. Electro Escrow is not just an
                                 escrow service; it is a transformative approach to facilitating
                                 secure, private transactions between buyers and sellers. Built on
-                                the robust Ethereum blockchain, Elektro Escrow employs smart
+                                the robust Ethereum blockchain, Elektroscrow employs smart
                                 contracts to ensure that every transaction is protected, private,
                                 and users never need to trust a third-party establishment.
                             </div>
                         </div>
                         <div className="px-4 py-4 mt-8">
                             <h1 className="font-medium text-3xl">
-                                The Immutable Foundation of Elektro Escrow
+                                The Immutable Foundation of Elektroscrow
                             </h1>
                             <div className="mt-2">
-                                The cornerstone of Elektro Escrow is its suite of smart contracts,
+                                The cornerstone of Elektroscrow is its suite of smart contracts,
                                 designed to be immutable and self-executing. These contracts, once
                                 deployed on the Ethereum blockchain, become unalterable. This
                                 immutability is crucial, as it guarantees the integrity of every
-                                transaction. No entity, including Elektro Escrow’s developers, can
+                                transaction. No entity, including Elektroscrow’s developers, can
                                 modify these contracts once they are active, ensuring a level of
                                 trust and consistency unparalleled in traditional escrow services.
                             </div>
@@ -73,7 +73,7 @@ export default function Home() {
                                 Prioritizing User Privacy and Autonomy
                             </h1>
                             <div className="mt-2">
-                                At Elektro Escrow, the privacy and autonomy of users are paramount.
+                                At Elektroscrow, the privacy and autonomy of users are paramount.
                                 The platform empowers users by allowing them to maintain control
                                 over their funds until a mutual consensus is reached in the
                                 transaction. This approach not only enhances security but also
@@ -84,11 +84,11 @@ export default function Home() {
                         </div>
                         <div className="px-4 py-4 mt-8">
                             <h1 className="font-medium text-3xl">
-                                Elektro Escrow's Operational Mechanics
+                                Elektroscrow's Operational Mechanics
                             </h1>
                             <div className="mt-2">
                                 <span className="font-bold">Initiating a Transaction:</span> A
-                                transaction on Elektro Escrow begins with the creation of an escrow
+                                transaction on Elektroscrow begins with the creation of an escrow
                                 contract by the buyer. This contract includes critical details like
                                 the seller’s address, the type of payment token, and the amount
                                 involved.
@@ -102,7 +102,7 @@ export default function Home() {
                                 <span className="font-bold">Engagement from Both Parties:</span>{" "}
                                 The escrow is set into motion once the seller matches the buyer’s
                                 commitment, or vice versa, by also depositing funds into the
-                                contract. Importantly, Elektro Escrow offers the flexibility for
+                                contract. Importantly, Elektroscrow offers the flexibility for
                                 either party to withdraw their funds before the escrow activates,
                                 ensuring a risk-free environment for initial engagement.
                             </div>
@@ -117,10 +117,10 @@ export default function Home() {
                         <div className="px-4 py-4 mt-8">
                             <h1 className="font-medium text-3xl">Expansive Network Reach</h1>
                             <div className="mt-2">
-                                Elektro Escrow’s primary operations are anchored in the Ethereum
+                                Elektroscrow’s primary operations are anchored in the Ethereum
                                 network, catering to its versatility and widespread adoption.
                                 However, recognizing the diverse needs of the blockchain community,
-                                Elektro Escrow extends its services to various Ethereum derivative
+                                Elektroscrow extends its services to various Ethereum derivative
                                 networks, thereby enhancing its accessibility and utility across
                                 different blockchain ecosystems.
                             </div>
@@ -130,13 +130,13 @@ export default function Home() {
                                 A Vanguard of Decentralized Escrows
                             </h1>
                             <div className="mt-2">
-                                Elektro Escrow stands at the forefront of revolutionizing escrow
+                                Elektroscrow stands at the forefront of revolutionizing escrow
                                 services within the blockchain domain by making them utterly
                                 decentralized. Its commitment to leveraging the power of smart
                                 contracts for ensuring immutable, autonomous, and confidential
                                 transactions sets a new benchmark in the world of digital finance.
-                                Elektro Escrow is more than just a platform; it's a testament to
-                                the potential of decentralized, secure, and private financial
+                                Elektroscrow is more than just a platform; it's a testament to the
+                                potential of decentralized, secure, and private financial
                                 transactions in the modern era.
                             </div>
                         </div>

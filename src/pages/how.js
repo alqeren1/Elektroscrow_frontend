@@ -21,7 +21,7 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="bg-[#f5f9ff] ">
+            <div className="bg-[#fffffd] ">
                 <Header />
                 <div className="px-10 mt-10">
                     <How />

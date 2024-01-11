@@ -42,7 +42,7 @@ export default function Header() {
                         }`}
                     >
                         <div className="hidden lg:block">How does it work</div>
-                        <div className="lg:hidden">How?</div>
+                        <div className="lg:hidden">Guide</div>
                     </div>
 
                     <div
