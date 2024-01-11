@@ -1288,10 +1288,10 @@ export default function EscrowFactory() {
                                     !showInputFields &&
                                     currentEscrow != "Creating new escrow contract" && (
                                         <button
-                                            className={`bg-[#ffe64a]  text-[#ffffff]     w-full rounded-xl font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
+                                            className={`bg-[#ffe64a]  text-white  w-full rounded-xl font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
                                                 isLoading || isFetching || isApproving
                                                     ? "opacity-50 "
-                                                    : "   hover:bg-[#e3cd42]  transition duration-300 ease-in-out"
+                                                    : "  hover:bg-[#e3cd42] transition duration-300 ease-in-out"
                                             }`}
                                             onClick={approveButton}
                                             disabled={isLoading || isFetching || isApproving}
