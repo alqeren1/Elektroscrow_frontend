@@ -742,7 +742,7 @@ export default function EscrowFactory() {
                                     <div className="">
                                         {anyEscrows != "No current escrows" && buyerState && (
                                             <button
-                                                className="bg-blue-500 hover:bg-blue-700 text-white transition duration-300 ease-in-out  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
+                                                className="bg-primary hover:bg-hover text-writing transition duration-300 ease-in-out  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
                                                 onClick={startEscrowButtonNew}
                                                 disabled={isLoading || isFetching}
                                             >
@@ -753,7 +753,7 @@ export default function EscrowFactory() {
                                 </div>
                                 {currentEscrow == "No current escrows" && !buyerState && (
                                     <button
-                                        className="bg-blue-500 hover:bg-blue-700 transition duration-300 ease-in-out rounded-xl w-full py-3 text-white font-bold"
+                                        className="bg-primary hover:bg-hover transition duration-300 ease-in-out rounded-xl w-full py-3 text-writing font-bold"
                                         onClick={buyerStateButton}
                                     >
                                         Switch to buyer
@@ -1220,7 +1220,7 @@ export default function EscrowFactory() {
 
                                             {/* Start Escrow Button */}
                                             <button
-                                                className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
+                                                className={`bg-primary  text-writing  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
                                                     isLoading ||
                                                     isFetching ||
                                                     (ethers.isAddress(seller)
@@ -1232,7 +1232,7 @@ export default function EscrowFactory() {
                                                     !tokenContract ||
                                                     !isTokenValid
                                                         ? "opacity-50 "
-                                                        : "hover:bg-blue-700 transition duration-300 ease-in-out"
+                                                        : "hover:bg-hover transition duration-300 ease-in-out"
                                                 }`}
                                                 onClick={startEscrowButton}
                                                 disabled={
@@ -1251,7 +1251,7 @@ export default function EscrowFactory() {
                                                 {isLoading || isFetching ? (
                                                     <>
                                                         <svg
-                                                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-writing"
                                                             xmlns="http://www.w3.org/2000/svg"
                                                             fill="none"
                                                             viewBox="0 0 24 24"
@@ -1273,7 +1273,9 @@ export default function EscrowFactory() {
                                                         Processing...
                                                     </>
                                                 ) : (
-                                                    <div className="text-white">Start Escrow</div>
+                                                    <div className="text-writing">
+                                                        Start Escrow
+                                                    </div>
                                                 )}
                                             </button>
                                         </>
@@ -1288,10 +1290,10 @@ export default function EscrowFactory() {
                                     !showInputFields &&
                                     currentEscrow != "Creating new escrow contract" && (
                                         <button
-                                            className={`bg-blue-500  w-full rounded-xl text-white font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
+                                            className={`bg-primary  w-full rounded-xl text-writing font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
                                                 isLoading || isFetching || isApproving
                                                     ? "opacity-50 "
-                                                    : "hover:bg-blue-700 transition duration-300 ease-in-out"
+                                                    : "hover:bg-hover transition duration-300 ease-in-out"
                                             }`}
                                             onClick={approveButton}
                                             disabled={isLoading || isFetching || isApproving}
@@ -1299,7 +1301,7 @@ export default function EscrowFactory() {
                                             {isApproving ? (
                                                 <>
                                                     <svg
-                                                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-writing"
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         fill="none"
                                                         viewBox="0 0 24 24"
@@ -1321,7 +1323,7 @@ export default function EscrowFactory() {
                                                     Processing...
                                                 </>
                                             ) : (
-                                                <div className="text-white">Approve</div>
+                                                <div className="text-writing">Approve</div>
                                             )}
                                         </button>
                                     )}
@@ -1331,10 +1333,10 @@ export default function EscrowFactory() {
                                     !isEscrowEnded &&
                                     !showInputFields && (
                                         <button
-                                            className={`bg-blue-500  text-white font-bold py-2 px-4 w-full rounded-xl ml-right mr-4 mt-4 flex items-center justify-center ${
+                                            className={`bg-primary  text-writing font-bold py-2 px-4 w-full rounded-xl ml-right mr-4 mt-4 flex items-center justify-center ${
                                                 isLoading || isFetching || isFunding
                                                     ? "opacity-50 "
-                                                    : "hover:bg-blue-700 transition duration-300 ease-in-out"
+                                                    : "hover:bg-hover transition duration-300 ease-in-out"
                                             }`}
                                             onClick={fundButton}
                                             disabled={isLoading || isFetching || isFunding}
@@ -1342,7 +1344,7 @@ export default function EscrowFactory() {
                                             {isFunding ? (
                                                 <>
                                                     <svg
-                                                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-writing"
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         fill="none"
                                                         viewBox="0 0 24 24"
@@ -1376,10 +1378,10 @@ export default function EscrowFactory() {
                                     !initializeState &&
                                     !showInputFields && (
                                         <button
-                                            className={`bg-blue-500  text-white  font-bold py-2 px-4 mt-4 w-full rounded-xl ml-right mr-4 flex items-center justify-center ${
+                                            className={`bg-primary  text-writing  font-bold py-2 px-4 mt-4 w-full rounded-xl ml-right mr-4 flex items-center justify-center ${
                                                 isLoading || isFetching || isWithdrawing
                                                     ? "opacity-50 "
-                                                    : "hover:bg-blue-700 transition duration-300 ease-in-out"
+                                                    : "hover:bg-hover transition duration-300 ease-in-out"
                                             }`}
                                             onClick={withdrawButton}
                                             disabled={isLoading || isFetching || isWithdrawing}
@@ -1387,7 +1389,7 @@ export default function EscrowFactory() {
                                             {isWithdrawing ? (
                                                 <>
                                                     <svg
-                                                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-writing"
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         fill="none"
                                                         viewBox="0 0 24 24"
@@ -1422,7 +1424,7 @@ export default function EscrowFactory() {
                                         <div>
                                             <div className=" flex items-center mt-2">
                                                 <button
-                                                    className={`bg-green-500  mr-2 w-full text-white font-bold py-2   rounded-xl   ${
+                                                    className={`bg-green-500  mr-2 w-full text-writing font-bold py-2   rounded-xl   ${
                                                         i_buyer &&
                                                         ethers.isAddress(i_buyer) &&
                                                         ethers.getAddress(account) ===
@@ -1460,7 +1462,7 @@ export default function EscrowFactory() {
                                                         <>
                                                             <div className="flex items-center justify-center">
                                                                 <svg
-                                                                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-writing"
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     fill="none"
                                                                     viewBox="0 0 24 24"
@@ -1487,7 +1489,7 @@ export default function EscrowFactory() {
                                                     )}
                                                 </button>
                                                 <button
-                                                    className={`bg-red-500   w-full text-white font-bold py-2   rounded-xl ${
+                                                    className={`bg-red-500   w-full text-writing font-bold py-2   rounded-xl ${
                                                         i_buyer &&
                                                         ethers.isAddress(i_buyer) &&
                                                         ethers.getAddress(account) ===
@@ -1525,7 +1527,7 @@ export default function EscrowFactory() {
                                                         <>
                                                             <div className="flex items-center justify-center">
                                                                 <svg
-                                                                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-writing"
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     fill="none"
                                                                     viewBox="0 0 24 24"
@@ -1553,7 +1555,7 @@ export default function EscrowFactory() {
                                                 </button>
                                             </div>
                                             <button
-                                                className={`bg-blue-500  w-full text-white font-bold py-2 mt-2  rounded-xl ${
+                                                className={`bg-primary  w-full text-writing font-bold py-2 mt-2  rounded-xl ${
                                                     i_buyer &&
                                                     ethers.isAddress(i_buyer) &&
                                                     ethers.getAddress(account) ===
@@ -1563,13 +1565,13 @@ export default function EscrowFactory() {
                                                           decisionBuyer == "Refund" ||
                                                           isRefunding
                                                             ? "opacity-50 "
-                                                            : "hover:bg-blue-700"
+                                                            : "hover:bg-hover"
                                                         : isLoading ||
                                                             isFetching ||
                                                             decisionSeller == "Refund" ||
                                                             isRefunding
                                                           ? "opacity-50 "
-                                                          : "hover:bg-blue-700 transition duration-300 ease-in-out"
+                                                          : "hover:bg-hover transition duration-300 ease-in-out"
                                                 }`}
                                                 onClick={refundButton}
                                                 disabled={
@@ -1591,7 +1593,7 @@ export default function EscrowFactory() {
                                                     <>
                                                         <div className="flex items-center justify-center">
                                                             <svg
-                                                                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                                className="animate-spin -ml-1 mr-3 h-5 w-5 text-writing"
                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                 fill="none"
                                                                 viewBox="0 0 24 24"
@@ -1679,7 +1681,7 @@ export default function EscrowFactory() {
                                     <div className="">
                                         {anyEscrows != "No current escrows" && buyerState && (
                                             <button
-                                                className="bg-blue-500 hover:bg-blue-700 text-white  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
+                                                className="bg-primary hover:bg-hover text-writing  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
                                                 disabled={true}
                                             >
                                                 New
@@ -1689,7 +1691,7 @@ export default function EscrowFactory() {
                                 </div>
                                 {currentEscrow == "No current escrows" && !buyerState && (
                                     <button
-                                        className="bg-blue-500 hover:bg-blue-700 transition duration-300 ease-in-out rounded-xl w-full py-3 text-white font-bold"
+                                        className="bg-primary hover:bg-hover transition duration-300 ease-in-out rounded-xl w-full py-3 text-writing font-bold"
                                         onClick={buyerStateButton}
                                     >
                                         Switch to buyer
@@ -1729,7 +1731,7 @@ export default function EscrowFactory() {
                                     </div>
 
                                     <button
-                                        className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
+                                        className={`bg-primary  text-writing  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
                                                 `}
                                         disabled={true}
                                     >
@@ -1791,7 +1793,7 @@ export default function EscrowFactory() {
                         </div>
                         {currentEscrow == "No current escrows" && !buyerState && (
                             <button
-                                className="bg-blue-500 hover:bg-blue-700 transition duration-300 ease-in-out rounded-xl w-full py-3 text-white font-bold"
+                                className="bg-primary hover:bg-hover transition duration-300 ease-in-out rounded-xl w-full py-3 text-writing font-bold"
                                 onClick={buyerStateButton}
                             >
                                 Switch to buyer
@@ -1831,7 +1833,7 @@ export default function EscrowFactory() {
                             </div>
 
                             <button
-                                className={`bg-blue-500  text-white  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
+                                className={`bg-primary  text-writing  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
                                             `}
                                 disabled={true}
                             >
