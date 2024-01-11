@@ -3,88 +3,91 @@
 @tailwind utilities;
 /* Custom notification settings*/
 [data-testid="test-notification-message"] {
-  font-family: inherit !important; /* This will inherit the font from the parent element */
-  font-weight: 100 !important;
+    font-family: inherit !important; /* This will inherit the font from the parent element */
+    font-weight: 100 !important;
 }
 [data-testid="test-notification-title"] {
-  color: #3b82f6 !important; /* Replace with your desired color */
+    color: #3b82f6 !important; /* Replace with your desired color */
 }
 [data-testid="test-notification"] {
-  background-color: #ffffff !important; /* This is an example using a hex code for orange color */
+    background-color: #ffffff !important; /* This is an example using a hex code for orange color */
 }
 .sc-dSuTWQ.bDUTKM svg[data-testid="test-icon"] {
-  fill: #3b82f6 !important; /* Replace with your desired color */
+    fill: #3b82f6 !important; /* Replace with your desired color */
 }
-
 
 /********************************************/
 
-
 .scrollbar-hide::-webkit-scrollbar {
-display: none;
+    display: none;
 }
 .scrollbar-hide {
--ms-overflow-style: none;  /* IE and Edge */
-scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
 @media (min-width: 480px) {
     .min-480px-width {
-      width: 480px; /* Set your desired minimum width for screens larger than 480px */
+        width: 480px; /* Set your desired minimum width for screens larger than 480px */
     }
-  }
+}
 
 .animate-ping {
-  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
 @keyframes ping {
-  75%, 100% {
-    transform: scale(2);
-    opacity: 0;
-  }
+    75%,
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
 }
 
 .custom-shadow {
-  box-shadow: 0 0 120px 20px #e0f3ff;
+    box-shadow: 0 0 120px 20px #fff9d1;
 }
-.text-lsm {	font-size: 0.950rem; /* 14px */
-  line-height: 1.5rem; /* 20px */}
+.text-lsm {
+    font-size: 0.95rem; /* 14px */
+    line-height: 1.5rem; /* 20px */
+}
 
-.text-xxs {	font-size: 0.700rem; /* 14px */
-    line-height: 1rem; /* 20px */}
+.text-xxs {
+    font-size: 0.7rem; /* 14px */
+    line-height: 1rem; /* 20px */
+}
 
 .info-bar::before {
-content: "";
-position: absolute;
-bottom: -5px; /* Adjust based on the size of the triangle */
-left: 20%;
-transform: translateX(-50%);
-border-left: 5px solid transparent;
-border-right: 5px solid transparent;
-border-top: 5px solid gray; /* Match the background color of the info bar */
+    content: "";
+    position: absolute;
+    bottom: -5px; /* Adjust based on the size of the triangle */
+    left: 20%;
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid gray; /* Match the background color of the info bar */
 }
 .info-bar::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 20%;
-  transform: translateX(-50%);
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 5px solid white; /* Background color */
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 20%;
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid white; /* Background color */
 }
 .info-bar2::before {
-  content: "";
-  position: absolute;
-  bottom: -5px; /* Adjust based on the size of the triangle */
-  left: 80%;
-  transform: translateX(-50%);
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 5px solid gray; /* Match the background color of the info bar */
-  }
-  .info-bar2::after {
+    content: "";
+    position: absolute;
+    bottom: -5px; /* Adjust based on the size of the triangle */
+    left: 80%;
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid gray; /* Match the background color of the info bar */
+}
+.info-bar2::after {
     content: "";
     position: absolute;
     bottom: -5px;
@@ -93,11 +96,10 @@ border-top: 5px solid gray; /* Match the background color of the info bar */
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 5px solid white; /* Background color */
-  }
+}
 
 @media screen and (max-height: 850px) {
-  
-  .hdefinedmax\:mt-custom {
-      margin-top: 150px; /* Custom margin bottom applies to viewport heights of 800px or less */
-  }
+    .hdefinedmax\:mt-custom {
+        margin-top: 150px; /* Custom margin bottom applies to viewport heights of 800px or less */
+    }
 }
