@@ -10,6 +10,11 @@ module.exports = {
     ],
     theme: {
         extend: {
+            colors: {
+                primary: "#ffe64a",
+                hover: "#e3cd42",
+                writing: "#ffffff",
+            },
             screens: {
                 wdefined: "480px",
             },
