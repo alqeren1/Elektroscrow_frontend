@@ -7,13 +7,13 @@
     font-weight: 100 !important;
 }
 [data-testid="test-notification-title"] {
-    color: #3b82f6 !important; /* Replace with your desired color */
+    color: #9c9259 !important; /* Replace with your desired color */
 }
 [data-testid="test-notification"] {
     background-color: #ffffff !important; /* This is an example using a hex code for orange color */
 }
 .sc-dSuTWQ.bDUTKM svg[data-testid="test-icon"] {
-    fill: #3b82f6 !important; /* Replace with your desired color */
+    fill: #9c9259 !important; /* Replace with your desired color */
 }
 
 /********************************************/

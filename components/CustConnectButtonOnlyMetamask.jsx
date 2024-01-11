@@ -67,7 +67,7 @@ export default function Home() {
                     onClick={connectWallet}
                     className={` py-2 px-4 transition duration-300 ease-in-out  rounded-2xl font-medium ${
                         isMetaMask
-                            ? "bg-blue-100 text-blue-500 hover:bg-blue-200 hover:text-blue-600"
+                            ? "bg-[#fff091] text-[#9c9259] hover:bg-[#e3d681] hover:text-[#6b643d]"
                             : "bg-red-100 text-red-500"
                     }`}
                     
