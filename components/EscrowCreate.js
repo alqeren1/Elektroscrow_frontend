@@ -696,11 +696,11 @@ export default function EscrowFactory() {
     }
 
     return (
-        <div className=" p-1 w-full">
+        <div className=" p-1 w-full ">
             {isWeb3Enabled ? (
                 <>
                     {factoryAddress ? (
-                        <div className="   flex justify-center  ">
+                        <div className="   flex justify-center  w-full">
                             <div className="relative bg-gray-100 p-4   w-full wdefined:w-[480px] border-2 custom-shadow max-h-[613px] rounded-3xl">
                                 {buyerState ? (
                                     <div className="flex items-center">
@@ -1453,13 +1453,13 @@ export default function EscrowFactory() {
                                                               isFetching ||
                                                               decisionBuyer == "Accept" ||
                                                               isAccepting
-                                                                ? "opacity-50 "
-                                                                : "hover:bg-greeenhover"
+                                                                ? "opacity-50 cursor-not-allowed"
+                                                                : "hover:bg-greeenhover transition duration-300 ease-in-out"
                                                             : isLoading ||
                                                                 isFetching ||
                                                                 decisionSeller == "Accept" ||
                                                                 isAccepting
-                                                              ? "opacity-50 "
+                                                              ? "opacity-50 cursor-not-allowed"
                                                               : "hover:bg-greeenhover transition duration-300 ease-in-out"
                                                     }`}
                                                     onClick={acceptButton}
@@ -1518,13 +1518,13 @@ export default function EscrowFactory() {
                                                               isFetching ||
                                                               decisionBuyer == "Decline" ||
                                                               isDeclining
-                                                                ? "opacity-50  "
-                                                                : "hover:bg-reedhover"
+                                                                ? "opacity-50 cursor-not-allowed "
+                                                                : "hover:bg-reedhover transition duration-300 ease-in-out"
                                                             : isLoading ||
                                                                 isFetching ||
                                                                 decisionSeller == "Decline" ||
                                                                 isDeclining
-                                                              ? "opacity-50 "
+                                                              ? "opacity-50 cursor-not-allowed"
                                                               : "hover:bg-reedhover transition duration-300 ease-in-out"
                                                     }`}
                                                     onClick={declineButton}
@@ -1584,13 +1584,13 @@ export default function EscrowFactory() {
                                                           isFetching ||
                                                           decisionBuyer == "Refund" ||
                                                           isRefunding
-                                                            ? "opacity-50 "
-                                                            : "hover:bg-hover"
+                                                            ? "opacity-50 cursor-not-allowed"
+                                                            : "hover:bg-hover transition duration-300 ease-in-out"
                                                         : isLoading ||
                                                             isFetching ||
                                                             decisionSeller == "Refund" ||
                                                             isRefunding
-                                                          ? "opacity-50 "
+                                                          ? "opacity-50 cursor-not-allowed"
                                                           : "hover:bg-hover transition duration-300 ease-in-out"
                                                 }`}
                                                 onClick={refundButton}

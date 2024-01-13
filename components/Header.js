@@ -19,9 +19,15 @@ export default function Header() {
     return (
         <div className="p-2  flex flex-row   justify-between items-center">
             <div className="flex items-center">
-                <img src="/elektro_adjusted.png" alt="Logo" className="h-16 w-16 mr-2  mt-1" />
+                <img
+                    src="/elektro_adjusted.png"
+                    alt="Logo"
+                    className="wdefinedxsm:h-16 wdefinedxsm:w-16 h-10 w-10 wdefinedxsm:mr-2 mr-1 mt-1"
+                />
 
-                <h1 className="font-bold text-3xl text-gray-800  ">Elektroscrow</h1>
+                <h1 className="font-bold  text-gray-800 text-xl wdefinedxsm:text-3xl">
+                    Elektroscrow
+                </h1>
                 <div className="hidden md:flex mt-2 ml-6">
                     <div
                         onClick={navigateToEscrow}
@@ -61,7 +67,7 @@ export default function Header() {
 
             <div className="flex items-center">
                 <NetworkSelector />
-                <div className="md:mr-5">
+                <div className="md:mr-5 hidden wdefined:flex">
                     <ManuelConnect />
                 </div>
             </div>

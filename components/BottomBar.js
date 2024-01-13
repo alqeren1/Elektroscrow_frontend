@@ -15,7 +15,7 @@ export default function BottomBar() {
         router.push("/how")
     }
     return (
-        <div className="flex items-center justify-center px-5">
+        <div className="flex items-center justify-center wdefined:px-5 px-2">
             <div className="md:hidden bg-white rounded-3xl w-full border py-1 ">
                 <div className=" flex  items-center">
                     <div className="flex justify-evenly w-full">
@@ -53,10 +53,10 @@ export default function BottomBar() {
                         </div>
                     </div>
                     <div className="flex justify-end px-2 ">
-                        <div className="text-gray-500 opacity-70 px-2  py-1 flex justify-center rounded-3xl transition duration-300 ease-in-out hover:bg-gray-200">
+                        <div className="text-gray-500 opacity-70 hidden wdefinedxsm:flex px-2  py-1 flex justify-center rounded-3xl transition duration-300 ease-in-out hover:bg-gray-200">
                             <Twitter />
                         </div>
-                        <div className="text-gray-500 opacity-70 px-2  py-1 flex justify-center rounded-3xl transition duration-300 ease-in-out hover:bg-gray-200">
+                        <div className="text-gray-500 opacity-70 px-2 hidden wdefinedsm:flex py-1 flex justify-center rounded-3xl transition duration-300 ease-in-out hover:bg-gray-200">
                             <Reddit />
                         </div>
                     </div>

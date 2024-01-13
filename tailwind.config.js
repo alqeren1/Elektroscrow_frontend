@@ -22,6 +22,8 @@ module.exports = {
             },
             screens: {
                 wdefined: "480px",
+                wdefinedxsm: "330px",
+                wdefinedsm: "390px",
             },
         },
     },

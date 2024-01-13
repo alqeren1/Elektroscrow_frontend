@@ -39,10 +39,12 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="bg-[#fffffd] flex flex-col min-h-screen">
-                <Header />
+                <div className="z-10">
+                    <Header />
+                </div>
 
                 <div className="flex flex-1 justify-center items-center">
-                    <div>
+                    <div className=" w-full">
                         {" "}
                         <EscrowFactory />
                         <div className="flex justify-center relative z-10">

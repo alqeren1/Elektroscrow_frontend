@@ -20,18 +20,17 @@ ISIM FIKIR:
 -sadece galaxy fold sıcıyor
 
 -docs yan bar kapama düğmesi ekran boyutuyla sıçıyor, düzelt
+
 -docs yan barı kaydırınca marka adı da kayıyor, sabit kalmalı
 
 
--font değiş (belki) -yok
 
 -build modda test et
 
 -info bar safety deposit'e link ekle
 
--index.js deki escrowcreate flex işini değiştirdiğim için optimizasyon bozuldu kucuk ekranlardaki. düzelt
 
-
+-seller'da iken dc atınca wallet not connected yazmıyor, boş duruyor
 
 
 LATER:

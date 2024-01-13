@@ -4,6 +4,7 @@ import WalletConnect from "./ConnectButtonWC"
 import Eth from "../svgs/ethereum-logo"
 import Bsc from "../svgs/bsc-logo"
 import Polygon from "../svgs/polygon-logo"
+import ManuelConnect from "./CustConnectButtonOnlyMetamask.jsx"
 
 import Arrowdown from "../svgs/arrow-down"
 import Arrowup from "../svgs/arrow-up"
@@ -51,7 +52,7 @@ function NetworkSelector() {
                 <div className="ml-10">
                     <button
                         onClick={() => setShowDropdown(!showDropdown)}
-                        className="flex items-center mr-2 rounded-2xl transition duration-300 ease-in-out hover:bg-gray-200   py-2 px-2 "
+                        className="flex items-center wdefined:mr-2 rounded-2xl transition duration-300 ease-in-out hover:bg-gray-200   py-2 px-2 "
                     >
                         <Error />
 
@@ -67,6 +68,9 @@ function NetworkSelector() {
 
                 {showDropdown && (
                     <div className="absolute right-2 z-10 w-60 shadow-lg rounded-xl bg-white border rounded ">
+                        <div className="p-2  wdefined:hidden items-center justify-center flex w-full ">
+                            <ManuelConnect />
+                        </div>
                         {networks.map((network) => (
                             <div
                                 key={network.chainId}
@@ -101,7 +105,7 @@ function NetworkSelector() {
                 {(currentNetwork.chainId == "0x1" ? (
                     <button
                         onClick={() => setShowDropdown(!showDropdown)}
-                        className="flex items-center mr-2 rounded-2xl hover:bg-gray-200 transition duration-300 ease-in-out py-2 px-2"
+                        className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200 transition duration-300 ease-in-out py-2 px-2"
                     >
                         <Eth />
                         <span
@@ -118,7 +122,7 @@ function NetworkSelector() {
                     (currentNetwork.chainId == "0x38" ? (
                         <button
                             onClick={() => setShowDropdown(!showDropdown)}
-                            className="flex items-center mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out    py-2 px-2 "
+                            className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out    py-2 px-2 "
                         >
                             <Bsc />
 
@@ -136,7 +140,7 @@ function NetworkSelector() {
                     (currentNetwork.chainId == "0x89" ? (
                         <button
                             onClick={() => setShowDropdown(!showDropdown)}
-                            className="flex items-center mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out  py-2 px-2 "
+                            className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out  py-2 px-2 "
                         >
                             <Polygon />
 
@@ -155,6 +159,12 @@ function NetworkSelector() {
 
             {showDropdown && (
                 <div className="absolute right-2  z-10 w-60 shadow-lg  rounded-xl bg-white border rounded ">
+                    <div
+                        onClick={disconnect}
+                        className="cursor-pointer bg-[#fff091] hidden wdefined:flex text-[#9c9259] hover:bg-[#e3d681] hover:text-[#6b643d] py-2 md:px-4 px-2 transition duration-300 ease-in-out rounded-2xl font-medium"
+                    >
+                        0xhfj...87635
+                    </div>
                     {networks.map((network) => (
                         <div
                             key={network.chainId}
