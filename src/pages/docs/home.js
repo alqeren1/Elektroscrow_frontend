@@ -1,4 +1,4 @@
-import Layout from "../../../components/Layout"
+import CommonLayout from "../../../components/CommonLayout"
 import Menu from "../../../svgs/menu"
 import { useState, useEffect } from "react"
 import { Inter } from "next/font/google"
@@ -12,13 +12,7 @@ export default function Home() {
         setLayoutOpen(!layoutOpen)
     }
     return (
-        <div className="flex">
-            {layoutOpen && (
-                <div className="w-[356px] bg-black ">
-                    <Layout />
-                </div>
-            )}
-
+        <CommonLayout layoutOpen={layoutOpen}>
             <div className=" w-full  justify-center  ">
                 <button
                     onClick={() => {
@@ -29,15 +23,23 @@ export default function Home() {
                     <Menu />
                 </button>
                 <div className="flex justify-center">
-                    <div className="text-base text-gray-800 text-justify w-full md:w-[850px]  h-screen font-base ">
-                        <h1 className="font-bold text-3xl mt-14 p-4">
+                    <div
+                        className={`text-base text-gray-800 text-justify w-full   h-screen font-base ${
+                            layoutOpen ? " wdefinedxl:w-[850px]" : "wdefinedlg:w-[850px]"
+                        }`}
+                    >
+                        <h1 className="font-bold text-3xl mt-14 p-4 text-left">
                             Introduction to Elektroscrow
                         </h1>
-                        <div className="bg-black w-[820px]  ml-4 py-[150px] items-center text-white">
-                            <div className="ml-[350px]"> Image</div>
+                        <div className="flex justify-center">
+                            <img
+                                src="/elektrodocs.png"
+                                alt="Logo"
+                                className=" px-4 flex justify-center"
+                            />
                         </div>
-                        <div className="px-4 py-4">
-                            <div className="mt-2">
+                        <div className="px-4 py-4 ">
+                            <div className="mt-2 ">
                                 Elektroscrow is a cutting-edge platform where trust and technology
                                 converge to facilitate secure, decentralized exchanges between
                                 buyers and sellers. It is the{" "}
@@ -54,8 +56,8 @@ export default function Home() {
                                 and users never need to trust a third-party establishment.
                             </div>
                         </div>
-                        <div className="px-4 py-4 mt-8">
-                            <h1 className="font-medium text-3xl">
+                        <div className="px-4 py-4 mt-8 ">
+                            <h1 className="font-medium text-3xl text-left ">
                                 The Immutable Foundation of Elektroscrow
                             </h1>
                             <div className="mt-2">
@@ -69,7 +71,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="px-4 py-4 mt-8">
-                            <h1 className="font-medium text-3xl">
+                            <h1 className="font-medium text-3xl text-left">
                                 Prioritizing User Privacy and Autonomy
                             </h1>
                             <div className="mt-2">
@@ -83,7 +85,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="px-4 py-4 mt-8">
-                            <h1 className="font-medium text-3xl">
+                            <h1 className="font-medium text-3xl text-left">
                                 Elektroscrow's Operational Mechanics
                             </h1>
                             <div className="mt-2">
@@ -115,7 +117,9 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="px-4 py-4 mt-8">
-                            <h1 className="font-medium text-3xl">Expansive Network Reach</h1>
+                            <h1 className="font-medium text-3xl text-left">
+                                Expansive Network Reach
+                            </h1>
                             <div className="mt-2">
                                 Elektroscrow’s primary operations are anchored in the Ethereum
                                 network, catering to its versatility and widespread adoption.
@@ -126,7 +130,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="px-4 pb-28 py-4 mt-8">
-                            <h1 className="font-medium text-3xl">
+                            <h1 className="font-medium text-3xl text-left">
                                 A Vanguard of Decentralized Escrows
                             </h1>
                             <div className="mt-2">
@@ -143,6 +147,6 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-        </div>
+        </CommonLayout>
     )
 }

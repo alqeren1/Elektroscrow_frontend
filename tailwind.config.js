@@ -21,6 +21,8 @@ module.exports = {
                 reedhover: "#b33529",
             },
             screens: {
+                wdefinedxl: "1180px",
+                wdefinedlg: "870px",
                 wdefined: "480px",
                 wdefinedxsm: "330px",
                 wdefinedsm: "390px",

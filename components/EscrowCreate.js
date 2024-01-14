@@ -15,7 +15,7 @@ const abi_logic = require("../constants1/abi_logic.json") // Adjust the path to 
 const escrowAddress = require("../constants1/escrowAddress.json")
 const abi_ERC20 = require("../constants1/abi_ERC20.json")
 
-export default function EscrowFactory() {
+export default function EscrowFactory({ onError }) {
     const { chainId: chainIdHex, isWeb3Enabled, account } = useMoralis()
 
     //console.log(parseInt(chainIdHex))
@@ -509,17 +509,23 @@ export default function EscrowFactory() {
                 await escrowFactory({
                     onSuccess: (tx) => {
                         handlesuccessNewEscrow(tx)
+                        onError("")
                     },
-                    onError: (error) => console.error("Error occurred:", error),
+                    onError: (error) => {
+                        console.error("Error occurred:", error), onError(error.message)
+                    },
                 })
             } catch (error) {
                 console.error("Error occurred:", error)
+                onError(error.message)
             }
         }
     }
     const startEscrowButtonNew = async function () {
         setCurrentEscrow("Creating new escrow contract")
-
+        setSeller("")
+        setAmountInput("")
+        setTokenBalance("")
         setShowInputFields(true)
     }
 
@@ -531,15 +537,18 @@ export default function EscrowFactory() {
             await initialize({
                 onSuccess: (tx) => {
                     handlesuccess(tx)
+                    onError("")
                 },
 
                 onError: (error) => {
                     console.error("Error occurred:", error)
                     setIsFunding(false)
+                    onError(error.message)
                 },
             })
         } catch (error) {
             console.error("Error occurred:", error)
+            onError(error.message)
             setIsFunding(false)
         }
     }
@@ -551,16 +560,19 @@ export default function EscrowFactory() {
             await withdraw({
                 onSuccess: (tx) => {
                     handlesuccess(tx)
+                    onError("")
                 },
 
                 onError: (error) => {
                     console.error("Error occurred:", error)
                     setIsWithdrawing(false)
+                    onError(error.message)
                 },
             })
         } catch (error) {
             console.error("Error occurred:", error)
             setIsWithdrawing(false)
+            onError(error.message)
         }
     }
     const buyerStateButton = () => {
@@ -578,30 +590,38 @@ export default function EscrowFactory() {
                 await approve({
                     onSuccess: (tx) => {
                         handlesuccess(tx)
+                        onError("")
                     },
                     onError: (error) => {
-                        console.error("Error occurred:", error), setIsApproving(false)
+                        console.error("Error occurred:", error),
+                            setIsApproving(false),
+                            onError(error.message)
                     },
                 })
             } catch (error) {
                 console.error("Error occurred:", error)
                 setIsApproving(false)
+                onError(error.message)
             }
         }
         if (ethers.getAddress(account) == i_seller) {
             try {
-                console.log("amouınt" + i_amount)
+                console.log("amount" + i_amount)
                 await approve2({
                     onSuccess: (tx) => {
                         handlesuccess(tx)
+                        onError("")
                     },
                     onError: (error) => {
-                        console.error("Error occurred:", error), setIsApproving(false)
+                        console.error("Error occurred:", error),
+                            setIsApproving(false),
+                            onError(error.message)
                     },
                 })
             } catch (error) {
                 console.error("Error occurred:", error)
                 setIsApproving(false)
+                onError(error.message)
             }
         }
     }
@@ -613,16 +633,19 @@ export default function EscrowFactory() {
                 params: { params: { decision: 1 } },
                 onSuccess: (tx) => {
                     handlesuccess(tx)
+                    onError("")
                 },
 
                 onError: (error) => {
                     console.error("Error occurred:", error)
                     setIsAccepting(false)
+                    onError(error.message)
                 },
             })
         } catch (error) {
             console.error("Error occurred:", error)
             setIsAccepting(false)
+            onError(error.message)
         }
     }
     const declineButton = async () => {
@@ -634,16 +657,19 @@ export default function EscrowFactory() {
                 params: { params: { decision: 0 } },
                 onSuccess: (tx) => {
                     handlesuccess(tx)
+                    onError("")
                 },
 
                 onError: (error) => {
                     console.error("Error occurred:", error)
                     setIsDeclining(false)
+                    onError(error.message)
                 },
             })
         } catch (error) {
             console.error("Error occurred:", error)
             setIsDeclining(true)
+            onError(error.message)
         }
     }
     const refundButton = async () => {
@@ -655,16 +681,19 @@ export default function EscrowFactory() {
                 params: { params: { decision: 2 } },
                 onSuccess: (tx) => {
                     handlesuccess(tx)
+                    onError("")
                 },
 
                 onError: (error) => {
                     console.error("Error occurred:", error)
                     setIsRefunding(false)
+                    onError(error.message)
                 },
             })
         } catch (error) {
             console.error("Error occurred:", error)
             setIsRefunding(false)
+            onError(error.message)
         }
     }
     const copyToClipboard = async (variable) => {
@@ -1240,7 +1269,7 @@ export default function EscrowFactory() {
 
                                             {/* Start Escrow Button */}
                                             <button
-                                                className={`bg-primary  text-writing  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
+                                                className={`bg-primary    font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
                                                     isLoading ||
                                                     isFetching ||
                                                     (ethers.isAddress(seller)
@@ -1251,8 +1280,8 @@ export default function EscrowFactory() {
                                                     !amountInput ||
                                                     !tokenContract ||
                                                     !isTokenValid
-                                                        ? "opacity-50 "
-                                                        : "hover:bg-hover transition duration-300 ease-in-out"
+                                                        ? "opacity-50 text-gray-400 "
+                                                        : "hover:bg-hover text-writing transition duration-300 ease-in-out"
                                                 }`}
                                                 onClick={startEscrowButton}
                                                 disabled={
@@ -1290,12 +1319,12 @@ export default function EscrowFactory() {
                                                                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                                                             ></path>
                                                         </svg>
-                                                        Processing...
+                                                        <div className="text-writing">
+                                                            Processing...
+                                                        </div>
                                                     </>
                                                 ) : (
-                                                    <div className="text-writing">
-                                                        Start Escrow
-                                                    </div>
+                                                    <div>Start Escrow</div>
                                                 )}
                                             </button>
                                         </>
@@ -1767,7 +1796,7 @@ export default function EscrowFactory() {
                     )}
                 </>
             ) : (
-                <div className="   flex justify-center  mb-16">
+                <div className="   flex justify-center  w-full">
                     {/* Wallet not connected decoys */}
                     <div
                         className="relative bg-gray-100 p-4   w-full wdefined:w-[480px] border-2 custom-shadow  max-h-[613px] rounded-3xl"
@@ -1804,27 +1833,43 @@ export default function EscrowFactory() {
                                 </button>
                             </div>
                         )}
-                        <div className=" text-lg text-gray-700 ml-1 font-bold ">
-                            Current escrow
-                        </div>
-                        <div className="flex  items-center">
-                            <button
-                                className={` mt-1 bg-gray-200 rounded-xl overflow-hidden text-ellipsis whitespace-nowrap w-full text-sm py-3 p-2 my-2 inline-block font-medium  text-gray-500`}
-                                disabled={true}
-                            >
-                                No current escrows
-                            </button>
-                        </div>
-                        {currentEscrow == "No current escrows" && !buyerState && (
-                            <button
-                                className="bg-primary hover:bg-hover transition duration-300 ease-in-out rounded-xl w-full py-3 text-writing font-bold"
-                                onClick={buyerStateButton}
-                            >
-                                Switch to buyer
-                            </button>
+                        {!buyerState && (
+                            <div>
+                                <div className=" text-lg text-gray-700 ml-1 font-bold ">
+                                    Current escrow
+                                </div>
+                                <div className="flex  items-center">
+                                    <button
+                                        className={` mt-1 bg-gray-200 rounded-xl overflow-hidden text-ellipsis whitespace-nowrap w-full text-sm py-3 p-2 my-2 inline-block font-medium  text-gray-500`}
+                                        disabled={true}
+                                    >
+                                        No current escrows
+                                    </button>
+                                </div>
+                                {currentEscrow == "No current escrows" && !buyerState && (
+                                    <button
+                                        className={`bg-primary  text-gray-400  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
+                                            `}
+                                        disabled={true}
+                                    >
+                                        Wallet not connected
+                                    </button>
+                                )}
+                            </div>
                         )}
                         {buyerState && (
                             <>
+                                <div className=" text-lg text-gray-700 ml-1 font-bold ">
+                                    Current escrow
+                                </div>
+                                <div className="flex  items-center">
+                                    <button
+                                        className={` mt-1 bg-gray-200 rounded-xl overflow-hidden text-ellipsis whitespace-nowrap w-full text-sm py-3 p-2 my-2 inline-block font-medium  text-gray-500`}
+                                        disabled={true}
+                                    >
+                                        No current escrows
+                                    </button>
+                                </div>
                                 <div className="w-full py-4 border-2 px-4 rounded-xl mb-5 bg-white cursor-not-allowed">
                                     <div className="text-gray-400">Enter seller address</div>
                                 </div>
@@ -1839,10 +1884,7 @@ export default function EscrowFactory() {
                                     <div className="opacity-0">Balance:</div>
                                     {tokenBalance && (
                                         <div className="flex">
-                                            <div className="mr-1">Balance:</div>
-                                            {BigNumber(tokenBalance)
-                                                .dividedBy(BigNumber("10").pow(18))
-                                                .toString()}
+                                            <div className="mr-1 opacity-0">Balance:</div>
                                         </div>
                                     )}
                                 </div>
@@ -1856,7 +1898,7 @@ export default function EscrowFactory() {
                                 </div>
 
                                 <button
-                                    className={`bg-primary  text-writing  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
+                                    className={`bg-primary  text-gray-400  font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center opacity-50
                                             `}
                                     disabled={true}
                                 >

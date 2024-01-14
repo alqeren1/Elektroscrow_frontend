@@ -1,27 +1,11 @@
-ISIM FIKIR:
--electroscrow sarı
 
--KiteScrow
--wavescrow
--Wirescrow
--hivescrow sarı
--Tidescrow mavi
-
--Beescrow  sarı
-
--cranescrow orange red
--foxscrow turuncu
--vulturescrow kırmızı
--------------------------------------
-
--pancakeswap gibi console errorlarını altta gösterme ekle(ekledim ama (object) olarak gosteriyo hata mesajını, düzelt.)
 
 
 -sadece galaxy fold sıcıyor
 
--docs yan bar kapama düğmesi ekran boyutuyla sıçıyor, düzelt
 
--docs yan barı kaydırınca marka adı da kayıyor, sabit kalmalı
+
+
 
 
 
@@ -29,8 +13,8 @@ ISIM FIKIR:
 
 -info bar safety deposit'e link ekle
 
-
--seller'da iken dc atınca wallet not connected yazmıyor, boş duruyor
+-docs u yaz
+-how does it work u yaz
 
 
 LATER:
