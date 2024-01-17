@@ -381,13 +381,19 @@ export default function EscrowFactory({ onError }) {
 
     useEffect(() => {
         if (isWeb3Enabled && showInputFields) {
-            getTokenDecimalsTemp()
+            // Set a timeout
+            const timeoutId = setTimeout(() => {
+                getTokenDecimalsTemp()
+            }, 100)
+
+            // Clear the timeout if the component unmounts or the dependencies change
+            return () => clearTimeout(timeoutId)
         }
     })
 
     async function getTokenDecimalsTemp() {
         const decimals = await checkToken1({ params: { contractAddress: tokenContract } })
-
+        console.log("sa")
         setTokenDecimalsTemp(decimals)
     }
 

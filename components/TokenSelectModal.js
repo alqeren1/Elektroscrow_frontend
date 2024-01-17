@@ -4,6 +4,8 @@ import { ethers } from "ethers"
 
 import tokens from "../default_tokens/mainnet.json"
 const abi_ERC20 = require("../constants1/abi_ERC20.json")
+const abi_ERC20_bytes = require("../constants1/abi_ERC20_bytes.json")
+const BigNumber = require("bignumber.js")
 
 const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent, onClose }) => {
     const modalRef = useRef()
@@ -37,12 +39,41 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
 
         functionName: "symbol",
     })
+
+    const { runContractFunction: checkToken1_bytes } = useWeb3Contract({
+        abi: abi_ERC20_bytes,
+
+        functionName: "decimals",
+    })
+    const { runContractFunction: checkToken2_bytes } = useWeb3Contract({
+        abi: abi_ERC20_bytes,
+
+        functionName: "name",
+    })
+    const { runContractFunction: checkToken3_bytes } = useWeb3Contract({
+        abi: abi_ERC20_bytes,
+
+        functionName: "symbol",
+    })
     const { runContractFunction: balanceOf } = useWeb3Contract({
         abi: abi_ERC20,
 
         functionName: "balanceOf",
     })
+    function hexToString(hex) {
+        // Remove the "0x" prefix if it's present
+        hex = hex.toString()
+        if (hex.startsWith("0x")) {
+            hex = hex.slice(2)
+        }
 
+        var str = ""
+        for (var i = 0; i < hex.length; i += 2) {
+            var v = parseInt(hex.substr(i, 2), 16)
+            if (v) str += String.fromCharCode(v)
+        }
+        return str
+    }
     async function tokenContractCheck() {
         if (!ethers.isAddress(searchTerm)) {
             return
@@ -52,9 +83,33 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
         const symbol = await checkToken3({ params: { contractAddress: searchTerm } })
 
         if (!decimals || !name || !symbol) {
-            console.log("Not a valid ERC-20 token")
-            setIsTokenValid(false)
-            onTokenValidation(false)
+            const decimals_bytes = await checkToken1_bytes({
+                params: { contractAddress: searchTerm },
+            })
+            const name_bytes = await checkToken2_bytes({
+                params: { contractAddress: searchTerm },
+            })
+            const symbol_bytes = await checkToken3_bytes({
+                params: { contractAddress: searchTerm },
+            })
+            if (!decimals_bytes || !name_bytes || !symbol_bytes) {
+                console.log("Not a valid ERC-20 token")
+
+                setIsTokenValid(false)
+                onTokenValidation(false)
+                return
+            }
+
+            setIsTokenValid(true)
+            onTokenValidation(true)
+            setTokenName(hexToString(name_bytes))
+            setTokenSymbol(hexToString(symbol_bytes))
+            setTokenSymbolParent(hexToString(symbol_bytes))
+            console.log(
+                `Token details: ${hexToString(name_bytes)} (${hexToString(
+                    symbol_bytes,
+                )}), Decimals: ${parseInt(decimals_bytes.toHexString(), 16)}`,
+            )
             return
         }
         setIsTokenValid(true)
@@ -72,9 +127,33 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
         const symbol = await checkToken3({ params: { contractAddress: tokenContractChild } })
 
         if (!decimals || !name || !symbol) {
-            console.log("Not a valid ERC-20 token")
-            setIsTokenValid(false)
-            onTokenValidation(false)
+            const decimals_bytes = await checkToken1_bytes({
+                params: { contractAddress: tokenContractChild },
+            })
+            const name_bytes = await checkToken2_bytes({
+                params: { contractAddress: tokenContractChild },
+            })
+            const symbol_bytes = await checkToken3_bytes({
+                params: { contractAddress: tokenContractChild },
+            })
+            if (!decimals_bytes || !name_bytes || !symbol_bytes) {
+                console.log("Not a valid ERC-20 token")
+
+                setIsTokenValid(false)
+                onTokenValidation(false)
+                return
+            }
+
+            setIsTokenValid(true)
+            onTokenValidation(true)
+            setTokenName(hexToString(name_bytes))
+            setTokenSymbol(hexToString(symbol_bytes))
+            setTokenSymbolParent(hexToString(symbol_bytes))
+            console.log(
+                `Token details: ${hexToString(name_bytes)} (${hexToString(
+                    symbol_bytes,
+                )}), Decimals: ${parseInt(decimals_bytes.toHexString(), 16)}`,
+            )
             return
         }
         setIsTokenValid(true)
