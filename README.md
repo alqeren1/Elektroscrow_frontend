@@ -6,7 +6,7 @@
 
 
 
-
+-website loading animasyhonu var sağ altta, vercel logolu, onu elektro logolu yap
 
 
 -build modda test et
@@ -15,6 +15,10 @@
 
 -docs u yaz
 -how does it work u yaz
+
+-docs daki sayfaların en altına sağa sola ok geçiş gelebilir.
+
+
 
 
 LATER:

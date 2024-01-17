@@ -34,7 +34,7 @@ export default function EscrowFactory({ onError }) {
     const [seller, setSeller] = useState("")
     const [amountInput, setAmountInput] = useState("")
     const [modalOpen, setModalOpen] = useState(false)
-
+    const [tokenDecimalsTemp, setTokenDecimalsTemp] = useState("")
     const [i_amount, seti_amount] = useState("0")
     const [i_amount2, seti_amount2] = useState("0")
     const [i_amount_check, seti_amount_check] = useState("0")
@@ -110,19 +110,20 @@ export default function EscrowFactory({ onError }) {
         abi: abi_ERC20,
         contractAddress: getTokenContract,
         functionName: "approve",
-        params: { spender: currentEscrow, value: i_amount2 },
+        params: { spender: currentEscrow, value: "999999999999999999999999999999999999999999999" },
+    })
+    const { runContractFunction: approve2 } = useWeb3Contract({
+        abi: abi_ERC20,
+        contractAddress: getTokenContract,
+        functionName: "approve",
+        params: { spender: currentEscrow, value: "999999999999999999999999999999999999999999999" },
     })
     const { runContractFunction: allowance } = useWeb3Contract({
         abi: abi_ERC20,
         contractAddress: getTokenContract,
         functionName: "allowance",
     })
-    const { runContractFunction: approve2 } = useWeb3Contract({
-        abi: abi_ERC20,
-        contractAddress: getTokenContract,
-        functionName: "approve",
-        params: { spender: currentEscrow, value: i_amount },
-    })
+
     const { runContractFunction: balanceOf } = useWeb3Contract({
         abi: abi_ERC20,
 
@@ -226,12 +227,6 @@ export default function EscrowFactory({ onError }) {
         } else {
             const latestEscrow = anyEscrowsFromCall[anyEscrowsFromCall.length - 1]
             setAnyEscrows(latestEscrow)
-            if (
-                anyEscrows != "No current escrows" &&
-                currentEscrow != "Creating new escrow contract"
-            ) {
-                setShowInputFields(false)
-            }
 
             if (currentEscrow == "No current escrows") {
                 setCurrentEscrow(anyEscrows)
@@ -384,6 +379,18 @@ export default function EscrowFactory({ onError }) {
         }
     }, [isWeb3Enabled, buyerState, account, anyEscrows, chainId])
 
+    useEffect(() => {
+        if (isWeb3Enabled && showInputFields) {
+            getTokenDecimalsTemp()
+        }
+    })
+
+    async function getTokenDecimalsTemp() {
+        const decimals = await checkToken1({ params: { contractAddress: tokenContract } })
+
+        setTokenDecimalsTemp(decimals)
+    }
+
     async function getTokenSymbol() {
         const symbol = await checkToken3({ params: { contractAddress: getTokenContract } })
         const decimals = await checkToken1({ params: { contractAddress: getTokenContract } })
@@ -526,6 +533,7 @@ export default function EscrowFactory({ onError }) {
         setSeller("")
         setAmountInput("")
         setTokenBalance("")
+        setTokenSymbol("")
         setShowInputFields(true)
     }
 
@@ -765,33 +773,38 @@ export default function EscrowFactory({ onError }) {
                                 <div className=" text-lg text-gray-700 ml-1 font-bold ">
                                     Current escrow
                                 </div>
-                                <div className="flex  items-center">
-                                    <button
-                                        className={` mt-1 bg-gray-200  rounded-xl overflow-hidden text-ellipsis whitespace-nowrap w-full text-sm py-3 p-2 my-2 inline-block ${
-                                            currentEscrow == "No current escrows" ||
-                                            currentEscrow == "Creating new escrow contract"
-                                                ? currentEscrow == "Creating new escrow contract"
-                                                    ? "cursor-pointer font-medium  text-gray-500 hover:bg-gray-300 transition duration-300"
-                                                    : "font-medium  text-gray-500"
-                                                : "cursor-pointer font-medium  text-gray-700 hover:bg-gray-300 transition duration-300 ease-in-out"
-                                        }`}
-                                        onClick={() => {
-                                            setModalOpen(true)
-                                        }}
-                                        disabled={currentEscrow == "No current escrows"}
-                                    >
-                                        {currentEscrow}
-                                    </button>
+                                <div className="flex  items-center justify-center">
+                                    <div className="w-full px-0.5">
+                                        <button
+                                            className={` mt-1 bg-gray-200  rounded-xl overflow-hidden text-ellipsis whitespace-nowrap w-full text-sm py-3  p-2 my-2 inline-block ${
+                                                currentEscrow == "No current escrows" ||
+                                                currentEscrow == "Creating new escrow contract"
+                                                    ? currentEscrow ==
+                                                      "Creating new escrow contract"
+                                                        ? "cursor-pointer font-medium  text-gray-500 hover:bg-gray-300 transition duration-300"
+                                                        : "font-medium  text-gray-500"
+                                                    : "cursor-pointer font-medium  text-gray-700 hover:bg-gray-300 transition duration-300 ease-in-out"
+                                            }`}
+                                            onClick={() => {
+                                                setModalOpen(true)
+                                            }}
+                                            disabled={currentEscrow == "No current escrows"}
+                                        >
+                                            {currentEscrow}
+                                        </button>
+                                    </div>
                                     <div className="">
-                                        {anyEscrows != "No current escrows" && buyerState && (
-                                            <button
-                                                className="bg-primary hover:bg-hover text-writing transition duration-300 ease-in-out  text-sm ml-1 font-bold py-3 mb-1 px-4 rounded-xl  "
-                                                onClick={startEscrowButtonNew}
-                                                disabled={isLoading || isFetching}
-                                            >
-                                                New
-                                            </button>
-                                        )}
+                                        {anyEscrows != "No current escrows" &&
+                                            currentEscrow != "Creating new escrow contract" &&
+                                            buyerState && (
+                                                <button
+                                                    className="bg-primary hover:bg-hover text-writing transition duration-300 ease-in-out mr-0.5 text-sm ml-1 font-bold py-3 mb-1 px-4  rounded-xl  "
+                                                    onClick={startEscrowButtonNew}
+                                                    disabled={isLoading || isFetching}
+                                                >
+                                                    New
+                                                </button>
+                                            )}
                                     </div>
                                 </div>
                                 {currentEscrow == "No current escrows" && !buyerState && (
@@ -863,7 +876,9 @@ export default function EscrowFactory({ onError }) {
                                                             <div className="font-medium  text-sm">
                                                                 {BigNumber(balance)
                                                                     .dividedBy(
-                                                                        BigNumber("10").pow(18),
+                                                                        BigNumber("10").pow(
+                                                                            tokenDecimals,
+                                                                        ),
                                                                     )
                                                                     .toString()}
                                                             </div>
@@ -1104,7 +1119,7 @@ export default function EscrowFactory({ onError }) {
                                                                     {BigNumber(i_amount)
                                                                         .dividedBy(
                                                                             BigNumber("10").pow(
-                                                                                18,
+                                                                                tokenDecimals,
                                                                             ),
                                                                         )
                                                                         .toString()}
@@ -1148,7 +1163,9 @@ export default function EscrowFactory({ onError }) {
                                                                                 .dividedBy(
                                                                                     BigNumber(
                                                                                         "10",
-                                                                                    ).pow(18),
+                                                                                    ).pow(
+                                                                                        tokenDecimals,
+                                                                                    ),
                                                                                 )
                                                                                 .toString()}
                                                                         </div>
@@ -1158,7 +1175,9 @@ export default function EscrowFactory({ onError }) {
                                                                                 .dividedBy(
                                                                                     BigNumber(
                                                                                         "10",
-                                                                                    ).pow(18),
+                                                                                    ).pow(
+                                                                                        tokenDecimals,
+                                                                                    ),
                                                                                 )
                                                                                 .toString()}
                                                                         </div>
@@ -1246,7 +1265,11 @@ export default function EscrowFactory({ onError }) {
                                                     <div className="flex">
                                                         <div className="mr-1">Balance:</div>
                                                         {BigNumber(tokenBalance)
-                                                            .dividedBy(BigNumber("10").pow(18))
+                                                            .dividedBy(
+                                                                BigNumber("10").pow(
+                                                                    tokenDecimalsTemp,
+                                                                ),
+                                                            )
                                                             .toString()}
                                                     </div>
                                                 )}
@@ -1336,7 +1359,6 @@ export default function EscrowFactory({ onError }) {
                                     anyEscrows != "No current escrows" &&
                                     !isFunded &&
                                     !isEscrowEnded &&
-                                    !showInputFields &&
                                     currentEscrow != "Creating new escrow contract" && (
                                         <button
                                             className={`bg-primary  w-full rounded-xl text-writing font-bold py-2 px-4  ml-right mr-4 mt-4  flex items-center justify-center ${
@@ -1379,8 +1401,7 @@ export default function EscrowFactory({ onError }) {
                                 {isApproved &&
                                     anyEscrows != "No current escrows" &&
                                     !isFunded &&
-                                    !isEscrowEnded &&
-                                    !showInputFields && (
+                                    !isEscrowEnded && (
                                         <button
                                             className={`bg-primary  text-writing font-bold py-2 px-4 w-full rounded-xl ml-right mr-4 mt-4 flex items-center justify-center ${
                                                 isLoading || isFetching || isFunding
@@ -1424,8 +1445,7 @@ export default function EscrowFactory({ onError }) {
                                 {anyEscrows != "No current escrows" &&
                                     isFunded &&
                                     !isEscrowEnded &&
-                                    !initializeState &&
-                                    !showInputFields && (
+                                    !initializeState && (
                                         <button
                                             className={`bg-primary  text-writing  font-bold py-2 px-4 mt-4 w-full rounded-xl ml-right mr-4 flex items-center justify-center ${
                                                 isLoading || isFetching || isWithdrawing
@@ -1468,8 +1488,7 @@ export default function EscrowFactory({ onError }) {
                                 {anyEscrows != "No current escrows" &&
                                     isFunded &&
                                     initializeState &&
-                                    !isEscrowEnded &&
-                                    !showInputFields && (
+                                    !isEscrowEnded && (
                                         <div>
                                             <div className=" flex items-center mt-2">
                                                 <button
@@ -1766,7 +1785,9 @@ export default function EscrowFactory({ onError }) {
                                                 <div className="flex">
                                                     <div className="mr-1">Balance:</div>
                                                     {BigNumber(tokenBalance)
-                                                        .dividedBy(BigNumber("10").pow(18))
+                                                        .dividedBy(
+                                                            BigNumber("10").pow(tokenDecimals),
+                                                        )
                                                         .toString()}
                                                 </div>
                                             )}

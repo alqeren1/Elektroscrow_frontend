@@ -23,7 +23,7 @@ export default function Home() {
             </Head>
             <div className="bg-[#fffffd] ">
                 <Header />
-                <div className="px-10 mt-10">
+                <div className="flex justify-center mt-10">
                     <How />
                 </div>
             </div>

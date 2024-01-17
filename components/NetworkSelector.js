@@ -158,9 +158,9 @@ function NetworkSelector() {
             </div>
 
             {showDropdown && (
-                <div className="absolute right-2  z-10 w-60 shadow-lg  rounded-xl bg-white border rounded ">
-                    <div className="cursor-pointer bg-[#fff091] hidden wdefined:flex text-[#9c9259] hover:bg-[#e3d681] hover:text-[#6b643d] py-2 md:px-4 px-2 transition duration-300 ease-in-out rounded-2xl font-medium">
-                        0xhfj...87635
+                <div className="absolute right-2 z-10 w-60 shadow-lg rounded-xl bg-white border rounded ">
+                    <div className="p-2  wdefined:hidden items-center justify-center flex w-full ">
+                        <ManuelConnect />
                     </div>
                     {networks.map((network) => (
                         <div

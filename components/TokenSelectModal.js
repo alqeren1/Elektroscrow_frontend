@@ -60,7 +60,9 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
         setIsTokenValid(true)
         onTokenValidation(true)
         setTokenName(name)
+
         setTokenSymbol(symbol)
+
         setTokenSymbolParent(symbol)
         console.log(`Token details: ${name} (${symbol}), Decimals: ${decimals}`)
     }
@@ -92,13 +94,15 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
         setTokenContractChild(searchTerm)
         setIsCustomToken(true)
         setDisplayTokenName(tokenName)
+
         setDisplayTokenSymbol(tokenSymbol)
         setModalOpen(false)
         setTokenImageUrl(
             "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
         )
+        setSearchTerm("")
     }
-    useEffect(() => {}, [searchTerm])
+
     useEffect(() => {
         const searchLowerCase = searchTerm.toLowerCase()
         const filtered = tokens.filter(
@@ -108,15 +112,14 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
                 token.symbol.toLowerCase().includes(searchLowerCase),
         )
         setFilteredTokens(filtered)
-
+        if (tokenContractChild != "") {
+            tokenContractCheck2()
+        }
         if (ethers.isAddress(searchTerm)) {
             tokenContractCheck()
         } else {
             setIsTokenValid(false)
             onTokenValidation(false)
-        }
-        if (tokenContractChild != "") {
-            tokenContractCheck2()
         }
     }, [searchTerm, tokenContractChild])
     useEffect(() => {
