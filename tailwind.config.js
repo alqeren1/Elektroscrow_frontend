@@ -23,7 +23,9 @@ module.exports = {
             screens: {
                 wdefinedxl: "1180px",
                 wdefinedlg: "870px",
+                wdefinedsmlg: "600px",
                 wdefined: "480px",
+                wdefinedmed: "427px",
                 wdefinedxsm: "330px",
                 wdefinedsm: "390px",
             },

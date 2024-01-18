@@ -348,11 +348,14 @@ export default function EscrowFactory({ onError }) {
             }
         }
     }
+
     useEffect(() => {
         if (isWeb3Enabled) {
             updateUI()
+
             checkApproval()
-            if (getTokenContract) {
+
+            if (getTokenContract && !showInputFields) {
                 getTokenSymbol()
             }
         }
@@ -393,7 +396,7 @@ export default function EscrowFactory({ onError }) {
 
     async function getTokenDecimalsTemp() {
         const decimals = await checkToken1({ params: { contractAddress: tokenContract } })
-        console.log("sa")
+
         setTokenDecimalsTemp(decimals)
     }
 
@@ -540,6 +543,7 @@ export default function EscrowFactory({ onError }) {
         setAmountInput("")
         setTokenBalance("")
         setTokenSymbol("")
+
         setShowInputFields(true)
     }
 
@@ -1206,7 +1210,7 @@ export default function EscrowFactory({ onError }) {
                                                                     </span>{" "}
                                                                     deposits. This amount includes
                                                                     the{" "}
-                                                                    <span className="font-bold text-primary hover:cursor-pointer hover:underline">
+                                                                    <span className="font-bold text-writingdark hover:cursor-pointer hover:underline">
                                                                         safety deposit
                                                                     </span>
                                                                 </p>

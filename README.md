@@ -18,7 +18,13 @@
 
 -docs daki sayfaların en altına sağa sola ok geçiş gelebilir.
 
+-current escrow adresi kopyalamak istersen zor kopyalanıyor
 
+-seçili olan escrow adı bold olabilir current escrowlara girildiğinde
+
+-buyer: seller: decisionları initialize olunca gösterilsin
+
+-bottom bar ekle how it works e
 
 
 LATER:
