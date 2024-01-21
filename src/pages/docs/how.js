@@ -8,18 +8,37 @@ import How from "../../../components/How"
 const inter = Inter({ subsets: ["latin"] })
 export default function Home() {
     const [layoutOpen, setLayoutOpen] = useState(true)
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 870) {
+                setLayoutOpen(false)
+            } else {
+                setLayoutOpen(true)
+            }
+        }
 
+        // Call the function on component mount
+        handleResize()
+
+        // Add event listener
+        window.addEventListener("resize", handleResize)
+
+        // Remove event listener on cleanup
+        return () => window.removeEventListener("resize", handleResize)
+    }, [])
     async function layoutButton() {
         setLayoutOpen(!layoutOpen)
     }
     return (
-        <CommonLayout layoutOpen={layoutOpen}>
+        <CommonLayout layoutOpen={layoutOpen} setLayoutOpen={setLayoutOpen}>
             <div className=" w-full  justify-center  ">
                 <button
                     onClick={() => {
                         layoutButton()
                     }}
-                    className="mt-2 ml-2 text-gray-400 hover:text-gray-700"
+                    className={`fixed mt-5 ml-2 md:text-gray-400 hover:text-gray-700  text-gray-700  md:p-0  md:bg-inherit rounded p-1  bg-gray-100 ${
+                        layoutOpen ? "hidden " : ""
+                    }`}
                 >
                     <Menu />
                 </button>
@@ -126,6 +145,11 @@ export default function Home() {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className=" mt-6 font-normal text-lsm ">
+                                            *Safety deposit is{" "}
+                                            <span className="font-medium">always</span> = escrow
+                                            amount
+                                        </div>
                                     </div>
                                     <div>
                                         Safety deposits are refunded upon the conclusion of the
@@ -183,10 +207,10 @@ export default function Home() {
                                             .
                                         </div>
                                     </div>
-                                    <div className="mt-10  italic bg-yellow-100 bg-opacity-30 rounded-3xl p-4">
+                                    <div className="mt-10 mb-10 italic bg-yellow-100 bg-opacity-30 rounded-3xl p-4">
                                         <div className="mb-6 underline decoration-dotted underline-offset-4">
                                             <span className="font-medium ">
-                                                All possible scenarios:{" "}
+                                                All possible scenarios after decisions are made:{" "}
                                             </span>
                                         </div>
                                         <div className="flex mt-2">
@@ -306,36 +330,57 @@ export default function Home() {
                                             <div className="wdefinedsmlg:ml-32 ml-4 wdefined:w-auto w-full">
                                                 <div className="font-medium ">Outcomes:</div>
 
-                                                <div className="flex wdefinedmt-6 mt-4 ">
+                                                <div className="flex wdefinedmt-6 mt-4 bg-green-100 bg-opacity-50 px-2 rounded-md ">
                                                     <div className="font-normal ">
                                                         Successfull transfer
                                                     </div>
                                                 </div>
-                                                <div className="flex wdefined:mt-4 mt-11 ">
+                                                <div className="flex wdefined:mt-4 mt-11 w-auto bg-yellow-100 bg-opacity-90 px-2 rounded-md">
                                                     <div className="font-normal ">Refund</div>
                                                 </div>
                                                 <div className="flex wdefined:mt-4 mt-10 ">
-                                                    <div className="font-normal ">Safekeeping</div>
+                                                    <div className="font-normal ">
+                                                        Safekeeping*
+                                                    </div>
                                                 </div>
                                                 <div className="flex wdefined:mt-4 mt-10 ">
-                                                    <div className="font-normal ">Safekeeping</div>
+                                                    <div className="font-normal ">
+                                                        Safekeeping*
+                                                    </div>
                                                 </div>
                                                 <div className="flex wdefined:mt-4 mt-10  ">
-                                                    <div className="font-normal ">Safekeeping</div>
+                                                    <div className="font-normal ">
+                                                        Safekeeping*
+                                                    </div>
                                                 </div>
                                                 <div className="flex wdefined:mt-4 mt-10 ">
-                                                    <div className="font-normal ">Safekeeping</div>
+                                                    <div className="font-normal ">
+                                                        Safekeeping*
+                                                    </div>
                                                 </div>
                                                 <div className="flex wdefined:mt-4 mt-10 ">
-                                                    <div className="font-normal ">Safekeeping</div>
+                                                    <div className="font-normal ">
+                                                        Safekeeping*
+                                                    </div>
                                                 </div>
                                                 <div className="flex wdefined:mt-4 mt-9 ">
-                                                    <div className="font-normal ">Safekeeping</div>
+                                                    <div className="font-normal ">
+                                                        Safekeeping*
+                                                    </div>
                                                 </div>
                                                 <div className="flex wdefined:mt-4 mt-10">
-                                                    <div className="font-normal ">Safekeeping</div>
+                                                    <div className="font-normal ">
+                                                        Safekeeping*
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div className="mt-10  ">
+                                            <span className="font-medium mr-2 ">Safekeeping*</span>
+                                            = Funds are securely kept inside the contract until
+                                            either <span className="font-medium  "> refund </span>{" "}
+                                            or <span className="font-medium  "> transfer </span>
+                                            outcomes occur
                                         </div>
                                     </div>
                                     <div className="justify-between flex mt-20">

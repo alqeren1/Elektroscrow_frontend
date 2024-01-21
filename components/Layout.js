@@ -1,7 +1,9 @@
 import Link from "next/link"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import Head from "next/head"
+
+import Menu from "../svgs/menu"
 
 const menuItems = [
     { href: "/docs/home", title: "Introduction" },
@@ -12,9 +14,9 @@ const menuItems = [
     { href: "/docs/paymentToken", title: "Tokens to use for payment" },
     { href: "/docs/depositing", title: "Funding the contract" },
     { href: "/docs/safetyDeposit", title: "Safety deposit" },
+    { href: "/docs/withdrawing", title: "Withdrawing" },
     { href: "/docs/contractBalance", title: "Contract balance" },
     { href: "/docs/initialization", title: "Initialization" },
-    { href: "/docs/withdrawing", title: "Withdrawing" },
 
     { href: "/docs/escrowStatus", title: "Escrow status" },
     { href: "/docs/supportedNetworks", title: "Supported networks" },
@@ -22,7 +24,7 @@ const menuItems = [
     { href: "/docs/roadmap", title: "Roadmap" },
 ]
 
-export default function Layout({ children }) {
+export default function Layout({ children, setLayoutOpen }) {
     const router = useRouter()
 
     return (
@@ -36,17 +38,26 @@ export default function Layout({ children }) {
             <div className="min-h-screen flex">
                 <aside className="bg-[#f7f7f7] w-[300px]  fixed inset-0  border-r border-gray-300 overflow-y-auto ">
                     <nav>
-                        <div className="flex  bg-white w-full items-center">
-                            <img
-                                src="/elektro_adjusted.png"
-                                alt="Logo"
-                                className="h-10 w-10 mr-1 ml-2 mt-1"
-                            />
-                            <div className="font-bold text-xl  py-4  text-gray-800 ">
-                                Elektroscrow Docs
+                        <div className="sticky top-0 bg-white z-10">
+                            <div className=" flex  bg-white w-full items-center">
+                                <img
+                                    src="/elektro_adjusted.png"
+                                    alt="Logo"
+                                    className="h-10 w-10 mr-1 ml-2 mt-1"
+                                />
+                                <div className="font-bold text-xl  py-4  text-gray-800 ">
+                                    Elektroscrow Docs
+                                </div>
+
+                                <button
+                                    onClick={() => setLayoutOpen(false)}
+                                    className=" absolute mt-1 right-0  text-gray-400 hover:text-gray-700 wdefinedxxxsm:mr-2 mr-6"
+                                >
+                                    <Menu />
+                                </button>
                             </div>
+                            <div className="border-b w-full border-gray-300"></div>
                         </div>
-                        <div className="border-b w-full border-gray-300"></div>
                         <ul className="mt-5">
                             <div className="px-4 mb-2  opacity-50 ">GENERAL</div>
                             {menuItems.map(({ href, title }) => (

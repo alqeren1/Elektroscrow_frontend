@@ -396,12 +396,7 @@ export default function EscrowFactory({ onError }) {
         }
     })
     useEffect(() => {
-        if (showInputFields) {
-            console.log("true")
-        } else {
-            console.log("false")
-        }
-        if (isWeb3Enabled && !showInputFields) {
+        if (isWeb3Enabled) {
             getTokenSymbol()
         }
     }, [getTokenContract, currentEscrow])
@@ -413,7 +408,6 @@ export default function EscrowFactory({ onError }) {
     }
 
     async function getTokenSymbol() {
-        console.log(getTokenContract)
         const symbol = await checkToken3({ params: { contractAddress: getTokenContract } })
         const decimals = await checkToken1({ params: { contractAddress: getTokenContract } })
         const name = await checkToken2({ params: { contractAddress: getTokenContract } })
@@ -875,6 +869,7 @@ export default function EscrowFactory({ onError }) {
                                     onSelectEscrow={handleSelectEscrow}
                                     onClose={() => setModalOpen(false)}
                                     isBuyer={buyerState}
+                                    currentEscrow={currentEscrow}
                                 />
 
                                 {/* Escrow Information */}

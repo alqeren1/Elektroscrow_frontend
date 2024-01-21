@@ -9,18 +9,37 @@ import How from "../../../components/How"
 const inter = Inter({ subsets: ["latin"] })
 export default function Home() {
     const [layoutOpen, setLayoutOpen] = useState(true)
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 870) {
+                setLayoutOpen(false)
+            } else {
+                setLayoutOpen(true)
+            }
+        }
 
+        // Call the function on component mount
+        handleResize()
+
+        // Add event listener
+        window.addEventListener("resize", handleResize)
+
+        // Remove event listener on cleanup
+        return () => window.removeEventListener("resize", handleResize)
+    }, [])
     async function layoutButton() {
         setLayoutOpen(!layoutOpen)
     }
     return (
-        <CommonLayout layoutOpen={layoutOpen}>
+        <CommonLayout layoutOpen={layoutOpen} setLayoutOpen={setLayoutOpen}>
             <div className=" w-full  justify-center  ">
                 <button
                     onClick={() => {
                         layoutButton()
                     }}
-                    className="mt-2 ml-2 text-gray-400 hover:text-gray-700"
+                    className={`fixed mt-5 ml-2 md:text-gray-400 hover:text-gray-700  text-gray-700  md:p-0  md:bg-inherit rounded p-1  bg-gray-100 ${
+                        layoutOpen ? "hidden " : ""
+                    }`}
                 >
                     <Menu />
                 </button>
@@ -37,32 +56,39 @@ export default function Home() {
                         <div className="px-4 py-4 mt-20">
                             <div className="mt-2 ">
                                 Elektroscrow's approach to payments is meticulously designed to
-                                offer both flexibility and security, catering to the diverse needs
-                                of its users in the blockchain ecosystem. The platform supports a
-                                wide array of tokens, ensuring users have the freedom to engage in
-                                transactions with their preferred digital assets. For ease of use
-                                and enhanced security, Elektroscrow provides a curated list of
-                                trusted tokens. This list is carefully compiled, featuring tokens
-                                that have been vetted for their reliability and stability, thus
-                                offering users peace of mind when selecting a token for their
-                                escrow transactions.
+                                offer both <span className="font-bold"> flexibility </span> and{" "}
+                                <span className="font-bold"> security</span>, catering to the
+                                diverse needs of its users in the blockchain ecosystem. The
+                                platform supports a wide array of tokens, ensuring users have the
+                                freedom to engage in transactions with their{" "}
+                                <span className="font-bold"> preferred digital assets</span>. For
+                                ease of use and enhanced security, Elektroscrow provides a curated
+                                list of <span className="font-bold"> trusted tokens</span>. This
+                                list is carefully compiled, featuring tokens that have been vetted
+                                for their reliability and stability, thus offering users peace of
+                                mind when selecting a token for their escrow transactions.
                             </div>
                             <div className="mt-10 ">
                                 In addition to the trusted tokens list, Elektroscrow uniquely
-                                empowers its users with the capability to use custom tokens that
-                                may not be included on the list. This feature is particularly
-                                beneficial for users looking to transact with niche or specialized
-                                tokens, thereby broadening the scope of potential escrow
-                                transactions on the platform. However, with this power comes a
-                                significant responsibility. Users opting for custom tokens are
-                                advised to exercise due diligence. The decentralized nature of
-                                blockchain means that while users have unparalleled freedom, they
-                                also bear the onus of ensuring the legitimacy and safety of the
-                                custom tokens they choose to transact with.
+                                empowers its users with the capability to use{" "}
+                                <span className="font-bold"> custom tokens </span> that may not be
+                                included on the list. This feature is particularly beneficial for
+                                users looking to transact with{" "}
+                                <span className="font-bold"> niche </span> or{" "}
+                                <span className="font-bold"> specialized tokens</span>, thereby
+                                broadening the scope of potential escrow transactions on the
+                                platform. However, with this power comes a significant
+                                responsibility. Users opting for{" "}
+                                <span className="font-bold"> custom tokens </span> are advised to
+                                exercise <span className="font-bold"> due diligence</span>. The
+                                decentralized nature of blockchain means that while users have
+                                unparalleled freedom, they also bear the onus of ensuring the
+                                legitimacy and safety of the custom tokens they choose to transact
+                                with.
                             </div>
                             <div className="mt-10 ">
                                 The platform's native token, a pivotal addition in the second phase
-                                of Elektroscrow’s development, introduces an even more seamless
+                                of Elektroscrow’s development, will introduce an even more seamless
                                 transaction experience. Transactions made using this native token
                                 will not incur protocol fees, providing a cost-effective option for
                                 users. This innovative step is aligned with Elektroscrow’s mission
@@ -71,11 +97,14 @@ export default function Home() {
                             </div>
                             <div className="mt-10 ">
                                 In summary, Elektroscrow stands out in the decentralized finance
-                                landscape by offering a diverse range of token options for escrow
-                                transactions. From a carefully selected list of trusted tokens to
-                                the freedom of using custom tokens, coupled with the added
-                                advantage of its fee-exempt native token, Elektroscrow is truly
-                                redefining user autonomy and security in digital transactions.
+                                landscape by offering a{" "}
+                                <span className="font-bold"> diverse range of token </span> options
+                                for escrow transactions. From a carefully selected list of{" "}
+                                <span className="font-bold"> trusted tokens </span> to the freedom
+                                of using <span className="font-bold"> custom tokens</span>, coupled
+                                with the added advantage of its fee-exempt native token,
+                                Elektroscrow is truly redefining user autonomy and security in
+                                digital transactions.
                             </div>
                             <div className="justify-between flex ">
                                 <a

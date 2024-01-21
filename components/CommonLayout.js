@@ -1,6 +1,6 @@
 import Layout from "./Layout"
 import { useEffect, useState } from "react"
-export default function CommonLayout({ children, layoutOpen }) {
+export default function CommonLayout({ children, layoutOpen, setLayoutOpen }) {
     const [isSmallScreen, setIsSmallScreen] = useState(false)
     useEffect(() => {
         // Check if window is available
@@ -22,7 +22,7 @@ export default function CommonLayout({ children, layoutOpen }) {
             <div className="relative min-h-screen flex ">
                 {layoutOpen && (
                     <div className="flex-none w-[300px] bg-black lg:block">
-                        <Layout />
+                        <Layout setLayoutOpen={setLayoutOpen} />
                     </div>
                 )}
 
@@ -39,7 +39,7 @@ export default function CommonLayout({ children, layoutOpen }) {
                     layoutOpen ? "block" : "hidden"
                 } fixed inset-y-0 left-0 z-30 w-72 bg-black `}
             >
-                <Layout />
+                <Layout setLayoutOpen={setLayoutOpen} />
             </div>
 
             {/* Main content */}

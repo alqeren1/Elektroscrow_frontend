@@ -9,18 +9,37 @@ import How from "../../../components/How"
 const inter = Inter({ subsets: ["latin"] })
 export default function Home() {
     const [layoutOpen, setLayoutOpen] = useState(true)
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 870) {
+                setLayoutOpen(false)
+            } else {
+                setLayoutOpen(true)
+            }
+        }
 
+        // Call the function on component mount
+        handleResize()
+
+        // Add event listener
+        window.addEventListener("resize", handleResize)
+
+        // Remove event listener on cleanup
+        return () => window.removeEventListener("resize", handleResize)
+    }, [])
     async function layoutButton() {
         setLayoutOpen(!layoutOpen)
     }
     return (
-        <CommonLayout layoutOpen={layoutOpen}>
+        <CommonLayout layoutOpen={layoutOpen} setLayoutOpen={setLayoutOpen}>
             <div className=" w-full  justify-center  ">
                 <button
                     onClick={() => {
                         layoutButton()
                     }}
-                    className="mt-2 ml-2 text-gray-400 hover:text-gray-700"
+                    className={`fixed mt-5 ml-2 md:text-gray-400 hover:text-gray-700  text-gray-700  md:p-0  md:bg-inherit rounded p-1  bg-gray-100 ${
+                        layoutOpen ? "hidden " : ""
+                    }`}
                 >
                     <Menu />
                 </button>
@@ -37,23 +56,32 @@ export default function Home() {
                         <div className="px-4 py-4 mt-20">
                             <div className="mt-2 ">
                                 Elektroscrow stands as a paragon of anonymity in the realm of
-                                decentralized finance, emphasizing the importance of user privacy
+                                decentralized finance, emphasizing the importance of{" "}
+                                <span className="font-bold"> user privacy </span>
                                 in every transaction. The platform is designed to ensure complete
-                                anonymity by requiring only the wallet address of users, without
-                                necessitating any personal information or transaction details. This
-                                approach means that Elektroscrow does not store, process, or even
-                                ask for any data beyond the essential blockchain addresses, thereby
-                                upholding the highest standards of privacy. The transactions
-                                themselves are conducted purely on the basis of smart contracts,
-                                which operate autonomously and transparently on the blockchain,
-                                further ensuring that no individual or entity can access user
-                                information. This system guarantees that the specifics of an escrow
-                                agreement remain known only to the involved parties, aligning with
-                                the core ethos of blockchain technology which champions anonymity
-                                and security. By prioritizing user anonymity, Elektroscrow not only
-                                safeguards user privacy but also fosters a trust-based environment
-                                where transactions are conducted without fear of data compromise or
-                                privacy invasion.
+                                anonymity by requiring{" "}
+                                <span className="font-bold"> only the wallet address </span> of
+                                users, without necessitating any personal information or
+                                transaction details. This approach means that Elektroscrow
+                                <span className="font-bold"> does not store</span>,{" "}
+                                <span className="font-bold"> process</span>, or even ask for{" "}
+                                <span className="font-bold"> any data </span> beyond the essential
+                                blockchain addresses, thereby upholding the highest standards of
+                                privacy. The transactions themselves are conducted purely on the
+                                basis of smart contracts, which operate autonomously and
+                                transparently on the blockchain, further ensuring that no
+                                individual or entity can access user information. This system
+                                guarantees that the <span className="font-bold"> specifics </span>{" "}
+                                of an <span className="font-bold"> escrow agreement </span> remain{" "}
+                                <span className="font-bold">
+                                    {" "}
+                                    known only to the involved parties
+                                </span>
+                                , aligning with the core ethos of blockchain technology which
+                                champions anonymity and security. By prioritizing user anonymity,
+                                Elektroscrow not only safeguards user privacy but also fosters a
+                                trust-based environment where transactions are conducted without
+                                fear of data compromise or privacy invasion.
                             </div>
                             <div className="justify-between flex mt-20">
                                 <a

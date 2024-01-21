@@ -150,6 +150,10 @@ function How() {
                                     </div>
                                 </div>
                             </div>
+                            <div className=" mt-6 font-normal text-lsm ">
+                                *Safety deposit is <span className="font-medium">always</span> =
+                                escrow amount
+                            </div>
                         </div>
                         <div>
                             Safety deposits are refunded upon the conclusion of the escrow. The
@@ -318,7 +322,7 @@ function How() {
                                 securely kept inside the contract until either{" "}
                                 <span className="font-medium  "> refund </span> or{" "}
                                 <span className="font-medium  "> transfer </span>
-                                outcomes happen
+                                outcomes occur
                             </div>
                         </div>
                     </div>

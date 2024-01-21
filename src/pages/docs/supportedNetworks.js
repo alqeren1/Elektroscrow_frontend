@@ -7,18 +7,37 @@ import How from "../../../components/How"
 const inter = Inter({ subsets: ["latin"] })
 export default function Home() {
     const [layoutOpen, setLayoutOpen] = useState(true)
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 870) {
+                setLayoutOpen(false)
+            } else {
+                setLayoutOpen(true)
+            }
+        }
 
+        // Call the function on component mount
+        handleResize()
+
+        // Add event listener
+        window.addEventListener("resize", handleResize)
+
+        // Remove event listener on cleanup
+        return () => window.removeEventListener("resize", handleResize)
+    }, [])
     async function layoutButton() {
         setLayoutOpen(!layoutOpen)
     }
     return (
-        <CommonLayout layoutOpen={layoutOpen}>
+        <CommonLayout layoutOpen={layoutOpen} setLayoutOpen={setLayoutOpen}>
             <div className=" w-full  justify-center  ">
                 <button
                     onClick={() => {
                         layoutButton()
                     }}
-                    className="mt-2 ml-2 text-gray-400 hover:text-gray-700"
+                    className={`fixed mt-5 ml-2 md:text-gray-400 hover:text-gray-700  text-gray-700  md:p-0  md:bg-inherit rounded p-1  bg-gray-100 ${
+                        layoutOpen ? "hidden " : ""
+                    }`}
                 >
                     <Menu />
                 </button>

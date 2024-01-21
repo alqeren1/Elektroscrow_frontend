@@ -3,7 +3,7 @@ import { useWeb3Contract } from "react-moralis"
 import { ArrowDown, ArrowUp } from "@web3uikit/icons"
 
 const abi_logic = require("../constants1/abi_logic.json")
-const EscrowDropdownModal = ({ isOpen, escrows, onSelectEscrow, onClose, isBuyer }) => {
+const EscrowDropdownModal = ({ isOpen, escrows, onSelectEscrow, onClose, currentEscrow }) => {
     const modalRef = useRef()
 
     const [searchTerm, setSearchTerm] = useState("")
@@ -131,7 +131,11 @@ const EscrowDropdownModal = ({ isOpen, escrows, onSelectEscrow, onClose, isBuyer
                                 .map((address, index) => (
                                     <div
                                         key={address}
-                                        className="flex items-center justify-between p-2 hover:bg-gray-200 h-16  cursor-pointer rounded-xl mt-2 mb-1 border-2  shadow-md bg-gray-50 text-gray-700"
+                                        className={`flex items-center justify-between p-2 hover:bg-gray-200 h-16 cursor-pointer rounded-xl mt-2 mb-1 border-2 shadow-md bg-gray-50 text-gray-700 ${
+                                            address === currentEscrow
+                                                ? " border-primary border-[3px] "
+                                                : ""
+                                        }`}
                                         onClick={() => handleEscrowSelect(address)}
                                     >
                                         <div className="font-medium text-lsm overflow-hidden text-ellipsis whitespace-nowrap">
@@ -174,7 +178,11 @@ const EscrowDropdownModal = ({ isOpen, escrows, onSelectEscrow, onClose, isBuyer
                                 .map((address, index) => (
                                     <div
                                         key={address}
-                                        className="flex items-center justify-between p-2 hover:bg-gray-200 h-16  cursor-pointer rounded-xl mt-2 mb-1 border-2  shadow-md bg-gray-50 text-gray-700"
+                                        className={`flex items-center justify-between p-2 hover:bg-gray-200 h-16 cursor-pointer rounded-xl mt-2 mb-1 border-2 shadow-md bg-gray-50 text-gray-700 ${
+                                            address === currentEscrow
+                                                ? "border-primary border-[3px] "
+                                                : ""
+                                        }`}
                                         onClick={() => handleEscrowSelect(address)}
                                     >
                                         <div className="font-medium text-lsm overflow-hidden text-ellipsis whitespace-nowrap">

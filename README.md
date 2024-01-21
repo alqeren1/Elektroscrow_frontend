@@ -3,7 +3,9 @@
 
 
 
+-docs' a fees başlığı ekle
 
+-docs'a networks ekle
 
 
 -website loading animasyhonu var sağ altta, vercel logolu, onu elektro logolu yap
@@ -12,26 +14,26 @@
 -build modda test et
 
 
+-tokenleri listede sırala, populerleri üste al
 
--docs u yaz(birkaç sekme kaldı, bold kelime ekleme yap, bir de yan menü kapama tuşu sayfanın üstünde olduğu gibi layout'da da olsun)
 
 
 
 
 -current escrow adresi kopyalamak istersen zor kopyalanıyor
 
--seçili olan escrow adı bold olabilir current escrowlara girildiğinde
+
 
 -en altta socialları gösteren bir bar hep olsun, we contract email.
 
 
 
 
--docs a fees ekle
 
 
 
--how does it work e de bottom bar lazım, donüş için
+
+
 
 LATER:
 

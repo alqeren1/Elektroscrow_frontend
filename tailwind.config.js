@@ -29,6 +29,7 @@ module.exports = {
                 wdefinedsm: "390px",
                 wdefinedxsm: "330px",
                 wdefinedxxsm: "310px",
+                wdefinedxxxsm: "300px",
             },
         },
     },
