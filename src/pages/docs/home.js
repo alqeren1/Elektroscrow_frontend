@@ -2,6 +2,8 @@ import CommonLayout from "../../../components/CommonLayout"
 import Menu from "../../../svgs/menu"
 import { useState, useEffect } from "react"
 import { Inter } from "next/font/google"
+import Arrowup from "../../../svgs/arrow-up"
+
 import styles from "@/styles/Home.module.css"
 import How from "../../../components/How"
 const inter = Inter({ subsets: ["latin"] })
@@ -129,7 +131,7 @@ export default function Home() {
                                 different blockchain ecosystems.
                             </div>
                         </div>
-                        <div className="px-4 pb-28 py-4 mt-8">
+                        <div className="px-4  py-4 mt-8 ">
                             <h1 className="font-medium text-3xl text-left">
                                 A Vanguard of Decentralized Escrows
                             </h1>
@@ -143,6 +145,23 @@ export default function Home() {
                                 potential of decentralized, secure, and private financial
                                 transactions in the modern era.
                             </div>
+                        </div>
+                        <div className="justify-between flex p-4 ">
+                            <button
+                                disabled={true}
+                                className="bg-gray-100 opacity-0 rounded-lg  border-2 w-64 h-16 mt-10 items-center flex  "
+                            ></button>
+                            <a
+                                href="/docs/how"
+                                className="bg-gray-100 bg-opacity-50 ml-2 rounded-lg border-2 w-64 group h-16 mt-10 items-center  text-[#7d7d7d] hover:text-gray-700 flex cursor-pointer"
+                            >
+                                <div className="flex px-1 justify-center text-left w-full font-medium">
+                                    How does it work?
+                                </div>
+                                <span className="rotate-[90deg] mr-2 group-hover:translate-x-2 transition duration-300 ease-in-out">
+                                    <Arrowup />
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </div>

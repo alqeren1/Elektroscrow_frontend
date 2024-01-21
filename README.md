@@ -1,7 +1,7 @@
 
 
 
--sadece galaxy fold sıcıyor
+
 
 
 
@@ -11,30 +11,37 @@
 
 -build modda test et
 
--info bar safety deposit'e link ekle
 
--docs u yaz
--how does it work u yaz
 
--docs daki sayfaların en altına sağa sola ok geçiş gelebilir.
+-docs u yaz(birkaç sekme kaldı, bold kelime ekleme yap, bir de yan menü kapama tuşu sayfanın üstünde olduğu gibi layout'da da olsun)
+
+
+
 
 -current escrow adresi kopyalamak istersen zor kopyalanıyor
 
 -seçili olan escrow adı bold olabilir current escrowlara girildiğinde
 
--buyer: seller: decisionları initialize olunca gösterilsin
+-en altta socialları gösteren bir bar hep olsun, we contract email.
 
--bottom bar ekle how it works e
 
+
+
+-docs a fees ekle
+
+
+
+-how does it work e de bottom bar lazım, donüş için
 
 LATER:
 
--yana donme yasak olmalı tellerde
+
 -custom token fotosu yap, ekle
 
 -componentlara ayırabilirsin ilk kod cok uzun oldu
 
--açıklamadaki safety deposits'e link koy detaya gönderen
+-ilerde belki giriş sayfası olur
+
 
 -walletconnect support
 ---walletconnect icin yeni bir escrowcreate.js yapman lazım. https://wagmi.sh/react/hooks/useContractWrite burdan bakarak functionları değiş

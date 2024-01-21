@@ -199,7 +199,7 @@ export default function EscrowFactory({ onError }) {
             seller: seller,
             amount:
                 amountInput && !isNaN(amountInput) && amountInput.trim() !== "" && amountInput > 0
-                    ? ethers.parseUnits(amountInput, "ether")
+                    ? ethers.parseUnits(amountInput, tokenDecimalsTemp)
                     : "0",
             tokenContract: tokenContract,
         },
@@ -352,12 +352,14 @@ export default function EscrowFactory({ onError }) {
     useEffect(() => {
         if (isWeb3Enabled) {
             updateUI()
+            if (currentEscrow != "Creating new escrow contract") {
+                setShowInputFields(false)
+            }
+            if (currentEscrow == "No current escrows") {
+                setShowInputFields(true)
+            }
 
             checkApproval()
-
-            if (getTokenContract && !showInputFields) {
-                getTokenSymbol()
-            }
         }
     }, [
         isWeb3Enabled,
@@ -393,6 +395,16 @@ export default function EscrowFactory({ onError }) {
             return () => clearTimeout(timeoutId)
         }
     })
+    useEffect(() => {
+        if (showInputFields) {
+            console.log("true")
+        } else {
+            console.log("false")
+        }
+        if (isWeb3Enabled && !showInputFields) {
+            getTokenSymbol()
+        }
+    }, [getTokenContract, currentEscrow])
 
     async function getTokenDecimalsTemp() {
         const decimals = await checkToken1({ params: { contractAddress: tokenContract } })
@@ -401,6 +413,7 @@ export default function EscrowFactory({ onError }) {
     }
 
     async function getTokenSymbol() {
+        console.log(getTokenContract)
         const symbol = await checkToken3({ params: { contractAddress: getTokenContract } })
         const decimals = await checkToken1({ params: { contractAddress: getTokenContract } })
         const name = await checkToken2({ params: { contractAddress: getTokenContract } })
@@ -477,6 +490,7 @@ export default function EscrowFactory({ onError }) {
     const handleSelectEscrow = (address) => {
         setCurrentEscrow(address)
         setModalOpen(false)
+        setShowInputFields(false)
         // Other actions to handle after selecting an escrow
     }
     const handlesuccess = async function (tx) {
@@ -543,7 +557,7 @@ export default function EscrowFactory({ onError }) {
         setAmountInput("")
         setTokenBalance("")
         setTokenSymbol("")
-
+        setGetTokenContract("")
         setShowInputFields(true)
     }
 
@@ -624,7 +638,6 @@ export default function EscrowFactory({ onError }) {
         }
         if (ethers.getAddress(account) == i_seller) {
             try {
-                console.log("amount" + i_amount)
                 await approve2({
                     onSuccess: (tx) => {
                         handlesuccess(tx)
@@ -748,7 +761,7 @@ export default function EscrowFactory({ onError }) {
                 <>
                     {factoryAddress ? (
                         <div className="   flex justify-center  w-full">
-                            <div className="relative bg-gray-100 p-4   w-full wdefined:w-[480px] border-2 custom-shadow max-h-[613px] rounded-3xl">
+                            <div className="relative bg-gray-100 p-4   w-full wdefined:w-[480px] border-2 custom-shadow  rounded-3xl">
                                 {buyerState ? (
                                     <div className="flex items-center">
                                         <button
@@ -780,6 +793,7 @@ export default function EscrowFactory({ onError }) {
                                         </button>
                                     </div>
                                 )}
+
                                 <div className=" text-lg text-gray-700 ml-1 font-bold ">
                                     Current escrow
                                 </div>
@@ -800,7 +814,35 @@ export default function EscrowFactory({ onError }) {
                                             }}
                                             disabled={currentEscrow == "No current escrows"}
                                         >
-                                            {currentEscrow}
+                                            {" "}
+                                            {currentEscrow == "No current escrows" ||
+                                            currentEscrow == "Creating new escrow contract" ? (
+                                                <div className=" ">{currentEscrow}</div>
+                                            ) : (
+                                                <div>
+                                                    <div className="wdefined:flex hidden justify-center">
+                                                        {currentEscrow}
+                                                    </div>
+                                                    <div className="wdefined:hidden wdefinedsm:flex hidden justify-center">
+                                                        {currentEscrow.slice(0, 16)}....
+                                                        {currentEscrow.slice(
+                                                            currentEscrow.length - 16,
+                                                        )}{" "}
+                                                    </div>
+                                                    <div className="wdefinedsm:hidden wdefinedxsm:flex hidden justify-center">
+                                                        {currentEscrow.slice(0, 12)}....
+                                                        {currentEscrow.slice(
+                                                            currentEscrow.length - 12,
+                                                        )}{" "}
+                                                    </div>
+                                                    <div className="wdefinedxsm:hidden flex justify-center">
+                                                        {currentEscrow.slice(0, 9)}....
+                                                        {currentEscrow.slice(
+                                                            currentEscrow.length - 9,
+                                                        )}{" "}
+                                                    </div>
+                                                </div>
+                                            )}
                                         </button>
                                     </div>
                                     <div className="">
@@ -808,7 +850,7 @@ export default function EscrowFactory({ onError }) {
                                             currentEscrow != "Creating new escrow contract" &&
                                             buyerState && (
                                                 <button
-                                                    className="bg-primary hover:bg-hover text-writing transition duration-300 ease-in-out mr-0.5 text-sm ml-1 font-bold py-3 mb-1 px-4  rounded-xl  "
+                                                    className="bg-primary hover:bg-hover text-writing transition duration-300 ease-in-out mr-0.5 text-sm wdefined:ml-1 font-bold py-3 mb-1 px-4  rounded-xl  "
                                                     onClick={startEscrowButtonNew}
                                                     disabled={isLoading || isFetching}
                                                 >
@@ -842,7 +884,7 @@ export default function EscrowFactory({ onError }) {
                                         <div>
                                             <div className="flex items-center mb-2 ">
                                                 <div className="flex w-full relative group">
-                                                    <div className="flex w-full rounded ml-auto cursor-pointer py-2 px-4  justify-between rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className="wdefinedxxsm:flex w-full rounded ml-auto cursor-pointer py-2 wdefinedxsm:px-4 px-2 justify-between rounded-xl text-gray-700 bg-white border-2 items-center">
                                                         <div className="flex ">
                                                             <div className=" font-bold text-sm ">
                                                                 Initialized
@@ -852,7 +894,7 @@ export default function EscrowFactory({ onError }) {
                                                                 <Questionmark />
                                                             </div>
                                                         </div>
-                                                        <div className="font-medium ml-2 text-sm  ">
+                                                        <div className="font-medium wdefinedxsm:ml-2 wdefinedxxsm:ml-1 text-sm  ">
                                                             {initializeStateString}
                                                         </div>
                                                     </div>
@@ -873,7 +915,7 @@ export default function EscrowFactory({ onError }) {
                                                     </div>
                                                 </div>
                                                 <div className="flex w-full relative group">
-                                                    <div className="flex w-full rounded ml-auto cursor-pointer justify-between py-2 px-4  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className="wdefinedxxsm:flex w-full rounded ml-auto cursor-pointer justify-between py-2  wdefinedxsm:px-4 px-2 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
                                                         <div className="flex ">
                                                             <div className=" font-bold text-sm ">
                                                                 Balance
@@ -882,7 +924,7 @@ export default function EscrowFactory({ onError }) {
                                                                 <Questionmark />
                                                             </div>
                                                         </div>
-                                                        <div className="flex items-center ml-4">
+                                                        <div className="flex items-center wdefinedsm:ml-4 wdefinedxxsm:ml-2">
                                                             <div className="font-medium  text-sm">
                                                                 {BigNumber(balance)
                                                                     .dividedBy(
@@ -892,7 +934,7 @@ export default function EscrowFactory({ onError }) {
                                                                     )
                                                                     .toString()}
                                                             </div>
-                                                            <div className=" font-medium ml-3 text-sm">
+                                                            <div className=" font-medium wdefinedsm:ml-3 ml-1 text-sm">
                                                                 {tokenSymbol}
                                                             </div>
                                                         </div>
@@ -940,12 +982,30 @@ export default function EscrowFactory({ onError }) {
                                                             )}
                                                         </div>
                                                     </div>
-                                                    <div className="font-normal  text-base  ">
-                                                        {i_buyer}
+                                                    <div>
+                                                        <div className="hidden wdefined:flex font-normal  text-base ">
+                                                            {i_buyer}
+                                                        </div>
+                                                        <div className="wdefined:hidden wdefinedsm:flex hidden ">
+                                                            {i_buyer.slice(0, 15)}......
+                                                            {i_buyer.slice(i_buyer.length - 15)}
+                                                        </div>
+                                                        <div className="wdefinedxsm:flex wdefinedsm:hidden hidden ">
+                                                            {i_buyer.slice(0, 12)}......
+                                                            {i_buyer.slice(i_buyer.length - 12)}
+                                                        </div>
+                                                        <div className="wdefinedxsm:hidden wdefinedxxsm:flex hidden ">
+                                                            {i_buyer.slice(0, 11)}......
+                                                            {i_buyer.slice(i_buyer.length - 11)}
+                                                        </div>
+                                                        <div className="wdefinedxxsm:hidden flex  ">
+                                                            {i_buyer.slice(0, 9)}......
+                                                            {i_buyer.slice(i_buyer.length - 9)}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             ) : (
-                                                <div className=" w-full rounded ml-auto  py-3 px-4 mb-2  overflow-hidden text-ellipsis whitespace-nowrap rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                <div className=" w-full rounded ml-auto  py-3 wdefinedxsm:px-4 px-2 mb-2  overflow-hidden  rounded-xl text-gray-700 bg-white border-2 items-center">
                                                     <div className="flex items-center">
                                                         <div className=" font-bold text-sm ">
                                                             Seller address
@@ -973,13 +1033,31 @@ export default function EscrowFactory({ onError }) {
                                                             )}
                                                         </div>
                                                     </div>
-                                                    <div className="font-normal  text-base ">
-                                                        {i_seller}
+                                                    <div>
+                                                        <div className="hidden wdefined:flex font-normal  text-base ">
+                                                            {i_seller}
+                                                        </div>
+                                                        <div className="wdefined:hidden wdefinedsm:flex hidden ">
+                                                            {i_seller.slice(0, 15)}......
+                                                            {i_seller.slice(i_seller.length - 15)}
+                                                        </div>
+                                                        <div className="wdefinedxsm:flex wdefinedsm:hidden hidden ">
+                                                            {i_seller.slice(0, 12)}......
+                                                            {i_seller.slice(i_seller.length - 12)}
+                                                        </div>
+                                                        <div className="wdefinedxsm:hidden wdefinedxxsm:flex hidden ">
+                                                            {i_seller.slice(0, 11)}......
+                                                            {i_seller.slice(i_seller.length - 11)}
+                                                        </div>
+                                                        <div className="wdefinedxxsm:hidden flex  ">
+                                                            {i_seller.slice(0, 9)}......
+                                                            {i_seller.slice(i_seller.length - 9)}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             )}
 
-                                            <div className=" w-full rounded ml-auto overflow-hidden text-ellipsis whitespace-nowrap py-3 px-4  mb-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                            <div className=" w-full rounded ml-auto  py-3  wdefinedxsm:px-4 px-2 mb-1 overflow-hidden rounded-xl text-gray-700 bg-white border-2 items-center">
                                                 <div className="flex items-center">
                                                     <div className=" font-bold text-sm ">
                                                         Token contract
@@ -1007,71 +1085,100 @@ export default function EscrowFactory({ onError }) {
                                                         )}
                                                     </div>
                                                 </div>
-                                                <div className="font-normal  text-base  ">
+
+                                                <div className="hidden wdefined:flex font-normal  text-base ">
                                                     {getTokenContract}
+                                                </div>
+                                                <div className="wdefined:hidden wdefinedsm:flex hidden ">
+                                                    {getTokenContract.slice(0, 15)}......
+                                                    {getTokenContract.slice(
+                                                        getTokenContract.length - 15,
+                                                    )}
+                                                </div>
+                                                <div className="wdefinedxsm:flex wdefinedsm:hidden hidden ">
+                                                    {getTokenContract.slice(0, 12)}......
+                                                    {getTokenContract.slice(
+                                                        getTokenContract.length - 12,
+                                                    )}
+                                                </div>
+                                                <div className="wdefinedxsm:hidden wdefinedxxsm:flex hidden ">
+                                                    {getTokenContract.slice(0, 11)}......
+                                                    {getTokenContract.slice(
+                                                        getTokenContract.length - 11,
+                                                    )}
+                                                </div>
+                                                <div className="wdefinedxxsm:hidden flex  ">
+                                                    {getTokenContract.slice(0, 9)}......
+                                                    {getTokenContract.slice(
+                                                        getTokenContract.length - 9,
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="flex items-center mb-1">
-                                                <div className="flex w-full rounded ml-0.5 p-0.5 justify-center rounded-lg text-gray-700 bg-gray-200 border-2 items-center">
+                                                <div className="wdefinedsm:flex w-full rounded ml-0.5 p-0.5 justify-center rounded-lg text-gray-700 bg-gray-200 border-2 items-center">
                                                     <div className=" font-bold text-sm">Name:</div>
-                                                    <div className="font-medium ml-2 text-sm  ">
+                                                    <div className="font-medium wdefinedsm:ml-2 text-sm  ">
                                                         {tokenName}
                                                     </div>
                                                 </div>
-                                                <div className="flex w-full rounded   justify-center ml-1 p-0.5 rounded-lg text-gray-700 bg-gray-200 border-2 items-center">
+                                                <div className="wdefinedsm:flex w-full rounded   justify-center ml-1 p-0.5 rounded-lg text-gray-700 bg-gray-200 border-2 items-center">
                                                     <div className=" font-bold text-sm ">
                                                         Symbol:
                                                     </div>
 
-                                                    <div className=" font-medium ml-2 text-sm">
+                                                    <div className=" font-medium wdefinedsm:ml-2 text-sm">
                                                         {tokenSymbol}
                                                     </div>
                                                 </div>
-                                                <div className="flex w-full rounded  mr-0.5 justify-center p-0.5 ml-1 rounded-lg text-gray-700 bg-gray-200 border-2 items-center">
+                                                <div className="wdefinedsm:flex w-full rounded  mr-0.5 justify-center p-0.5 ml-1 rounded-lg text-gray-700 bg-gray-200 border-2 items-center">
                                                     <div className=" font-bold text-sm ">
                                                         Decimals:
                                                     </div>
 
-                                                    <div className=" font-medium ml-2 text-sm">
+                                                    <div className=" font-medium wdefinedsm:ml-2 text-sm">
                                                         {tokenDecimals}
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className=" mt-7">
-                                                <div className="flex mb-1 items-center text-sm">
-                                                    <div className="  mr-2 rounded-xl  ml-1 font-medium flex items-center">
-                                                        Buyer:
-                                                        <div
-                                                            className={`ml-1 ${
-                                                                decisionBuyer == "Decline"
-                                                                    ? "text-reed"
-                                                                    : decisionBuyer == "Accept"
-                                                                      ? "text-greeen"
-                                                                      : "text-writingdark"
-                                                            }`}
-                                                        >
-                                                            {decisionBuyer}
+                                            <div className={`${initializeState ? "" : "mt-8"}`}>
+                                                {initializeState && (
+                                                    <div className="flex mt-5 mb-1 items-center text-sm">
+                                                        <div className="  mr-2 rounded-xl  ml-2 font-medium flex items-center">
+                                                            Buyer:
+                                                            <div
+                                                                className={`ml-1 ${
+                                                                    decisionBuyer == "Decline"
+                                                                        ? "text-reed"
+                                                                        : decisionBuyer == "Accept"
+                                                                          ? "text-greeen"
+                                                                          : "text-writingdark"
+                                                                }`}
+                                                            >
+                                                                {decisionBuyer}
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                    <div className="justify-end  w-96 rounded-xl mr-2  font-medium flex">
-                                                        Seller:
-                                                        <div
-                                                            className={`ml-1 ${
-                                                                decisionSeller == "Decline"
-                                                                    ? "text-reed"
-                                                                    : decisionSeller == "Accept"
-                                                                      ? "text-greeen"
-                                                                      : "text-writingdark"
-                                                            }`}
-                                                        >
-                                                            {decisionSeller}
+                                                        <div className="justify-end  w-96 rounded-xl mr-2  font-medium flex">
+                                                            Seller:
+                                                            <div
+                                                                className={`ml-1 ${
+                                                                    decisionSeller == "Decline"
+                                                                        ? "text-reed"
+                                                                        : decisionSeller ==
+                                                                            "Accept"
+                                                                          ? "text-greeen"
+                                                                          : "text-writingdark"
+                                                                }`}
+                                                            >
+                                                                {decisionSeller}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                )}
+
                                                 <div className="flex items-center ">
                                                     <div className="relative group w-full ">
-                                                        <div className=" w-full rounded ml-auto  cursor-pointer py-1 px-2  rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                        <div className=" w-full rounded ml-auto  cursor-pointer py-1 wdefinedxxsm:px-2 px-1 rounded-xl text-gray-700 bg-white border-2 items-center">
                                                             <div className="flex ">
                                                                 <div className=" font-bold text-sm ">
                                                                     Status
@@ -1081,9 +1188,9 @@ export default function EscrowFactory({ onError }) {
                                                                 </div>
                                                             </div>
                                                             <div className="flex items-center">
-                                                                <div className="font-normal  text-xl">
+                                                                <div className="font-medium wdefinedmed:font-normal  text-base   wdefinedmed:text-xl">
                                                                     {escrowStatus == "Live" ? (
-                                                                        <div className="text-greeen">
+                                                                        <div className="text-greeen ">
                                                                             {escrowStatus}
                                                                         </div>
                                                                     ) : (
@@ -1115,7 +1222,7 @@ export default function EscrowFactory({ onError }) {
                                                         </div>
                                                     </div>
                                                     <div className="relative group w-full">
-                                                        <div className=" w-full rounded ml-auto py-1 px-2 cursor-pointer ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                        <div className=" w-full rounded ml-auto py-1 wdefinedxsm:px-2 px-1 cursor-pointer ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
                                                             <div className="flex ">
                                                                 <div className=" font-bold text-sm ">
                                                                     Amount
@@ -1125,7 +1232,7 @@ export default function EscrowFactory({ onError }) {
                                                                 </div>
                                                             </div>
                                                             <div className="flex items-center">
-                                                                <div className="font-normal  text-xl">
+                                                                <div className="font-normal text-base   wdefinedmed:text-xl">
                                                                     {BigNumber(i_amount)
                                                                         .dividedBy(
                                                                             BigNumber("10").pow(
@@ -1134,7 +1241,7 @@ export default function EscrowFactory({ onError }) {
                                                                         )
                                                                         .toString()}
                                                                 </div>
-                                                                <div className=" font-normal ml-1 text-xl">
+                                                                <div className="hidden wdefinedmed:flex font-normal ml-1 text-xl">
                                                                     {tokenSymbol}
                                                                 </div>
                                                             </div>
@@ -1153,7 +1260,7 @@ export default function EscrowFactory({ onError }) {
 
                                                     {escrowStatus != "Ended" && (
                                                         <div className="relative group w-full">
-                                                            <div className=" w-full rounded ml-auto cursor-pointer py-1 px-2 mr-0.5 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                            <div className=" w-full rounded ml-auto cursor-pointer py-1 wdefinedxsm:px-2 px-1 mr-0.5 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
                                                                 <div className="flex ">
                                                                     <div className=" font-bold text-sm ">
                                                                         Deposit
@@ -1168,7 +1275,7 @@ export default function EscrowFactory({ onError }) {
                                                                         ethers.getAddress(
                                                                             i_seller,
                                                                         ) ? (
-                                                                        <div className="font-normal  text-xl">
+                                                                        <div className="font-normal  text-base   wdefinedmed:text-xl">
                                                                             {BigNumber(i_amount)
                                                                                 .dividedBy(
                                                                                     BigNumber(
@@ -1180,7 +1287,7 @@ export default function EscrowFactory({ onError }) {
                                                                                 .toString()}
                                                                         </div>
                                                                     ) : (
-                                                                        <div className="font-normal  text-xl">
+                                                                        <div className="font-normal text-base   wdefinedmed:text-xl">
                                                                             {BigNumber(i_amount2)
                                                                                 .dividedBy(
                                                                                     BigNumber(
@@ -1193,7 +1300,7 @@ export default function EscrowFactory({ onError }) {
                                                                         </div>
                                                                     )}
 
-                                                                    <div className=" font-normal ml-1 text-xl">
+                                                                    <div className="hidden wdefinedmed:flex  font-normal ml-1 text-xl">
                                                                         {tokenSymbol}
                                                                     </div>
                                                                 </div>
@@ -1210,9 +1317,14 @@ export default function EscrowFactory({ onError }) {
                                                                     </span>{" "}
                                                                     deposits. This amount includes
                                                                     the{" "}
-                                                                    <span className="font-bold text-writingdark hover:cursor-pointer hover:underline">
+                                                                    <a
+                                                                        className="font-bold text-writingdark hover:cursor-pointer hover:underline"
+                                                                        href="/docs/safetyDeposit"
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                    >
                                                                         safety deposit
-                                                                    </span>
+                                                                    </a>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -1496,10 +1608,11 @@ export default function EscrowFactory({ onError }) {
                                     )}
 
                                 {anyEscrows != "No current escrows" &&
+                                    !isEscrowEnded &&
                                     isFunded &&
                                     initializeState &&
-                                    !isEscrowEnded && (
-                                        <div>
+                                    currentEscrow != "Creating new escrow contract" && (
+                                        <div className=" ">
                                             <div className=" flex items-center mt-2">
                                                 <button
                                                     className={`bg-greeen  mr-2 w-full text-writing font-bold py-2   rounded-xl   ${
@@ -1633,7 +1746,7 @@ export default function EscrowFactory({ onError }) {
                                                 </button>
                                             </div>
                                             <button
-                                                className={`bg-primary  w-full text-writing font-bold py-2 mt-2  rounded-xl ${
+                                                className={`bg-primary  w-full text-writing font-bold py-2 mt-2 rounded-xl ${
                                                     i_buyer &&
                                                     ethers.isAddress(i_buyer) &&
                                                     ethers.getAddress(account) ===

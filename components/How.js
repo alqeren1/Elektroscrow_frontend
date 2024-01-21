@@ -7,35 +7,82 @@ function How() {
         <div className=" w-full px-6 wdefinedlg:px-0 wdefinedlg:w-[850px] text-justify">
             <div className=" py-4">
                 <h1 className="font-bold text-4xl text-left">How does Elektroscrow work?</h1>
-                <h1 className="font-medium text-2xl mt-20">Working Principles</h1>
+                <h1 className="font-medium text-2xl mt-20">Elektroscrow's Ethos</h1>
 
                 <div className="mt-4">
                     <div>
-                        Elektroscrow represents the{" "}
-                        <span className="font-bold text-gray-900">first fully decentralized</span>{" "}
-                        escrow service across blockchain networks. The protocol prioritizes{" "}
-                        <span className="font-bold">privacy, decentralization, and security</span>{" "}
-                        in its operations. Unlike its competitors, Elektroscrow achieves a superior
-                        level of decentralization through its innovative and efficient working
-                        principles. Traditional escrow services often rely on intermediaries to
-                        resolve disputes, which introduces a level of centralization and
-                        potentially diminishes user confidence in their platforms. Elektroscrow,
-                        however, revolutionizes dispute resolution by necessitating mutual
-                        reconciliation between parties to reach a mutually satisfactory resolution.
-                        By leveraging <span className="font-bold">smart contract technology</span>,
-                        Elektroscrow ensures a fair and unbiased process, eliminating the
-                        possibility of unfavorable outcomes for any party involved. The escrow
-                        transaction is executed only when both the recipient and provider reach a
-                        consensus, ensuring transparency and trust in the transaction process. This
-                        approach not only enhances user trust but also reinforces the fundamental
-                        principles of <span className="font-bold">Web3</span> – decentralization
-                        and self-governance.
+                        Elektroscrow stands as the{" "}
+                        <span className="font-bold text-gray-900">
+                            {" "}
+                            first fully decentralized{" "}
+                        </span>{" "}
+                        escrow service across blockchain networks, with a strong emphasis on
+                        <span className="font-bold text-gray-900">
+                            {" "}
+                            privacy, decentralization,{" "}
+                        </span>{" "}
+                        and <span className="font-bold text-gray-900"> security </span>. Distinct
+                        from its competitors, Elektroscrow achieves an unparalleled level of
+                        decentralization, bolstering trustworthiness by automating dispute
+                        resolution{" "}
+                        <span className="font-bold text-gray-900">
+                            {" "}
+                            without human intervention
+                        </span>
+                        . This approach{" "}
+                        <span className="font-bold text-gray-900"> terminates </span> the risk of{" "}
+                        <span className="font-bold text-gray-900"> human errors </span> while
+                        solving disputes, ensuring{" "}
+                        <span className="font-bold text-gray-900"> fair </span> and{" "}
+                        <span className="font-bold text-gray-900"> unbiased </span> outcomes.
+                        Traditional escrow services often rely on intermediaries to resolve
+                        disputes, which introduces a level of centralization and potentially
+                        diminishes user confidence in their platforms. Elektroscrow, however,
+                        revolutionizes dispute resolution by necessitating mutual reconciliation
+                        between parties to reach a mutually satisfactory resolution by leveraging
+                        smart contracts. The escrow transaction is executed only when both the
+                        recipient and provider reach a{" "}
+                        <span className="font-bold text-gray-900"> consensus</span>, thus creating
+                        a <span className="font-bold text-gray-900"> self-governed </span> and
+                        <span className="font-bold text-gray-900"> automated </span> process
+                        ensuring transparency and trust. Unlike many competitors, Elektroscrow{" "}
+                        <span className="font-bold text-gray-900"> does not require </span> users
+                        to share their wallet{" "}
+                        <span className="font-bold text-gray-900"> secret phrases</span>,
+                        maintaining the integrity and security of user assets. The process is
+                        remarkably user-friendly; users simply connect their wallets to the
+                        protocol, streamlining the experience while ensuring maximum security.
+                    </div>
+                    <div className="mt-10">
+                        In terms of <span className="font-bold text-gray-900"> privacy</span>,
+                        Elektroscrow sets a high standard by{" "}
+                        <span className="font-bold text-gray-900"> not retaining any logs </span>{" "}
+                        or requiring more information than the user’s wallet address. The nature of
+                        the escrow transaction{" "}
+                        <span className="font-bold text-gray-900"> remains confidential</span>, as
+                        the protocol{" "}
+                        <span className="font-bold text-gray-900"> does not inquire </span> about
+                        the <span className="font-bold text-gray-900"> purpose </span> of the
+                        escrow, reflecting our deep commitment to user{" "}
+                        <span className="font-bold text-gray-900"> privacy</span>. This policy
+                        reinforces the core tenets of Web3, focusing on decentralization and
+                        self-governance, and establishes Elektroscrow as a
+                        <span className="font-bold text-gray-900"> trust-centric </span> and{" "}
+                        <span className="font-bold text-gray-900"> privacy-focused </span>{" "}
+                        platform. Users can engage in transactions with the assurance of
+                        transparency and trust, knowing that their privacy is respected and their
+                        transactions are secure.
                     </div>
                 </div>
             </div>
             <div className=" py-4">
                 <h1 className="font-medium text-2xl mt-10">Decentralization logic</h1>
-                <div className="bg-black h-[478px] w-full wdefinedlg:w-[850px] mt-4"></div>
+
+                <img
+                    src="/how_illustrate.png"
+                    alt="Escrow Process Illustration"
+                    className=" flex mt-4 mb-4 rounded-3xl"
+                />
                 <div className="mt-10">
                     <div className="font-medium mb-2">Initiating the Escrow Process:</div>
                     <div>
@@ -149,7 +196,9 @@ function How() {
                         </div>
                         <div className="mt-10 mb-10 italic bg-yellow-100 bg-opacity-30 rounded-3xl p-4">
                             <div className="mb-6 underline decoration-dotted underline-offset-4">
-                                <span className="font-medium ">All possible scenarios: </span>
+                                <span className="font-medium ">
+                                    All possible scenarios after decisions are made:{" "}
+                                </span>
                             </div>
                             <div className="flex mt-2">
                                 <div className="font-medium">
@@ -235,34 +284,41 @@ function How() {
                                 <div className="wdefinedsmlg:ml-32 ml-4 wdefined:w-auto w-full">
                                     <div className="font-medium ">Outcomes:</div>
 
-                                    <div className="flex wdefinedmt-6 mt-4 ">
+                                    <div className="flex wdefinedmt-6 mt-4 bg-green-100 bg-opacity-50 px-2 rounded-md ">
                                         <div className="font-normal ">Successfull transfer</div>
                                     </div>
-                                    <div className="flex wdefined:mt-4 mt-11 ">
+                                    <div className="flex wdefined:mt-4 mt-11 w-auto bg-yellow-100 bg-opacity-90 px-2 rounded-md">
                                         <div className="font-normal ">Refund</div>
                                     </div>
                                     <div className="flex wdefined:mt-4 mt-10 ">
-                                        <div className="font-normal ">Safekeeping</div>
+                                        <div className="font-normal ">Safekeeping*</div>
                                     </div>
                                     <div className="flex wdefined:mt-4 mt-10 ">
-                                        <div className="font-normal ">Safekeeping</div>
+                                        <div className="font-normal ">Safekeeping*</div>
                                     </div>
                                     <div className="flex wdefined:mt-4 mt-10  ">
-                                        <div className="font-normal ">Safekeeping</div>
+                                        <div className="font-normal ">Safekeeping*</div>
                                     </div>
                                     <div className="flex wdefined:mt-4 mt-10 ">
-                                        <div className="font-normal ">Safekeeping</div>
+                                        <div className="font-normal ">Safekeeping*</div>
                                     </div>
                                     <div className="flex wdefined:mt-4 mt-10 ">
-                                        <div className="font-normal ">Safekeeping</div>
+                                        <div className="font-normal ">Safekeeping*</div>
                                     </div>
                                     <div className="flex wdefined:mt-4 mt-9 ">
-                                        <div className="font-normal ">Safekeeping</div>
+                                        <div className="font-normal ">Safekeeping*</div>
                                     </div>
                                     <div className="flex wdefined:mt-4 mt-10">
-                                        <div className="font-normal ">Safekeeping</div>
+                                        <div className="font-normal ">Safekeeping*</div>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="mt-10  ">
+                                <span className="font-medium mr-2 ">Safekeeping*</span>= Funds are
+                                securely kept inside the contract until either{" "}
+                                <span className="font-medium  "> refund </span> or{" "}
+                                <span className="font-medium  "> transfer </span>
+                                outcomes happen
                             </div>
                         </div>
                     </div>
@@ -276,7 +332,7 @@ function How() {
                             <img
                                 src="/how1.png"
                                 alt="Escrow Process Illustration"
-                                className="wdefinedlg:hidden flex mt-4 mb-4 w-96"
+                                className="wdefinedlg:hidden flex mt-4 mb-4 w-96 rounded-xl"
                             />
                         </div>
                         <div>
@@ -305,7 +361,7 @@ function How() {
                     <img
                         src="/how1.png"
                         alt="Escrow Process Illustration"
-                        className="hidden wdefinedlg:flex mt-4 w-96"
+                        className="hidden wdefinedlg:flex mt-4 w-96 rounded-xl"
                     />
                 </div>
             </div>
@@ -318,7 +374,7 @@ function How() {
                         <img
                             src="/howApprove.png"
                             alt="Token Approval Process"
-                            className="mt-4 w-96"
+                            className="mt-4 w-96 rounded-xl"
                         />
                     </div>
                 </div>
@@ -341,7 +397,7 @@ function How() {
                         <img
                             src="/howFund.png"
                             alt="Contract Funding Process"
-                            className="mt-4 w-96"
+                            className="mt-4 w-96 rounded-xl"
                         />
                     </div>
                 </div>
@@ -366,7 +422,7 @@ function How() {
                         <img
                             src="/howWithdraw.png"
                             alt="Asset Withdrawal Process"
-                            className="mt-4 w-96"
+                            className="mt-4 w-96 rounded-xl"
                         />
                     </div>
                 </div>
@@ -388,7 +444,7 @@ function How() {
                         <img
                             src="/howDecisions.png"
                             alt="Decision Making Process in Escrow"
-                            className="mt-4 w-96"
+                            className="mt-4 w-96 rounded-xl"
                         />
                     </div>
                 </div>
@@ -418,7 +474,7 @@ function How() {
                         <img
                             src="/howEnded.png"
                             alt="Escrow Completion Process"
-                            className="mt-4 w-96"
+                            className="mt-4 w-96 rounded-xl"
                         />
                     </div>
                 </div>
@@ -437,7 +493,7 @@ function How() {
                 </div>
             </div>
 
-            <div className="py-4 mb-32">
+            <div className="py-4 mb-16">
                 <h1 className="font-medium text-2xl mt-10">Past Escrow Contracts</h1>
 
                 <div className="mt-4 flex justify-center">
@@ -445,7 +501,7 @@ function How() {
                         <img
                             src="/howPastEscrows.png"
                             alt="Reviewing Past Escrow Contracts"
-                            className="mt-4 w-96"
+                            className="mt-4 w-96 rounded-3xl"
                         />
                     </div>
                 </div>
