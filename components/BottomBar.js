@@ -1,5 +1,5 @@
 import Twitter from "../svgs/twitter"
-import Reddit from "../svgs/reddit"
+import Github from "../svgs/github"
 // header.js
 import { useRouter } from "next/router"
 
@@ -53,12 +53,20 @@ export default function BottomBar() {
                         </div>
                     </div>
                     <div className="flex justify-end px-2 ">
-                        <div className="text-gray-500 opacity-70 hidden wdefinedxsm:flex px-2  py-1 flex justify-center rounded-3xl transition duration-300 ease-in-out hover:bg-gray-200">
+                        <a
+                            href="https://twitter.com/elektroscrow"
+                            target="_blank"
+                            className="text-gray-500 opacity-70 hidden wdefinedxsm:flex px-2  py-1 flex justify-center rounded-3xl transition duration-300 ease-in-out hover:bg-gray-200"
+                        >
                             <Twitter />
-                        </div>
-                        <div className="text-gray-500 opacity-70 px-2 hidden wdefinedsm:flex py-1 flex justify-center rounded-3xl transition duration-300 ease-in-out hover:bg-gray-200">
-                            <Reddit />
-                        </div>
+                        </a>
+                        <a
+                            href="https://github.com/elektroscrow"
+                            target="_blank"
+                            className="text-gray-500 opacity-70 px-2 hidden wdefinedsm:flex py-1 flex justify-center rounded-3xl transition duration-300 ease-in-out hover:bg-gray-200"
+                        >
+                            <Github />
+                        </a>
                     </div>
                 </div>
             </div>

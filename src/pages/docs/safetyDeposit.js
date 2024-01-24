@@ -48,7 +48,9 @@ export default function Home() {
                             layoutOpen ? " wdefinedxl:w-[850px]" : "wdefinedlg:w-[850px]"
                         }`}
                     >
-                        <h1 className="font-bold text-3xl mt-14 p-4 text-left">Safety deposit</h1>
+                        <h1 className="font-bold text-3xl mt-14 p-4 text-left text-gray-900">
+                            Safety deposit
+                        </h1>
 
                         <div className="px-4 py-4 mt-20">
                             <div className="mt-2 ">
@@ -149,12 +151,12 @@ export default function Home() {
                             <div className="justify-between flex">
                                 <a
                                     href="/docs/depositing"
-                                    className="bg-gray-100 bg-opacity-50 rounded-lg group border-2 w-64 h-16 mt-20 text-[#7d7d7d] hover:text-gray-700 items-center flex cursor-pointer "
+                                    className="bg-gray-100 bg-opacity-50 rounded-lg mr-2 group border-2 w-64 h-16 mt-20 text-[#7d7d7d] hover:text-gray-700 items-center flex cursor-pointer "
                                 >
                                     <span className="rotate-[-90deg] ml-2 group-hover:translate-x-[-0.5rem] transition duration-300 ease-in-out">
                                         <Arrowup />{" "}
                                     </span>
-                                    <div className="flex justify-center w-full  font-medium">
+                                    <div className="flex justify-center w-full  text-right wdefinedmed:mr-0 mr-1 font-medium">
                                         Funding the contract
                                     </div>
                                 </a>
@@ -162,7 +164,7 @@ export default function Home() {
                                     href="/docs/withdrawing"
                                     className="bg-gray-100 bg-opacity-50 rounded-lg border-2 w-64 group h-16 mt-20 items-center  text-[#7d7d7d] hover:text-gray-700 flex cursor-pointer"
                                 >
-                                    <div className="flex justify-center w-full font-medium">
+                                    <div className="flex justify-center wdefinedmed:ml-0 ml-1 w-full font-medium">
                                         Withdrawing
                                     </div>
                                     <span className="rotate-[90deg] mr-2 group-hover:translate-x-2 transition duration-300 ease-in-out">

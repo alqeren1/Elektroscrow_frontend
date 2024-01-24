@@ -3,7 +3,6 @@ import Head from "next/head"
 import Header from "../../components/Header.js"
 import ErrorDisplay from "../../components/Error.js"
 import BottomBar from "../../components/BottomBar.js"
-import backgroundImage from "../../public/background.png"
 
 import Image from "next/image"
 import { Inter } from "next/font/google"

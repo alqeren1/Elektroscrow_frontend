@@ -1,8 +1,24 @@
-import { useMoralis, useChain } from "react-moralis"
-
 import React, { useState, useRef, useEffect } from "react"
-
+import Arrow from "../svgs/arrow-up"
 function How() {
+    const [showTopBtn, setShowTopBtn] = useState(false)
+
+    useEffect(() => {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 500) {
+                setShowTopBtn(true)
+            } else {
+                setShowTopBtn(false)
+            }
+        })
+    }, [])
+
+    const goToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        })
+    }
     return (
         <div className=" w-full px-6 wdefinedlg:px-0 wdefinedlg:w-[850px] text-justify">
             <div className=" py-4">
@@ -72,6 +88,67 @@ function How() {
                         platform. Users can engage in transactions with the assurance of
                         transparency and trust, knowing that their privacy is respected and their
                         transactions are secure.
+                    </div>
+                </div>
+
+                <h1 className="font-medium text-2xl  mt-20 items-center flex">
+                    What to do step by step in order to use the protocol{" "}
+                    <span className="font-normal text-gray-500 italic text-base mt-1 ml-2 ">
+                        {" "}
+                        (from buyer's perspective){" "}
+                    </span>
+                </h1>
+
+                <div className="mt-8 text-xl">
+                    <div>
+                        <span className="font-medium  text-xl underline mr-2 "> Step 1: </span>{" "}
+                        Find a seller/provider for the service you would like to purchase.
+                        Communicate with the provider to specify the type and amount of the token
+                        to be used for payment.
+                    </div>
+                    <div className="mt-4">
+                        <span className="font-medium  text-xl underline mr-2"> Step 2: </span>{" "}
+                        Connect your wallet to Elektroscrow, then press the buyer button to switch
+                        to buyer view. Type the seller's wallet address, then fill the remaining
+                        input fields with the predetermined values that you have set with seller.
+                        After you input the adequate information, press the button below and create
+                        a new escrow.
+                    </div>
+                    <div className="mt-4">
+                        <span className="font-medium  text-xl underline mr-2"> Step 3: </span>{" "}
+                        Approve the tokens for protocol to use, then fund the contract with the
+                        required amount of tokens by pressing fund button. After that, inform the
+                        seller that you deposited the amount and now its his turn to deposit the
+                        safety-deposit.
+                    </div>
+                    <div className="mt-4">
+                        <span className="font-medium  text-xl underline mr-2"> Step 4: </span>{" "}
+                        Seller connects to Elektroscrow, then presses the seller button to switch
+                        to seller view. Seller can automatically see the escrow contracts created
+                        with his wallet address. Then, seller deposits the safety-deposit to
+                        contract, confirming the escrow address and the buyer's wallet address by
+                        communicating with you.
+                    </div>
+                    <div className="mt-4">
+                        <span className="font-medium  text-xl underline mr-2"> Step 5: </span> At
+                        this step, the escrow is initialized and both users are prompted with three
+                        decision buttons. These are; "Accept", "Decline" and "Refund". Both users
+                        have a right to decide the outcome of this escrow. These decisions are set
+                        to "Decline" for start. Mutual decision are needed to come to either
+                        "Accept" or "Refund" decision for the outcome.
+                        <div className="mt-4 mb-4">
+                            After the seller successfully provides what he promised to you, he
+                            informs you about it. After you are satisfied with it, either users
+                            press the "Accept" button to transfer the funds and recieve their
+                            safety-deposits back. If you are not satisfied, contact the seller and
+                            try to figure the problem out between yourselves by asking for a
+                            revision or returning the product back to get a new one, according what
+                            the product is.
+                        </div>{" "}
+                        If nothing works and you can not solve the problem, reconciliate with the
+                        seller to decide for a refund, then return the product or do whatever you
+                        need to according to the scenario. After that, you both press the "Refund"
+                        button, then both parties gets their deposits back.
                     </div>
                 </div>
             </div>
@@ -332,11 +409,11 @@ function How() {
                 <h1 className="font-medium text-2xl mt-10">Starting a New Escrow</h1>
                 <div className="flex mt-6">
                     <div className="mt-4 wdefinedlg:mr-6">
-                        <div className="flex justify-center">
+                        <div className="bg-yellow-100 w-full mb-6 mt-4 wdefinedlg:hidden justify-center flex rounded-xl bg-opacity-30">
                             <img
                                 src="/how1.png"
                                 alt="Escrow Process Illustration"
-                                className="wdefinedlg:hidden flex mt-4 mb-4 w-96 rounded-xl"
+                                className=" flex mt-2 mb-2 w-96 rounded-xl"
                             />
                         </div>
                         <div>
@@ -374,11 +451,11 @@ function How() {
                 <h1 className="font-medium text-2xl mt-10">Approving Tokens</h1>
 
                 <div className="mt-4 flex justify-center">
-                    <div>
+                    <div className="bg-yellow-100 w-full mb-6 mt-4 justify-center flex rounded-xl bg-opacity-30">
                         <img
                             src="/howApprove.png"
                             alt="Token Approval Process"
-                            className="mt-4 w-96 rounded-xl"
+                            className="mt-2 mb-2 w-96 rounded-xl"
                         />
                     </div>
                 </div>
@@ -397,11 +474,11 @@ function How() {
                 <h1 className="font-medium text-2xl mt-10">Funding the Contract</h1>
 
                 <div className="mt-4 flex justify-center">
-                    <div>
+                    <div className="bg-yellow-100 w-full mb-6 mt-4 justify-center flex rounded-xl bg-opacity-30">
                         <img
                             src="/howFund.png"
                             alt="Contract Funding Process"
-                            className="mt-4 w-96 rounded-xl"
+                            className="mt-2 mb-2 w-96 rounded-xl"
                         />
                     </div>
                 </div>
@@ -422,11 +499,11 @@ function How() {
                 <h1 className="font-medium text-2xl mt-10">Withdrawing Funded Assets</h1>
 
                 <div className="mt-4 flex justify-center">
-                    <div>
+                    <div className="bg-yellow-100 w-full mb-6 mt-4 justify-center flex rounded-xl bg-opacity-30">
                         <img
-                            src="/howWithdraw.png"
+                            src="/howWithdraw2.png"
                             alt="Asset Withdrawal Process"
-                            className="mt-4 w-96 rounded-xl"
+                            className="mt-2 mb-2 w-96 rounded-xl"
                         />
                     </div>
                 </div>
@@ -444,11 +521,11 @@ function How() {
                 <h1 className="font-medium text-2xl mt-10">Escrow Decisions</h1>
 
                 <div className="mt-4 flex justify-center">
-                    <div>
+                    <div className="bg-yellow-100 w-full mb-6 mt-4 justify-center flex rounded-xl bg-opacity-30">
                         <img
                             src="/howDecisions.png"
                             alt="Decision Making Process in Escrow"
-                            className="mt-4 w-96 rounded-xl"
+                            className="mt-2 mb-2 w-96 rounded-xl"
                         />
                     </div>
                 </div>
@@ -474,11 +551,11 @@ function How() {
                 <h1 className="font-medium text-2xl mt-10">Ending of an Escrow</h1>
 
                 <div className="mt-4 flex justify-center">
-                    <div>
+                    <div className="bg-yellow-100 w-full mb-6 mt-4 justify-center flex rounded-xl bg-opacity-30">
                         <img
                             src="/howEnded.png"
                             alt="Escrow Completion Process"
-                            className="mt-4 w-96 rounded-xl"
+                            className="mt-2 mb-2 w-96 rounded-xl"
                         />
                     </div>
                 </div>
@@ -501,11 +578,11 @@ function How() {
                 <h1 className="font-medium text-2xl mt-10">Past Escrow Contracts</h1>
 
                 <div className="mt-4 flex justify-center">
-                    <div>
+                    <div className="bg-yellow-100 w-full mb-6 mt-4 justify-center flex rounded-xl bg-opacity-30">
                         <img
                             src="/howPastEscrows.png"
                             alt="Reviewing Past Escrow Contracts"
-                            className="mt-4 w-96 rounded-3xl"
+                            className="mt-2 mb-2 w-96 rounded-3xl"
                         />
                     </div>
                 </div>
@@ -524,6 +601,15 @@ function How() {
                     transactions.
                 </div>
             </div>
+            {showTopBtn && (
+                <button
+                    onClick={goToTop}
+                    className="fixed bottom-10 right-10 bg-gray-100  border-2 p-1 hover:bg-gray-200 rounded-lg  z-50"
+                    title="Back to Top"
+                >
+                    <Arrow />
+                </button>
+            )}
         </div>
     )
 }

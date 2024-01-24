@@ -49,7 +49,7 @@ export default function Home() {
                             layoutOpen ? " wdefinedxl:w-[850px]" : "wdefinedlg:w-[850px]"
                         }`}
                     >
-                        <h1 className="font-bold text-3xl mt-14 p-4 text-left">
+                        <h1 className="font-bold text-3xl mt-14 p-4 text-left text-gray-900">
                             Starting a New Escrow
                         </h1>
                         <div className="p-4">
@@ -108,8 +108,11 @@ export default function Home() {
                                     href="/docs/paymentToken"
                                     className="bg-gray-100 bg-opacity-50 ml-2 rounded-lg border-2 w-64 group h-16 mt-20 items-center  text-[#7d7d7d] hover:text-gray-700 flex cursor-pointer"
                                 >
-                                    <div className="flex px-1 justify-center text-left w-full font-medium">
+                                    <div className="wdefinedsm:flex hidden justify-center px-1 w-full text-left font-medium">
                                         Tokens to use for payment
+                                    </div>
+                                    <div className=" wdefinedsm:hidden flex justify-center px-1 w-full text-left font-medium">
+                                        Tokens to use
                                     </div>
                                     <span className="rotate-[90deg] mr-2 group-hover:translate-x-2 transition duration-300 ease-in-out">
                                         <Arrowup />

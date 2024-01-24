@@ -49,7 +49,7 @@ function NetworkSelector() {
     if (currentNetwork == null) {
         return (
             <div className="relative " ref={dropdownRef}>
-                <div className="ml-10">
+                <div className="ml-6">
                     <button
                         onClick={() => setShowDropdown(!showDropdown)}
                         className="flex items-center wdefined:mr-2 rounded-2xl transition duration-300 ease-in-out hover:bg-gray-200   py-2 px-2 "
@@ -67,7 +67,7 @@ function NetworkSelector() {
                 </div>
 
                 {showDropdown && (
-                    <div className="absolute right-2 z-10 w-60 shadow-lg rounded-xl bg-white border rounded ">
+                    <div className="absolute right-2 z-10 w-60 shadow-lg rounded-xl bg-white border  ">
                         <div className="p-2  wdefined:hidden items-center justify-center flex w-full ">
                             <ManuelConnect />
                         </div>

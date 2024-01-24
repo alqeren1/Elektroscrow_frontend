@@ -29,6 +29,24 @@ export default function Home() {
     async function layoutButton() {
         setLayoutOpen(!layoutOpen)
     }
+    const [showTopBtn, setShowTopBtn] = useState(false)
+
+    useEffect(() => {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 500) {
+                setShowTopBtn(true)
+            } else {
+                setShowTopBtn(false)
+            }
+        })
+    }, [])
+
+    const goToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        })
+    }
     return (
         <CommonLayout layoutOpen={layoutOpen} setLayoutOpen={setLayoutOpen}>
             <div className=" w-full  justify-center  ">
@@ -48,7 +66,7 @@ export default function Home() {
                             layoutOpen ? " wdefinedxl:w-[850px]" : "wdefinedlg:w-[850px]"
                         }`}
                     >
-                        <h1 className="font-bold text-3xl mt-14 p-4 text-left">
+                        <h1 className="font-bold text-3xl mt-14 p-4 text-left text-gray-900">
                             How does it work?
                         </h1>
                         <div className=" p-4">
@@ -412,6 +430,15 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
+                {showTopBtn && (
+                    <button
+                        onClick={goToTop}
+                        className="fixed bottom-20 xl:bottom-10 right-10 bg-gray-100  border-2 p-1 hover:bg-gray-200 rounded-lg  z-50"
+                        title="Back to Top"
+                    >
+                        <Arrowup />
+                    </button>
+                )}
             </div>
         </CommonLayout>
     )

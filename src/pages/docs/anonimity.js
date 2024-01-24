@@ -49,7 +49,7 @@ export default function Home() {
                             layoutOpen ? " wdefinedxl:w-[850px]" : "wdefinedlg:w-[850px]"
                         }`}
                     >
-                        <h1 className="font-bold text-3xl mt-14 p-4 text-left">
+                        <h1 className="font-bold text-3xl mt-14 p-4 text-left text-gray-900">
                             How is the protocol anonymous?
                         </h1>
 

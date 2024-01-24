@@ -49,7 +49,9 @@ export default function Home() {
                             layoutOpen ? " wdefinedxl:w-[850px]" : "wdefinedlg:w-[850px]"
                         }`}
                     >
-                        <h1 className="font-bold text-3xl mt-14 p-4 text-left">Escrow status</h1>
+                        <h1 className="font-bold text-3xl mt-14 p-4 text-left text-gray-900">
+                            Escrow status
+                        </h1>
 
                         <div className="px-4 py-4 ">
                             <div className="mt-4 flex justify-center ">
@@ -92,11 +94,11 @@ export default function Home() {
                                     </div>
                                 </a>
                                 <a
-                                    href="/docs/supportedNetworks"
+                                    href="/docs/fee"
                                     className="bg-gray-100 bg-opacity-50 ml-2 rounded-lg border-2 w-64 group h-16 mt-20 items-center  text-[#7d7d7d] hover:text-gray-700 flex cursor-pointer"
                                 >
                                     <div className="flex px-1 justify-center text-left w-full font-medium">
-                                        Supported networks
+                                        Protocol fee
                                     </div>
                                     <span className="rotate-[90deg] mr-2 group-hover:translate-x-2 transition duration-300 ease-in-out">
                                         <Arrowup />

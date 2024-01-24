@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import './fonts.css';
+
 /* Custom notification settings*/
 [data-testid="test-notification-message"] {
     font-family: inherit !important; /* This will inherit the font from the parent element */
@@ -44,7 +46,9 @@
     }
 }
 
-
+.header-fade {
+    background: linear-gradient(to bottom, #fffffd 75%, transparent 100%);
+}
 .custom-shadow {
     box-shadow: 0 0 120px 20px #fff9d1;
 }
@@ -103,4 +107,67 @@
     .hdefinedmax\:mt-custom {
         margin-top: 150px; /* Custom margin bottom applies to viewport heights of 800px or less */
     }
+}
+
+
+
+
+
+.custom-scrollbar::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+
+.custom-scrollbar {
+    -ms-overflow-style: none; /* for IE and Edge */
+    scrollbar-width: none; /* for Firefox */
+}
+
+/* Show scrollbar on hover */
+.custom-scrollbar:hover::-webkit-scrollbar {
+    display: block; /* for Chrome, Safari, and Opera */
+}
+
+.custom-scrollbar:hover {
+    -ms-overflow-style: auto; /* for IE and Edge */
+    scrollbar-width: auto; /* for Firefox */
+}
+
+/* Custom scrollbar styles (apply these only on hover) */
+.custom-scrollbar:hover::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; /* Adjust the width of the scrollbar */
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: #d1d1d1; /* Scrollbar thumb color */
+    border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0; /* Scrollbar thumb color on hover */
+}
+
+
+
+
+
+
+
+
+/* Custom scrollbar styles (apply these only on hover) */
+.custom-scrollbar2::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; /* Adjust the width of the scrollbar */
+}
+.custom-scrollbar2::-webkit-scrollbar-track {
+    background: transparent; /* Transparent track */
+}
+
+.custom-scrollbar2::-webkit-scrollbar-thumb {
+    background: #d1d1d1; /* Scrollbar thumb color */
+    border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+.custom-scrollbar2::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0; /* Scrollbar thumb color on hover */
 }

@@ -1,0 +1,74 @@
+/* styles/fonts.css */
+
+@font-face {
+    font-family: 'Franklin Gothic';
+    src: url('/fonts/Franklin/FRADMCN.TTF') format('truetype');
+    font-weight: 600; /* Adjust as needed */
+    font-style: normal;
+    font-stretch: condensed;
+}
+
+@font-face {
+    font-family: 'Franklin Gothic';
+    src: url('/fonts/Franklin/FRAMDCN.TTF') format('truetype');
+    font-weight: 500; /* Adjust as needed */
+    font-style: normal;
+    font-stretch: condensed;
+}
+
+@font-face {
+    font-family: 'Franklin Gothic';
+    src: url('/fonts/Franklin/FRADM.TTF') format('truetype');
+    font-weight: 600; /* Adjust as needed */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Franklin Gothic';
+    src: url('/fonts/Franklin/FRADMIT.TTF') format('truetype');
+    font-weight: 600; /* Adjust as needed */
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Franklin Gothic';
+    src: url('/fonts/Franklin/FRAHV.TTF') format('truetype');
+    font-weight: bold; /* Adjust as needed */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Franklin Gothic';
+    src: url('/fonts/Franklin/FRAHVIT.TTF') format('truetype');
+    font-weight: bold; /* Adjust as needed */
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Franklin Gothic';
+    src: url('/fonts/Franklin/FRAMD.TTF') format('truetype');
+    font-weight: 500; /* Adjust as needed */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Franklin Gothic';
+    src: url('/fonts/Franklin/FRAMDiT.TTF') format('truetype');
+    font-weight: 500; /* Adjust as needed */
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Franklin Gothic';
+    src: url('/fonts/Franklin/FRABK.TTF') format('truetype');
+    font-weight: 400; /* Adjust as needed */
+    font-style: normal;
+   
+}
+@font-face {
+    font-family: 'Franklin Gothic';
+    src: url('/fonts/Franklin/FRABKIT.TTF') format('truetype');
+    font-weight: 400; /* Adjust as needed */
+    font-style: italic;
+   
+}

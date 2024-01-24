@@ -49,7 +49,7 @@ export default function Home() {
                             layoutOpen ? " wdefinedxl:w-[850px]" : "wdefinedlg:w-[850px]"
                         }`}
                     >
-                        <h1 className="font-bold text-3xl mt-14 p-4 text-left">
+                        <h1 className="font-bold text-3xl mt-14 p-4 text-left text-gray-900">
                             Funding the Contract
                         </h1>
                         <div className="p-4 ">
@@ -83,8 +83,11 @@ export default function Home() {
                                     <span className="rotate-[-90deg] ml-2 group-hover:translate-x-[-0.5rem] transition duration-300 ease-in-out">
                                         <Arrowup />{" "}
                                     </span>
-                                    <div className="flex justify-center px-1 w-full text-right font-medium">
+                                    <div className="wdefinedsm:flex hidden justify-center px-1 w-full text-right font-medium">
                                         Tokens to use for payment
+                                    </div>
+                                    <div className=" wdefinedsm:hidden flex justify-center px-1 w-full text-right font-medium">
+                                        Tokens to use
                                     </div>
                                 </a>
                                 <a

@@ -1,33 +1,13 @@
 
 
+-dark mod lazım
+
+
+-escrow create'e fee bilgisi ekle (interaktif gösterebilir)
 
 
 
--docs' a fees başlığı ekle
-
--docs'a networks ekle
-
-
--website loading animasyhonu var sağ altta, vercel logolu, onu elektro logolu yap
-
-
--build modda test et
-
-
--tokenleri listede sırala, populerleri üste al
-
-
-
-
-
--current escrow adresi kopyalamak istersen zor kopyalanıyor
-
-
-
--en altta socialları gösteren bir bar hep olsun, we contract email.
-
-
-
+-docs'a why would i trust elektroscrow? başlığı ekliyip, altına açıklama testnet kodu ile dilediğiniz gibi deneyin, bytecodu kıyaslayın yaz
 
 
 
@@ -36,7 +16,11 @@
 
 
 LATER:
+-website loading animasyhonu var sağ altta, vercel logolu, onu elektro logolu yap
 
+-tokenleri listede sırala, populerleri üste al
+
+-docs'a networks ekle
 
 -custom token fotosu yap, ekle
 
@@ -44,6 +28,7 @@ LATER:
 
 -ilerde belki giriş sayfası olur
 
+-build modda test et
 
 -walletconnect support
 ---walletconnect icin yeni bir escrowcreate.js yapman lazım. https://wagmi.sh/react/hooks/useContractWrite burdan bakarak functionları değiş

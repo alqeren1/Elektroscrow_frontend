@@ -131,10 +131,10 @@ const EscrowDropdownModal = ({ isOpen, escrows, onSelectEscrow, onClose, current
                                 .map((address, index) => (
                                     <div
                                         key={address}
-                                        className={`flex items-center justify-between p-2 hover:bg-gray-200 h-16 cursor-pointer rounded-xl mt-2 mb-1 border-2 shadow-md bg-gray-50 text-gray-700 ${
+                                        className={`flex items-center justify-between p-2  h-16 cursor-pointer rounded-xl mt-2 mb-1 border-2 shadow-md bg-gray-50 text-gray-700 ${
                                             address === currentEscrow
                                                 ? " border-primary border-[3px] "
-                                                : ""
+                                                : " hover:bg-gray-200"
                                         }`}
                                         onClick={() => handleEscrowSelect(address)}
                                     >
@@ -178,10 +178,10 @@ const EscrowDropdownModal = ({ isOpen, escrows, onSelectEscrow, onClose, current
                                 .map((address, index) => (
                                     <div
                                         key={address}
-                                        className={`flex items-center justify-between p-2 hover:bg-gray-200 h-16 cursor-pointer rounded-xl mt-2 mb-1 border-2 shadow-md bg-gray-50 text-gray-700 ${
+                                        className={`flex items-center justify-between p-2  h-16 cursor-pointer rounded-xl mt-2 mb-1 border-2 shadow-md bg-gray-50 text-gray-700 ${
                                             address === currentEscrow
-                                                ? "border-primary border-[3px] "
-                                                : ""
+                                                ? " border-primary border-[3px] border-opacity-50 bg-yellow-50"
+                                                : " hover:bg-gray-200 "
                                         }`}
                                         onClick={() => handleEscrowSelect(address)}
                                     >

@@ -54,6 +54,7 @@ export default function EscrowFactory({ onError }) {
     const [escrowStatus, setEscrowStatus] = useState("")
     const [isCopied, setIsCopied] = useState(false)
     const [isCopied2, setIsCopied2] = useState(false)
+    const [isCopied3, setIsCopied3] = useState(false)
 
     const [tokenContract, setTokenContract] = useState("")
     const [i_seller, seti_seller] = useState("")
@@ -787,9 +788,34 @@ export default function EscrowFactory({ onError }) {
                                         </button>
                                     </div>
                                 )}
-
-                                <div className=" text-lg text-gray-700 ml-1 font-bold ">
-                                    Current escrow
+                                <div className="flex items-center">
+                                    <div className=" text-lg text-gray-700 ml-1 font-bold ">
+                                        Current escrow
+                                    </div>
+                                    <div
+                                        onClick={() => {
+                                            copyToClipboard(currentEscrow)
+                                            setIsCopied3(true)
+                                            setTimeout(() => setIsCopied3(false), 1000)
+                                        }}
+                                        className={`ml-1  hover:cursor-pointer transition duration-300 ease-in-out ${
+                                            currentEscrow == "No current escrows" ||
+                                            currentEscrow == "Creating new escrow contract"
+                                                ? "hidden"
+                                                : ""
+                                        }`}
+                                    >
+                                        {" "}
+                                        {isCopied3 ? (
+                                            <div className=" text-xxs  px-1  text-black opacity-50 ">
+                                                Copied!
+                                            </div>
+                                        ) : (
+                                            <div className="opacity-30 hover:opacity-60 ">
+                                                <Copy />
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                                 <div className="flex  items-center justify-center">
                                     <div className="w-full px-0.5">
@@ -878,45 +904,63 @@ export default function EscrowFactory({ onError }) {
                                     currentEscrow != "Initial" && (
                                         <div>
                                             <div className="flex items-center mb-2 ">
-                                                <div className="flex w-full relative group">
-                                                    <div className="wdefinedxxsm:flex w-full rounded ml-auto cursor-pointer py-2 wdefinedxsm:px-4 px-2 justify-between rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                        <div className="flex ">
-                                                            <div className=" font-bold text-sm ">
-                                                                Initialized
+                                                <div className="flex w-full relative ">
+                                                    <div className="wdefinedxxsm:flex w-full  rounded ml-auto  py-2 wdefinedxsm:px-4 px-2 justify-between rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                        <div className="group cursor-pointer">
+                                                            <div className="flex ">
+                                                                <div className=" font-bold text-sm ">
+                                                                    Initialized
+                                                                </div>
+                                                                <div className="opacity-30 ml-0.5 mt-0.5">
+                                                                    {" "}
+                                                                    <Questionmark />
+                                                                </div>
                                                             </div>
-                                                            <div className="opacity-30 ml-0.5 mt-0.5">
-                                                                {" "}
-                                                                <Questionmark />
+                                                            <div className="absolute bottom-full left-0  hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
+                                                                {/* Info bar content */}
+                                                                <p className="text-gray-500 text-xs ">
+                                                                    Escrow is initialized after{" "}
+                                                                    <span className="font-bold ">
+                                                                        both parties
+                                                                    </span>{" "}
+                                                                    deposit the required funds to
+                                                                    the contract. Funds are{" "}
+                                                                    <span className="font-bold ">
+                                                                        withdrawable
+                                                                    </span>{" "}
+                                                                    before the initialization.
+                                                                </p>
                                                             </div>
                                                         </div>
                                                         <div className="font-medium wdefinedxsm:ml-2 wdefinedxxsm:ml-1 text-sm  ">
                                                             {initializeStateString}
                                                         </div>
                                                     </div>
-                                                    <div className="absolute bottom-full left-0  hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
-                                                        {/* Info bar content */}
-                                                        <p className="text-gray-500 text-xs ">
-                                                            Escrow is initialized after{" "}
-                                                            <span className="font-bold ">
-                                                                both parties
-                                                            </span>{" "}
-                                                            deposit the required funds to the
-                                                            contract. Funds are{" "}
-                                                            <span className="font-bold ">
-                                                                withdrawable
-                                                            </span>{" "}
-                                                            before the initialization.
-                                                        </p>
-                                                    </div>
                                                 </div>
-                                                <div className="flex w-full relative group">
-                                                    <div className="wdefinedxxsm:flex w-full rounded ml-auto cursor-pointer justify-between py-2  wdefinedxsm:px-4 px-2 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                        <div className="flex ">
-                                                            <div className=" font-bold text-sm ">
-                                                                Balance
+                                                <div className="flex w-full relative ">
+                                                    <div className="wdefinedxxsm:flex w-full rounded ml-auto  justify-between py-2  wdefinedxsm:px-4 px-2 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                        <div className="group cursor-pointer">
+                                                            <div className="flex ">
+                                                                <div className=" font-bold text-sm ">
+                                                                    Balance
+                                                                </div>
+                                                                <div className="opacity-30 ml-0.5 mt-0.5">
+                                                                    <Questionmark />
+                                                                </div>
                                                             </div>
-                                                            <div className="opacity-30 ml-0.5 mt-0.5">
-                                                                <Questionmark />
+                                                            <div className="absolute bottom-full left-0  hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
+                                                                {/* Info bar content */}
+                                                                <p className="text-gray-500 text-xs">
+                                                                    Current balance of the
+                                                                    contract. The total balance of
+                                                                    the contract should be{" "}
+                                                                    <span className="font-bold ">
+                                                                        three times
+                                                                    </span>{" "}
+                                                                    the escrow amount before
+                                                                    initialization. (with safety
+                                                                    deposits)
+                                                                </p>
                                                             </div>
                                                         </div>
                                                         <div className="flex items-center wdefinedsm:ml-4 wdefinedxxsm:ml-2">
@@ -933,18 +977,6 @@ export default function EscrowFactory({ onError }) {
                                                                 {tokenSymbol}
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="absolute bottom-full left-0  hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
-                                                        {/* Info bar content */}
-                                                        <p className="text-gray-500 text-xs">
-                                                            Current balance of the contract. The
-                                                            total balance of the contract should be{" "}
-                                                            <span className="font-bold ">
-                                                                three times
-                                                            </span>{" "}
-                                                            the escrow amount before
-                                                            initialization. (with safety deposits)
-                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1172,14 +1204,36 @@ export default function EscrowFactory({ onError }) {
                                                 )}
 
                                                 <div className="flex items-center ">
-                                                    <div className="relative group w-full ">
-                                                        <div className=" w-full rounded ml-auto  cursor-pointer py-1 wdefinedxxsm:px-2 px-1 rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                            <div className="flex ">
-                                                                <div className=" font-bold text-sm ">
-                                                                    Status
+                                                    <div className="relative  w-full ">
+                                                        <div className=" w-full rounded ml-auto   py-1 wdefinedxxsm:px-2 px-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                            <div className="group cursor-pointer">
+                                                                <div className="flex ">
+                                                                    <div className=" font-bold text-sm ">
+                                                                        Status
+                                                                    </div>
+                                                                    <div className="opacity-30 ml-0.5 mt-0.5">
+                                                                        <Questionmark />
+                                                                    </div>
                                                                 </div>
-                                                                <div className="opacity-30 ml-0.5 mt-0.5">
-                                                                    <Questionmark />
+                                                                <div className="absolute bottom-full left-0  w-64 hidden transition duration-300 ease-in-out group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
+                                                                    {/* Info bar content */}
+                                                                    <p className="text-gray-500 text-xs">
+                                                                        Shows to status of the
+                                                                        current escrow contract.
+                                                                        Escrow is ended when{" "}
+                                                                        <span className="font-bold ">
+                                                                            both parties agree
+                                                                        </span>{" "}
+                                                                        on the same decision,
+                                                                        either{" "}
+                                                                        <span className="font-bold ">
+                                                                            Accept
+                                                                        </span>{" "}
+                                                                        or{" "}
+                                                                        <span className="font-bold ">
+                                                                            Refund
+                                                                        </span>
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                             <div className="flex items-center">
@@ -1196,34 +1250,27 @@ export default function EscrowFactory({ onError }) {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="absolute bottom-full left-0  w-64 hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
-                                                            {/* Info bar content */}
-                                                            <p className="text-gray-500 text-xs">
-                                                                Shows to status of the current
-                                                                escrow contract. Escrow is ended
-                                                                when{" "}
-                                                                <span className="font-bold ">
-                                                                    both parties agree
-                                                                </span>{" "}
-                                                                on the same decision, either{" "}
-                                                                <span className="font-bold ">
-                                                                    Accept
-                                                                </span>{" "}
-                                                                or{" "}
-                                                                <span className="font-bold ">
-                                                                    Refund
-                                                                </span>
-                                                            </p>
-                                                        </div>
                                                     </div>
-                                                    <div className="relative group w-full">
-                                                        <div className=" w-full rounded ml-auto py-1 wdefinedxsm:px-2 px-1 cursor-pointer ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
-                                                            <div className="flex ">
-                                                                <div className=" font-bold text-sm ">
-                                                                    Amount
+                                                    <div className="relative  w-full">
+                                                        <div className=" w-full rounded ml-auto py-1 wdefinedxsm:px-2 px-1  ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                            <div className="group cursor-pointer">
+                                                                <div className="flex ">
+                                                                    <div className=" font-bold text-sm ">
+                                                                        Amount
+                                                                    </div>
+                                                                    <div className="opacity-30 ml-0.5 mt-0.5">
+                                                                        <Questionmark />
+                                                                    </div>
                                                                 </div>
-                                                                <div className="opacity-30 ml-0.5 mt-0.5">
-                                                                    <Questionmark />
+                                                                <div className="absolute bottom-full left-0   hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
+                                                                    {/* Info bar content */}
+                                                                    <p className="text-gray-500 text-xs">
+                                                                        The{" "}
+                                                                        <span className="font-bold">
+                                                                            transfer amount
+                                                                        </span>{" "}
+                                                                        after a successful escrow.
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                             <div className="flex items-center">
@@ -1240,16 +1287,6 @@ export default function EscrowFactory({ onError }) {
                                                                     {tokenSymbol}
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div className="absolute bottom-full left-0   hidden group-hover:block bg-white border shadow-lg p-2 rounded-xl  info-bar">
-                                                            {/* Info bar content */}
-                                                            <p className="text-gray-500 text-xs">
-                                                                The{" "}
-                                                                <span className="font-bold">
-                                                                    transfer amount
-                                                                </span>{" "}
-                                                                after a successful escrow.
-                                                            </p>
                                                         </div>
                                                     </div>
 
