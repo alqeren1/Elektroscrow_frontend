@@ -10,7 +10,7 @@
 -docs'a why would i trust elektroscrow? başlığı ekliyip, altına açıklama testnet kodu ile dilediğiniz gibi deneyin, bytecodu kıyaslayın yaz
 
 
-
+-giriş sayfası token sembolu neden sıfırlanmıyor
 
 
 
@@ -20,7 +20,7 @@ LATER:
 
 -tokenleri listede sırala, populerleri üste al
 
--docs'a networks ekle
+
 
 -custom token fotosu yap, ekle
 

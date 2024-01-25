@@ -35,6 +35,8 @@ export default function EscrowFactory({ onError }) {
     const [amountInput, setAmountInput] = useState("")
     const [modalOpen, setModalOpen] = useState(false)
     const [tokenDecimalsTemp, setTokenDecimalsTemp] = useState("")
+    const [i_fee, seti_fee] = useState("")
+    const [s_fee, sets_fee] = useState("")
     const [i_amount, seti_amount] = useState("0")
     const [i_amount2, seti_amount2] = useState("0")
     const [i_amount_check, seti_amount_check] = useState("0")
@@ -90,6 +92,10 @@ export default function EscrowFactory({ onError }) {
         contractAddress: factoryAddress,
         functionName: "getSellerEscrows",
         params: { seller: account },
+    })
+    const { runContractFunction: gets_fee } = useWeb3Contract({
+        abi: abi_factory,
+        functionName: "s_fee",
     })
 
     const { runContractFunction: getEscrowBalance } = useWeb3Contract({
@@ -165,6 +171,10 @@ export default function EscrowFactory({ onError }) {
     const { runContractFunction: geti_amount } = useWeb3Contract({
         abi: abi_logic,
         functionName: "i_amount",
+    })
+    const { runContractFunction: geti_fee } = useWeb3Contract({
+        abi: abi_logic,
+        functionName: "i_fee",
     })
     const { runContractFunction: getEscrowToken } = useWeb3Contract({
         abi: abi_logic,
@@ -386,19 +396,33 @@ export default function EscrowFactory({ onError }) {
     }, [isWeb3Enabled, buyerState, account, anyEscrows, chainId])
 
     useEffect(() => {
-        if (isWeb3Enabled && showInputFields) {
-            // Set a timeout
+        if (onError) {
             const timeoutId = setTimeout(() => {
-                getTokenDecimalsTemp()
-            }, 100)
+                onError("")
+            }, 20000)
 
             // Clear the timeout if the component unmounts or the dependencies change
             return () => clearTimeout(timeoutId)
         }
-    })
+    }, [onError])
+
+    useEffect(() => {
+        if (isWeb3Enabled && showInputFields) {
+            // Set a timeout
+            const timeoutId = setTimeout(() => {
+                getTokenDecimalsTemp()
+            }, 1000)
+
+            // Clear the timeout if the component unmounts or the dependencies change
+            return () => clearTimeout(timeoutId)
+        }
+    }, [getTokenContract, currentEscrow])
+
     useEffect(() => {
         if (isWeb3Enabled) {
             getTokenSymbol()
+            geti_feeFunction()
+            gets_feeFunction()
         }
     }, [getTokenContract, currentEscrow])
 
@@ -415,6 +439,18 @@ export default function EscrowFactory({ onError }) {
         setTokenSymbol(symbol)
         setTokenDecimals(decimals)
         setTokenName(name)
+    }
+    async function gets_feeFunction() {
+        const s_fee_ = await gets_fee({ params: { contractAddress: factoryAddress } })
+        sets_fee(s_fee_.toString() / 10)
+    }
+    async function geti_feeFunction() {
+        try {
+            const i_fee_ = await geti_fee({ params: { contractAddress: currentEscrow } })
+            seti_fee(i_fee_.toString() / 10)
+        } catch {
+            return
+        }
     }
 
     async function fixCurrentEscrow() {
@@ -788,34 +824,101 @@ export default function EscrowFactory({ onError }) {
                                         </button>
                                     </div>
                                 )}
-                                <div className="flex items-center">
-                                    <div className=" text-lg text-gray-700 ml-1 font-bold ">
-                                        Current escrow
+                                <div className="flex items-center ">
+                                    <div className="flex items-center">
+                                        <div className=" text-lg text-gray-700 ml-1 font-bold ">
+                                            Current escrow
+                                        </div>
+                                        <div
+                                            onClick={() => {
+                                                copyToClipboard(currentEscrow)
+                                                setIsCopied3(true)
+                                                setTimeout(() => setIsCopied3(false), 1000)
+                                            }}
+                                            className={`ml-1  hover:cursor-pointer transition duration-300 ease-in-out ${
+                                                currentEscrow == "No current escrows" ||
+                                                currentEscrow == "Creating new escrow contract"
+                                                    ? "hidden"
+                                                    : ""
+                                            }`}
+                                        >
+                                            {" "}
+                                            {isCopied3 ? (
+                                                <div className=" text-xxs  px-1  text-black opacity-50 ">
+                                                    Copied!
+                                                </div>
+                                            ) : (
+                                                <div className="opacity-30 hover:opacity-60 ">
+                                                    <Copy />
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                    <div
-                                        onClick={() => {
-                                            copyToClipboard(currentEscrow)
-                                            setIsCopied3(true)
-                                            setTimeout(() => setIsCopied3(false), 1000)
-                                        }}
-                                        className={`ml-1  hover:cursor-pointer transition duration-300 ease-in-out ${
-                                            currentEscrow == "No current escrows" ||
-                                            currentEscrow == "Creating new escrow contract"
-                                                ? "hidden"
-                                                : ""
-                                        }`}
-                                    >
-                                        {" "}
-                                        {isCopied3 ? (
-                                            <div className=" text-xxs  px-1  text-black opacity-50 ">
-                                                Copied!
+                                    {currentEscrow != "Creating new escrow contract" &&
+                                    currentEscrow != "No current escrows" ? (
+                                        <div className="relative group ml-2 mt-0.5">
+                                            <div className="cursor-pointer bg-white border px-2 rounded-lg mr-1 text-xs text-gray-700 font-normal  opacity-80">
+                                                Fee: {i_fee}%
                                             </div>
-                                        ) : (
-                                            <div className="opacity-30 hover:opacity-60 ">
-                                                <Copy />
+
+                                            <div className="absolute bottom-full  left-0 min-w-[90px] hidden group-hover:block bg-white border shadow-lg px-2 py-1 rounded-xl  info-bar">
+                                                {/* Info bar content */}
+                                                <p className="text-gray-500 text-xs   justify-between flex">
+                                                    <div className=" font-medium">Buyer </div>
+                                                    {i_fee / 2}%
+                                                </p>
+                                                <p className="text-gray-500 text-xs   justify-between flex">
+                                                    <div className=" font-medium">Seller </div>
+                                                    {i_fee / 2}%
+                                                </p>
+                                                <p className="text-gray-500 text-xs font-bold mt-1 justify-center flex">
+                                                    <div className="flex items-center text-gray-700">
+                                                        {((i_amount.toString() /
+                                                            10 ** tokenDecimals) *
+                                                            i_fee) /
+                                                            100}
+                                                        <div className="ml-[3px]">
+                                                            {tokenSymbol}
+                                                        </div>
+                                                    </div>
+                                                    <div className=" ml-2 font-medium text-gray-500">
+                                                        each{" "}
+                                                    </div>
+                                                </p>
                                             </div>
-                                        )}
-                                    </div>
+                                        </div>
+                                    ) : s_fee != null ? (
+                                        <div className="relative group ml-2 mt-0.5">
+                                            <div className="cursor-pointer bg-white border px-2 rounded-lg mr-1 text-xs text-gray-700 font-normal  opacity-80">
+                                                Fee: {s_fee}%
+                                            </div>
+
+                                            <div className="absolute bottom-full  left-0 min-w-[90px] hidden group-hover:block bg-white border shadow-lg px-2 py-1 rounded-xl  info-bar">
+                                                {/* Info bar content */}
+                                                <p className="text-gray-500 text-xs   justify-between flex">
+                                                    <div className=" font-medium">Buyer </div>
+                                                    {s_fee / 2}%
+                                                </p>
+                                                <p className="text-gray-500 text-xs   justify-between flex">
+                                                    <div className=" font-medium">Seller </div>
+                                                    {s_fee / 2}%
+                                                </p>
+                                                <p className="text-gray-500 text-xs font-bold mt-1 justify-center flex">
+                                                    <div className="flex items-center text-gray-700">
+                                                        {(amountInput.toString() * s_fee) / 100}
+                                                        <div className="ml-[3px]">
+                                                            {tokenSymbol}
+                                                        </div>
+                                                    </div>
+                                                    <div className=" ml-2 font-medium text-gray-500">
+                                                        each{" "}
+                                                    </div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div></div>
+                                    )}
                                 </div>
                                 <div className="flex  items-center justify-center">
                                     <div className="w-full px-0.5">
@@ -1555,7 +1658,8 @@ export default function EscrowFactory({ onError }) {
                                 {isApproved &&
                                     anyEscrows != "No current escrows" &&
                                     !isFunded &&
-                                    !isEscrowEnded && (
+                                    !isEscrowEnded &&
+                                    currentEscrow != "Creating new escrow contract" && (
                                         <button
                                             className={`bg-primary  text-writing font-bold py-2 px-4 w-full rounded-xl ml-right mr-4 mt-4 flex items-center justify-center ${
                                                 isLoading || isFetching || isFunding
@@ -1597,6 +1701,7 @@ export default function EscrowFactory({ onError }) {
                                         </button>
                                     )}
                                 {anyEscrows != "No current escrows" &&
+                                    currentEscrow != "Creating new escrow contract" &&
                                     isFunded &&
                                     !isEscrowEnded &&
                                     !initializeState && (

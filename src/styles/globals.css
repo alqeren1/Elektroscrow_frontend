@@ -149,7 +149,18 @@
 
 
 
+@keyframes slideLeft {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0%;
+    }
+}
 
+.time-bar {
+    animation: slideLeft 20s linear forwards;
+}
 
 
 
