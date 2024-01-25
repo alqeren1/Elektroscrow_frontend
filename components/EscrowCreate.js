@@ -411,12 +411,12 @@ export default function EscrowFactory({ onError }) {
             // Set a timeout
             const timeoutId = setTimeout(() => {
                 getTokenDecimalsTemp()
-            }, 1000)
+            }, 100)
 
             // Clear the timeout if the component unmounts or the dependencies change
             return () => clearTimeout(timeoutId)
         }
-    }, [getTokenContract, currentEscrow])
+    })
 
     useEffect(() => {
         if (isWeb3Enabled) {
@@ -855,7 +855,8 @@ export default function EscrowFactory({ onError }) {
                                         </div>
                                     </div>
                                     {currentEscrow != "Creating new escrow contract" &&
-                                    currentEscrow != "No current escrows" ? (
+                                    currentEscrow != "No current escrows" &&
+                                    buyerState ? (
                                         <div className="relative group ml-2 mt-0.5">
                                             <div className="cursor-pointer bg-white border px-2 rounded-lg mr-1 text-xs text-gray-700 font-normal  opacity-80">
                                                 Fee: {i_fee}%
@@ -887,7 +888,7 @@ export default function EscrowFactory({ onError }) {
                                                 </p>
                                             </div>
                                         </div>
-                                    ) : s_fee != null ? (
+                                    ) : s_fee != null && buyerState ? (
                                         <div className="relative group ml-2 mt-0.5">
                                             <div className="cursor-pointer bg-white border px-2 rounded-lg mr-1 text-xs text-gray-700 font-normal  opacity-80">
                                                 Fee: {s_fee}%
@@ -1518,7 +1519,7 @@ export default function EscrowFactory({ onError }) {
 
                                             <div className="flex justify-end text-xs text-gray-700 font-light mr-1 opacity-80">
                                                 <div className="opacity-0">Balance:</div>
-                                                {tokenBalance && (
+                                                {tokenBalance && tokenDecimalsTemp && (
                                                     <div className="flex">
                                                         <div className="mr-1">Balance:</div>
                                                         {BigNumber(tokenBalance)

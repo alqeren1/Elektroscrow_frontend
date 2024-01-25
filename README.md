@@ -3,7 +3,7 @@
 -dark mod lazım
 
 
--escrow create'e fee bilgisi ekle (interaktif gösterebilir)
+
 
 
 
