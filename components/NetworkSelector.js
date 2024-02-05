@@ -4,6 +4,7 @@ import WalletConnect from "./ConnectButtonWC"
 import Eth from "../svgs/ethereum-logo"
 import Bsc from "../svgs/bsc-logo"
 import Polygon from "../svgs/polygon-logo"
+import Avax from "../svgs/avax-logo"
 import ManuelConnect from "./CustConnectButtonOnlyMetamask.jsx"
 
 import Arrowdown from "../svgs/arrow-down"
@@ -14,6 +15,7 @@ const networks = [
     { name: "Ethereum", chainId: "0x1" },
     { name: "Binance Smart Chain", chainId: "0x38" },
     { name: "Polygon", chainId: "0x89" },
+    { name: "Avax", chainId: "0xa86a" },
 ]
 
 function NetworkSelector() {
@@ -85,6 +87,8 @@ function NetworkSelector() {
                                             <Bsc />
                                         ) : network.name == "Polygon" ? (
                                             <Polygon />
+                                        ) : network.name == "Avax" ? (
+                                            <Avax />
                                         ) : (
                                             ""
                                         )}
@@ -154,6 +158,24 @@ function NetworkSelector() {
                         </button>
                     ) : (
                         ""
+                    )) ||
+                    (currentNetwork.chainId == "0xa86a" ? (
+                        <button
+                            onClick={() => setShowDropdown(!showDropdown)}
+                            className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out  py-2 px-2 "
+                        >
+                            <Avax />
+
+                            <span
+                                className={`transform transition-transform duration-200 ${
+                                    showDropdown ? "rotate-180 " : "rotate-0"
+                                }`}
+                            >
+                                <Arrowup />
+                            </span>
+                        </button>
+                    ) : (
+                        ""
                     ))}
             </div>
 
@@ -176,11 +198,13 @@ function NetworkSelector() {
                                         <Bsc />
                                     ) : network.name == "Polygon" ? (
                                         <Polygon />
+                                    ) : network.name == "Avax" ? (
+                                        <Avax />
                                     ) : (
                                         ""
                                     )}
                                 </div>
-                                <div>{network.name}</div>
+                                <div className="font-medium text-lsm">{network.name}</div>
                             </div>
                         </div>
                     ))}

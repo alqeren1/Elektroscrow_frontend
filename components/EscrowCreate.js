@@ -72,6 +72,7 @@ export default function EscrowFactory({ onError }) {
     const [tokenSymbol, setTokenSymbol] = useState("")
 
     const [isApproving, setIsApproving] = useState(false)
+    const [isStarting, setIsStarting] = useState(false)
     const [isTokenValid, setIsTokenValid] = useState()
     const [isFunding, setIsFunding] = useState(false)
     const [isWithdrawing, setIsWithdrawing] = useState(false)
@@ -514,6 +515,7 @@ export default function EscrowFactory({ onError }) {
     }
     const handlesuccessNewEscrow = async function (tx) {
         await tx.wait(1)
+        setIsStarting(false)
         setShowInputFields(false)
         handleNewNotification(tx)
         updateUI()
@@ -552,6 +554,7 @@ export default function EscrowFactory({ onError }) {
     }
     const startEscrowButton = async () => {
         // Call your contract function here using the inputs as parameters
+        setIsStarting(true)
         if (!ethers.isAddress(seller)) {
             console.error("Invalid seller contract address")
             return
@@ -574,10 +577,12 @@ export default function EscrowFactory({ onError }) {
                     },
                     onError: (error) => {
                         console.error("Error occurred:", error), onError(error.message)
+                        setIsStarting(false)
                     },
                 })
             } catch (error) {
                 console.error("Error occurred:", error)
+                setIsStarting(false)
                 onError(error.message)
             }
         }
@@ -855,8 +860,7 @@ export default function EscrowFactory({ onError }) {
                                         </div>
                                     </div>
                                     {currentEscrow != "Creating new escrow contract" &&
-                                    currentEscrow != "No current escrows" &&
-                                    buyerState ? (
+                                    currentEscrow != "No current escrows" ? (
                                         <div className="relative group ml-2 mt-0.5">
                                             <div className="cursor-pointer bg-white border px-2 rounded-lg mr-1 text-xs text-gray-700 font-normal  opacity-80">
                                                 Fee: {i_fee}%
@@ -877,7 +881,7 @@ export default function EscrowFactory({ onError }) {
                                                         {((i_amount.toString() /
                                                             10 ** tokenDecimals) *
                                                             i_fee) /
-                                                            100}
+                                                            200}
                                                         <div className="ml-[3px]">
                                                             {tokenSymbol}
                                                         </div>
@@ -888,7 +892,8 @@ export default function EscrowFactory({ onError }) {
                                                 </p>
                                             </div>
                                         </div>
-                                    ) : s_fee != null && buyerState ? (
+                                    ) : s_fee != null &&
+                                      !(!buyerState && currentEscrow == "No current escrows") ? (
                                         <div className="relative group ml-2 mt-0.5">
                                             <div className="cursor-pointer bg-white border px-2 rounded-lg mr-1 text-xs text-gray-700 font-normal  opacity-80">
                                                 Fee: {s_fee}%
@@ -906,7 +911,7 @@ export default function EscrowFactory({ onError }) {
                                                 </p>
                                                 <p className="text-gray-500 text-xs font-bold mt-1 justify-center flex">
                                                     <div className="flex items-center text-gray-700">
-                                                        {(amountInput.toString() * s_fee) / 100}
+                                                        {(amountInput.toString() * s_fee) / 200}
                                                         <div className="ml-[3px]">
                                                             {tokenSymbol}
                                                         </div>
@@ -1009,7 +1014,7 @@ export default function EscrowFactory({ onError }) {
                                         <div>
                                             <div className="flex items-center mb-2 ">
                                                 <div className="flex w-full relative ">
-                                                    <div className="wdefinedxxsm:flex w-full  rounded ml-auto  py-2 wdefinedxsm:px-4 px-2 justify-between rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className="wdefinedxxsm:flex w-full  rounded ml-auto  py-2 wdefinedsm:px-4 px-2 justify-between rounded-xl text-gray-700 bg-white border-2 items-center">
                                                         <div className="group cursor-pointer">
                                                             <div className="flex ">
                                                                 <div className=" font-bold text-sm ">
@@ -1042,7 +1047,7 @@ export default function EscrowFactory({ onError }) {
                                                     </div>
                                                 </div>
                                                 <div className="flex w-full relative ">
-                                                    <div className="wdefinedxxsm:flex w-full rounded ml-auto  justify-between py-2  wdefinedxsm:px-4 px-2 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
+                                                    <div className="wdefinedxxsm:flex w-full rounded ml-auto  justify-between py-2  wdefinedsm:px-4 px-2 ml-1 rounded-xl text-gray-700 bg-white border-2 items-center">
                                                         <div className="group cursor-pointer">
                                                             <div className="flex ">
                                                                 <div className=" font-bold text-sm ">
@@ -1247,26 +1252,28 @@ export default function EscrowFactory({ onError }) {
                                             </div>
                                             <div className="flex items-center mb-1">
                                                 <div className="wdefinedsm:flex w-full rounded ml-0.5 p-0.5 justify-center rounded-lg text-gray-700 bg-gray-200 border-2 items-center">
-                                                    <div className=" font-bold text-sm">Name:</div>
-                                                    <div className="font-medium wdefinedsm:ml-2 text-sm  ">
+                                                    <div className=" font-bold text-xxs">
+                                                        Name:
+                                                    </div>
+                                                    <div className="font-medium wdefinedsm:ml-2 text-xxs  ">
                                                         {tokenName}
                                                     </div>
                                                 </div>
                                                 <div className="wdefinedsm:flex w-full rounded   justify-center ml-1 p-0.5 rounded-lg text-gray-700 bg-gray-200 border-2 items-center">
-                                                    <div className=" font-bold text-sm ">
+                                                    <div className=" font-bold text-xxs ">
                                                         Symbol:
                                                     </div>
 
-                                                    <div className=" font-medium wdefinedsm:ml-2 text-sm">
+                                                    <div className=" font-medium wdefinedsm:ml-2 text-xxs">
                                                         {tokenSymbol}
                                                     </div>
                                                 </div>
                                                 <div className="wdefinedsm:flex w-full rounded  mr-0.5 justify-center p-0.5 ml-1 rounded-lg text-gray-700 bg-gray-200 border-2 items-center">
-                                                    <div className=" font-bold text-sm ">
+                                                    <div className=" font-bold text-xxs ">
                                                         Decimals:
                                                     </div>
 
-                                                    <div className=" font-medium wdefinedsm:ml-2 text-sm">
+                                                    <div className=" font-medium wdefinedsm:ml-2 text-xxs">
                                                         {tokenDecimals}
                                                     </div>
                                                 </div>
@@ -1553,6 +1560,7 @@ export default function EscrowFactory({ onError }) {
                                                 className={`bg-primary    font-bold py-3 px-4 rounded-xl w-full flex items-center justify-center ${
                                                     isLoading ||
                                                     isFetching ||
+                                                    isStarting ||
                                                     (ethers.isAddress(seller)
                                                         ? ethers.getAddress(account) ==
                                                           ethers.getAddress(seller)
@@ -1567,6 +1575,7 @@ export default function EscrowFactory({ onError }) {
                                                 onClick={startEscrowButton}
                                                 disabled={
                                                     isLoading ||
+                                                    isStarting ||
                                                     isFetching ||
                                                     !seller ||
                                                     !amountInput ||
@@ -1578,7 +1587,7 @@ export default function EscrowFactory({ onError }) {
                                                         : true)
                                                 }
                                             >
-                                                {isLoading || isFetching ? (
+                                                {isLoading || isFetching || isStarting ? (
                                                     <>
                                                         <svg
                                                             className="animate-spin -ml-1 mr-3 h-5 w-5 text-writing"

@@ -63,10 +63,13 @@ export default function Home() {
                                 Elektroscrow not only broadens its reach but also aligns with the
                                 evolving landscape of decentralized finance, adapting to the
                                 diverse needs of its users.
-                                <div className="mt-14">
+                                <div className="mt-10">
                                     The latest version of{" "}
-                                    <span className="font-bold"> Elektroscrow-v1 </span> contract
+                                    <span className="font-bold"> Elektroscrow v1.0 </span> contract
                                     is deployed at the addresses listed below.
+                                </div>
+                                <div className="mt-10 mb-4 text-gray-800 font-bold text-2xl">
+                                    Mainnets
                                 </div>
                                 <div className="overflow-x-auto custom-scrollbar2 mt-4">
                                     <table className="min-w-full table-auto">
@@ -91,7 +94,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://etherscan.com"
+                                                        href="https://etherscan.com/address/0x47c9afc609a7cc4976ccc56c2f33b5e7352535c4#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -100,7 +103,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x000000000000000000000000000000000000dEaD{" "}
+                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -116,7 +119,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://etherscan.com"
+                                                        href="https://bscscan.com/address/0x47c9afc609a7cc4976ccc56c2f33b5e7352535c4#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -125,7 +128,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x000000000000000000000000000000000000dEaD{" "}
+                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -141,7 +144,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://etherscan.com"
+                                                        href="https://polygonscan.com/address/0x47c9afc609a7cc4976ccc56c2f33b5e7352535c4#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -150,10 +153,52 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x000000000000000000000000000000000000dEaD{" "}
+                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4{" "}
                                                     </a>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td
+                                                    style={{
+                                                        fontFamily:
+                                                            "'Franklin Gothic', sans-serif",
+                                                    }}
+                                                    className="border-2 p-4 text-lg"
+                                                >
+                                                    Avalanche
+                                                </td>
+                                                <td className="border-2 p-4 ">
+                                                    <a
+                                                        href="https://avascan.info/blockchain/all/address/0x66C046Bab48664F804b92DEa7C65B77BF7E67247/contract"
+                                                        target="_blank"
+                                                        style={{
+                                                            fontFamily:
+                                                                "'Franklin Gothic', sans-serif",
+                                                        }}
+                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
+                                                    >
+                                                        {" "}
+                                                        0x66C046Bab48664F804b92DEa7C65B77BF7E67247{" "}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="mt-16 mb-4 text-gray-800 font-bold text-2xl">
+                                    Testnets
+                                </div>
+                                <div className="overflow-x-auto custom-scrollbar2 mt-4">
+                                    <table className="min-w-full table-auto">
+                                        <thead className="">
+                                            <tr>
+                                                <th className="border-2  p-4 w-1/4">Networks</th>
+                                                <th className="border-2  p-4 w-3/4">
+                                                    Contract Address
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr>
                                                 <td
                                                     style={{
@@ -166,7 +211,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://etherscan.com"
+                                                        href="https://sepolia.etherscan.io/address/0xad4a39Ea15a8bbb828336A447D38515989D361A4#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -175,7 +220,57 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x000000000000000000000000000000000000dEaD{" "}
+                                                        0xad4a39Ea15a8bbb828336A447D38515989D361A4{" "}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr className="bg-gray-50">
+                                                <td
+                                                    style={{
+                                                        fontFamily:
+                                                            "'Franklin Gothic', sans-serif",
+                                                    }}
+                                                    className="border-2 text-lg p-4 whitespace-nowrap"
+                                                >
+                                                    Bsc - Testnet
+                                                </td>
+                                                <td className="border-2 p-4 ">
+                                                    <a
+                                                        href="https://testnet.bscscan.com/address/0x66C046Bab48664F804b92DEa7C65B77BF7E67247#code"
+                                                        target="_blank"
+                                                        style={{
+                                                            fontFamily:
+                                                                "'Franklin Gothic', sans-serif",
+                                                        }}
+                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
+                                                    >
+                                                        {" "}
+                                                        0x66C046Bab48664F804b92DEa7C65B77BF7E67247{" "}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style={{
+                                                        fontFamily:
+                                                            "'Franklin Gothic', sans-serif",
+                                                    }}
+                                                    className="border-2 text-lg p-4"
+                                                >
+                                                    Polygon - Mumbai
+                                                </td>
+                                                <td className="border-2 p-4 ">
+                                                    <a
+                                                        href="https://mumbai.polygonscan.com/address/0x66C046Bab48664F804b92DEa7C65B77BF7E67247#code"
+                                                        target="_blank"
+                                                        style={{
+                                                            fontFamily:
+                                                                "'Franklin Gothic', sans-serif",
+                                                        }}
+                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
+                                                    >
+                                                        {" "}
+                                                        0x66C046Bab48664F804b92DEa7C65B77BF7E67247{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -187,11 +282,11 @@ export default function Home() {
                                                     }}
                                                     className="border-2 p-4 text-lg"
                                                 >
-                                                    Bsc - testnet
+                                                    Arbitrum - Sepolia
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://etherscan.com"
+                                                        href="https://sepolia.arbiscan.io/address/0x66C046Bab48664F804b92DEa7C65B77BF7E67247#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -200,7 +295,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x000000000000000000000000000000000000dEaD{" "}
+                                                        0x66C046Bab48664F804b92DEa7C65B77BF7E67247{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -212,11 +307,11 @@ export default function Home() {
                                                     }}
                                                     className="border-2 p-4 text-lg"
                                                 >
-                                                    Polygon - testnet
+                                                    OP - Sepolia
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://etherscan.com"
+                                                        href="https://optimism-sepolia.blockscout.com/address/0x66C046Bab48664F804b92DEa7C65B77BF7E67247?tab=contract"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -225,7 +320,57 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x000000000000000000000000000000000000dEaD{" "}
+                                                        0x66C046Bab48664F804b92DEa7C65B77BF7E67247{" "}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style={{
+                                                        fontFamily:
+                                                            "'Franklin Gothic', sans-serif",
+                                                    }}
+                                                    className="border-2 p-4 text-lg"
+                                                >
+                                                    Base - Sepolia
+                                                </td>
+                                                <td className="border-2 p-4 ">
+                                                    <a
+                                                        href="https://sepolia.basescan.org/address/0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4#code"
+                                                        target="_blank"
+                                                        style={{
+                                                            fontFamily:
+                                                                "'Franklin Gothic', sans-serif",
+                                                        }}
+                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
+                                                    >
+                                                        {" "}
+                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4{" "}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style={{
+                                                        fontFamily:
+                                                            "'Franklin Gothic', sans-serif",
+                                                    }}
+                                                    className="border-2 p-4 text-lg"
+                                                >
+                                                    Celo - Alfajores
+                                                </td>
+                                                <td className="border-2 p-4 ">
+                                                    <a
+                                                        href="https://alfajores.celoscan.io/address/0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4#code"
+                                                        target="_blank"
+                                                        style={{
+                                                            fontFamily:
+                                                                "'Franklin Gothic', sans-serif",
+                                                        }}
+                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
+                                                    >
+                                                        {" "}
+                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4{" "}
                                                     </a>
                                                 </td>
                                             </tr>

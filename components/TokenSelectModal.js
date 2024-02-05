@@ -2,12 +2,84 @@ import React, { useState, useEffect, useRef } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { ethers } from "ethers"
 
-import tokens from "../default_tokens/mainnet.json"
+import tokens_mainnet from "../default_tokens/mainnet.json"
+import tokens_sepolia from "../default_tokens/sepolia.json"
 const abi_ERC20 = require("../constants1/abi_ERC20.json")
 const abi_ERC20_bytes = require("../constants1/abi_ERC20_bytes.json")
 const BigNumber = require("bignumber.js")
 
 const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent, onClose }) => {
+    const { chainId: chainIdHex } = useMoralis()
+    let chainId = parseInt(chainIdHex)
+
+    let tokens
+    if (chainId == "1" || chainId == "0x7a69") {
+        tokens = tokens_mainnet
+    }
+    if (chainId == "11155111") {
+        tokens = tokens_sepolia
+    }
+    if (chainId == "56") {
+        //BSC
+        tokens = tokens_sepolia
+    }
+    if (chainId == "97") {
+        //BSC testnet
+        tokens = tokens_sepolia
+    }
+    if (chainId == "137") {
+        //Polygon
+        tokens = tokens_sepolia
+    }
+    if (chainId == "80001") {
+        //Polygon testnet
+        tokens = tokens_sepolia
+    }
+
+    if (chainId == "42161") {
+        //Arbitrum
+        tokens = tokens_sepolia
+    }
+    if (chainId == "421614") {
+        //Arbitrum testnet
+        tokens = tokens_sepolia
+    }
+
+    if (chainId == "43114") {
+        //Avalanche
+        tokens = tokens_sepolia
+    }
+    if (chainId == "43113") {
+        //Avalanche testnet
+        tokens = tokens_sepolia
+    }
+
+    if (chainId == "10") {
+        //Optimism
+        tokens = tokens_sepolia
+    }
+    if (chainId == "11155420") {
+        //Optimism testnet
+        tokens = tokens_sepolia
+    }
+
+    if (chainId == "8453") {
+        //Base
+        tokens = tokens_sepolia
+    }
+    if (chainId == "84532") {
+        //Base sepolia testnet
+        tokens = tokens_sepolia
+    }
+
+    if (chainId == "42220") {
+        //Celo
+        tokens = tokens_sepolia
+    }
+    if (chainId == "44787") {
+        //Celo testnet
+        tokens = tokens_sepolia
+    }
     const modalRef = useRef()
     const { account } = useMoralis()
 

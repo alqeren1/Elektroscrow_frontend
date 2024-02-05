@@ -62,6 +62,8 @@
     line-height: 1rem; /* 20px */
 }
 
+
+
 .info-bar::before {
     content: "";
     position: absolute;

@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 export default function BottomBar() {
     const router = useRouter()
     const currentPage = router.pathname
-    console.log(currentPage)
+
     const navigateToEscrow = () => {
         router.push("/")
     }

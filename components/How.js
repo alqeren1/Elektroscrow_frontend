@@ -92,21 +92,21 @@ function How() {
                 </div>
 
                 <h1 className="font-medium text-2xl  mt-20 items-center flex">
-                    What to do step by step in order to use the protocol{" "}
+                    What to do step by step in order to do an escrow transaction{" "}
                     <span className="font-normal text-gray-500 italic text-base mt-1 ml-2 ">
                         {" "}
                         (from buyer's perspective){" "}
                     </span>
                 </h1>
 
-                <div className="mt-8 text-xl">
+                <div className="mt-12 text-xl">
                     <div>
                         <span className="font-medium  text-xl underline mr-2 "> Step 1: </span>{" "}
                         Find a seller/provider for the service you would like to purchase.
                         Communicate with the provider to specify the type and amount of the token
                         to be used for payment.
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-12">
                         <span className="font-medium  text-xl underline mr-2"> Step 2: </span>{" "}
                         Connect your wallet to Elektroscrow, then press the buyer button to switch
                         to buyer view. Type the seller's wallet address, then fill the remaining
@@ -114,14 +114,14 @@ function How() {
                         After you input the adequate information, press the button below and create
                         a new escrow.
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-12">
                         <span className="font-medium  text-xl underline mr-2"> Step 3: </span>{" "}
                         Approve the tokens for protocol to use, then fund the contract with the
                         required amount of tokens by pressing fund button. After that, inform the
                         seller that you deposited the amount and now its his turn to deposit the
                         safety-deposit.
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-12">
                         <span className="font-medium  text-xl underline mr-2"> Step 4: </span>{" "}
                         Seller connects to Elektroscrow, then presses the seller button to switch
                         to seller view. Seller can automatically see the escrow contracts created
@@ -129,14 +129,14 @@ function How() {
                         contract, confirming the escrow address and the buyer's wallet address by
                         communicating with you.
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-12">
                         <span className="font-medium  text-xl underline mr-2"> Step 5: </span> At
                         this step, the escrow is initialized and both users are prompted with three
                         decision buttons. These are; "Accept", "Decline" and "Refund". Both users
                         have a right to decide the outcome of this escrow. These decisions are set
                         to "Decline" for start. Mutual decision are needed to come to either
                         "Accept" or "Refund" decision for the outcome.
-                        <div className="mt-4 mb-4">
+                        <div className="mt-6 mb-6">
                             After the seller successfully provides what he promised to you, he
                             informs you about it. After you are satisfied with it, either users
                             press the "Accept" button to transfer the funds and recieve their

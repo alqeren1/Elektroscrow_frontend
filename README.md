@@ -1,17 +1,19 @@
 
 
--dark mod lazım
-
 
 
 
 
 
 -docs'a why would i trust elektroscrow? başlığı ekliyip, altına açıklama testnet kodu ile dilediğiniz gibi deneyin, bytecodu kıyaslayın yaz
+--https://countwordsfree.com/comparetexts
+
+
 
 
 -giriş sayfası token sembolu neden sıfırlanmıyor
 
+-token listelerini yap her ağ için
 
 
 
@@ -20,7 +22,7 @@ LATER:
 
 -tokenleri listede sırala, populerleri üste al
 
-
+-dark mod lazım
 
 -custom token fotosu yap, ekle
 
