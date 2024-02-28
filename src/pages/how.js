@@ -14,7 +14,7 @@ export default function Home() {
         <>
             <Head>
                 <title>Elektroscrow</title>
-                <meta name="description" content="Smart contract lottery" />
+                <meta name="description" content="Decentralized escrow transactions" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/elektro_adjusted.png" />
             </Head>

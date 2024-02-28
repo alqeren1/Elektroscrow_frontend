@@ -414,11 +414,11 @@ export default function Home() {
                                             </div>
                                         </a>
                                         <a
-                                            href="/docs/decentralization"
+                                            href="/docs/trust"
                                             className="bg-gray-100 bg-opacity-50 ml-2 rounded-lg border-2 w-64 group h-16  items-center  text-[#7d7d7d] hover:text-gray-700 flex cursor-pointer"
                                         >
                                             <div className="flex px-1 justify-center text-left w-full font-medium">
-                                                How is it decentralized?
+                                                Why trust Elektroscrow?
                                             </div>
                                             <span className="rotate-[90deg] mr-2 group-hover:translate-x-2 transition duration-300 ease-in-out">
                                                 <Arrowup />

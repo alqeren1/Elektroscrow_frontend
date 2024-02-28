@@ -104,7 +104,7 @@ function NetworkSelector() {
     }
     return (
         <div className="relative " ref={dropdownRef}>
-            <div className="ml-10">
+            <div>
                 {" "}
                 {(currentNetwork.chainId == "0x1" ? (
                     <button
@@ -204,7 +204,13 @@ function NetworkSelector() {
                                         ""
                                     )}
                                 </div>
-                                <div className="font-medium text-lsm">{network.name}</div>
+                                <div
+                                    className={` ${
+                                        chainId == network.chainId ? "font-medium " : ""
+                                    }`}
+                                >
+                                    {network.name}
+                                </div>
                             </div>
                         </div>
                     ))}

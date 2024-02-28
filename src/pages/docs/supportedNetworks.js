@@ -94,7 +94,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://etherscan.com/address/0x47c9afc609a7cc4976ccc56c2f33b5e7352535c4#code"
+                                                        href="https://etherscan.com/address/"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -103,7 +103,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4{" "}
+                                                        NA{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -119,7 +119,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://bscscan.com/address/0x47c9afc609a7cc4976ccc56c2f33b5e7352535c4#code"
+                                                        href="https://bscscan.com/address/0xA0F0364ba8Bf0AC4029Ea19906743427edFF9089#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -128,7 +128,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4{" "}
+                                                        0xA0F0364ba8Bf0AC4029Ea19906743427edFF9089{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -144,7 +144,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://polygonscan.com/address/0x47c9afc609a7cc4976ccc56c2f33b5e7352535c4#code"
+                                                        href="https://polygonscan.com/address/0x66C046Bab48664F804b92DEa7C65B77BF7E67247#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -153,7 +153,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4{" "}
+                                                        0x66C046Bab48664F804b92DEa7C65B77BF7E67247{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -169,7 +169,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://avascan.info/blockchain/all/address/0x66C046Bab48664F804b92DEa7C65B77BF7E67247/contract"
+                                                        href="https://avascan.info/blockchain/all/address/0xA0F0364ba8Bf0AC4029Ea19906743427edFF9089/contract"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -178,7 +178,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x66C046Bab48664F804b92DEa7C65B77BF7E67247{" "}
+                                                        0xA0F0364ba8Bf0AC4029Ea19906743427edFF9089{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -211,7 +211,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://sepolia.etherscan.io/address/0xad4a39Ea15a8bbb828336A447D38515989D361A4#code"
+                                                        href="https://sepolia.etherscan.io/address/"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -220,7 +220,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0xad4a39Ea15a8bbb828336A447D38515989D361A4{" "}
+                                                        NA{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -236,7 +236,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://testnet.bscscan.com/address/0x66C046Bab48664F804b92DEa7C65B77BF7E67247#code"
+                                                        href="https://testnet.bscscan.com/address/0xe761f3BFFf8a82BA01dA7264b3Edd542D8A56C45#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -245,7 +245,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x66C046Bab48664F804b92DEa7C65B77BF7E67247{" "}
+                                                        0xe761f3BFFf8a82BA01dA7264b3Edd542D8A56C45{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -261,7 +261,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://mumbai.polygonscan.com/address/0x66C046Bab48664F804b92DEa7C65B77BF7E67247#code"
+                                                        href="https://mumbai.polygonscan.com/address/0xAed21ab405882d731bD30cDe88a278d4ecb0BC29#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -270,7 +270,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x66C046Bab48664F804b92DEa7C65B77BF7E67247{" "}
+                                                        0xAed21ab405882d731bD30cDe88a278d4ecb0BC29{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -286,7 +286,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://sepolia.arbiscan.io/address/0x66C046Bab48664F804b92DEa7C65B77BF7E67247#code"
+                                                        href="https://sepolia.arbiscan.io/address/0xe761f3BFFf8a82BA01dA7264b3Edd542D8A56C45#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -295,7 +295,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x66C046Bab48664F804b92DEa7C65B77BF7E67247{" "}
+                                                        0xe761f3BFFf8a82BA01dA7264b3Edd542D8A56C45{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -311,7 +311,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://optimism-sepolia.blockscout.com/address/0x66C046Bab48664F804b92DEa7C65B77BF7E67247?tab=contract"
+                                                        href="https://sepolia-optimism.etherscan.io/address/0x8818929e913A443f15b56cC95DD7108d5B324cfD#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -320,7 +320,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x66C046Bab48664F804b92DEa7C65B77BF7E67247{" "}
+                                                        0x8818929e913A443f15b56cC95DD7108d5B324cfD{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -336,7 +336,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://sepolia.basescan.org/address/0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4#code"
+                                                        href="https://sepolia.basescan.org/address/0x8b73484bc7c0d140D8f3B2Be4189095Da8811241#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -345,7 +345,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4{" "}
+                                                        0x8b73484bc7c0d140D8f3B2Be4189095Da8811241{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -361,7 +361,7 @@ export default function Home() {
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
-                                                        href="https://alfajores.celoscan.io/address/0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4#code"
+                                                        href="https://alfajores.celoscan.io/address/0x8b73484bc7c0d140D8f3B2Be4189095Da8811241#code"
                                                         target="_blank"
                                                         style={{
                                                             fontFamily:
@@ -370,7 +370,7 @@ export default function Home() {
                                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                                     >
                                                         {" "}
-                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4{" "}
+                                                        0x8b73484bc7c0d140D8f3B2Be4189095Da8811241{" "}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -381,22 +381,22 @@ export default function Home() {
 
                             <div className="justify-between flex">
                                 <a
-                                    href="/docs/escrowStatus"
+                                    href="/docs/fee"
                                     className="bg-gray-100 bg-opacity-50 rounded-lg group mr-2 border-2 w-64 h-16 mt-20 text-[#7d7d7d] hover:text-gray-700 items-center flex cursor-pointer "
                                 >
                                     <span className="rotate-[-90deg] ml-2 group-hover:translate-x-[-0.5rem] transition duration-300 ease-in-out">
                                         <Arrowup />{" "}
                                     </span>
-                                    <div className="flex justify-center w-full  font-medium">
-                                        Escrow status
+                                    <div className="flex justify-center w-full  text-right font-medium">
+                                        Protocol fee
                                     </div>
                                 </a>
                                 <a
-                                    href="/docs/supportedNetworks"
+                                    href="/docs/links"
                                     className="bg-gray-100 bg-opacity-50 rounded-lg border-2 w-64 group h-16 mt-20 items-center  text-[#7d7d7d] hover:text-gray-700 flex cursor-pointer"
                                 >
                                     <div className="flex justify-center w-full wdefinedmed:mr-0 ml-1 font-medium text-left">
-                                        How to connect
+                                        Links
                                     </div>
                                     <span className="rotate-[90deg]  mr-2 group-hover:translate-x-2 transition duration-300 ease-in-out">
                                         <Arrowup />

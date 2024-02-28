@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { ethers } from "ethers"
-
+import NetworkSelector from "./NetworkSelector"
 import tokens_mainnet from "../default_tokens/mainnet.json"
 import tokens_sepolia from "../default_tokens/sepolia.json"
+import tokens_avax from "../default_tokens/avax.json"
+import tokens_polygon from "../default_tokens/polygon.json"
+import tokens_bnb from "../default_tokens/bnb.json"
+import tokens_hardhat from "../default_tokens/hardhat.json"
+
 const abi_ERC20 = require("../constants1/abi_ERC20.json")
 const abi_ERC20_bytes = require("../constants1/abi_ERC20_bytes.json")
 const BigNumber = require("bignumber.js")
@@ -13,6 +18,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
     let chainId = parseInt(chainIdHex)
 
     let tokens
+
     if (chainId == "1" || chainId == "0x7a69") {
         tokens = tokens_mainnet
     }
@@ -21,7 +27,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
     }
     if (chainId == "56") {
         //BSC
-        tokens = tokens_sepolia
+        tokens = tokens_bnb
     }
     if (chainId == "97") {
         //BSC testnet
@@ -29,7 +35,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
     }
     if (chainId == "137") {
         //Polygon
-        tokens = tokens_sepolia
+        tokens = tokens_polygon
     }
     if (chainId == "80001") {
         //Polygon testnet
@@ -47,7 +53,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
 
     if (chainId == "43114") {
         //Avalanche
-        tokens = tokens_sepolia
+        tokens = tokens_avax
     }
     if (chainId == "43113") {
         //Avalanche testnet
@@ -79,6 +85,10 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
     if (chainId == "44787") {
         //Celo testnet
         tokens = tokens_sepolia
+    }
+    if (chainId == "31337") {
+        //Celo testnet
+        tokens = tokens_hardhat
     }
     const modalRef = useRef()
     const { account } = useMoralis()
@@ -248,9 +258,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
 
         setDisplayTokenSymbol(tokenSymbol)
         setModalOpen(false)
-        setTokenImageUrl(
-            "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
-        )
+        setTokenImageUrl("custom_token_logo.png")
         setSearchTerm("")
     }
 
@@ -272,7 +280,8 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
             setIsTokenValid(false)
             onTokenValidation(false)
         }
-    }, [searchTerm, tokenContractChild])
+        console.log(tokenImageUrl)
+    }, [searchTerm, tokenContractChild, chainId])
     useEffect(() => {
         if (modalOpen) {
             document.addEventListener("mousedown", closeModalOnOutsideClick)
@@ -283,7 +292,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
         return () => {
             document.removeEventListener("mousedown", closeModalOnOutsideClick)
         }
-    }, [modalOpen])
+    }, [modalOpen, chainId])
 
     const handleTokenSelect = (token) => {
         setTokenContract(token.address)
@@ -292,7 +301,12 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
         setIsCustomToken(false)
         setDisplayTokenName(token.name)
         setDisplayTokenSymbol(token.symbol)
-        setTokenImageUrl(token.logoURI)
+        if (filteredTokens.length === 0) {
+            setTokenImageUrl(null)
+        } else {
+            setTokenImageUrl(token.logoURI)
+        }
+
         setModalOpen(false)
         setSearchTerm("")
     }
@@ -305,7 +319,10 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
                 }`}
                 onClick={() => setModalOpen(true)}
             >
-                {tokenImageUrl && <img src={tokenImageUrl} alt="Token" className="w-5 h-5 mr-2" />}
+                {tokenImageUrl && (
+                    <img src={tokenImageUrl} alt="Token" className="w-5 h-5 mr-2 rounded-full" />
+                )}
+
                 <span className="flex-1">
                     {displayTokenName ? (
                         <div className="text-gray-700 font-medium mr-3">{displayTokenName}</div>
@@ -320,7 +337,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
                         ref={modalRef}
                         className="relative bg-white py-4  shadow-lg w-full min-480px-width h-1/2 wdefined:h-[613px] rounded-t-3xl wdefined:rounded-3xl"
                     >
-                        <div className="sticky top-0 bg-white pt-2 px-4  rounded-3xl z-10">
+                        <div className="sticky top-0 bg-white pt-2 px-4  rounded-3xl z-10 ">
                             <div className="flex  items-center mt-1  mb-4">
                                 <div className="font-bold text-gray-700 ml-1">Select a token</div>
 
@@ -331,13 +348,16 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
                                     &#10005; {/* X symbol */}
                                 </button>
                             </div>
-                            <input
-                                type="text"
-                                placeholder="Search token by name or address"
-                                className="p-2 border border-gray-300 rounded w-full focus:outline-none rounded-xl"
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
+                            <div className="flex">
+                                <input
+                                    type="text"
+                                    placeholder="Search token by name or address"
+                                    className="p-2 border border-gray-300 rounded w-full focus:outline-none rounded-xl mr-2"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                                <NetworkSelector />
+                            </div>
                         </div>
                         <div className=" w-full border-b-2 border-gray-300/50 mt-4 "></div>
                         <div
@@ -365,7 +385,9 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
                                 </div>
                             ))}
                             {filteredTokens.length === 0 && !isTokenValid && (
-                                <div className="p-2 text-gray-600">No tokens found</div>
+                                <div className="flex justify-center mt-2">
+                                    <div className="p-2 text-gray-600 ">No tokens found</div>
+                                </div>
                             )}
                             {filteredTokens.length === 0 && isTokenValid && (
                                 <div>
@@ -377,11 +399,9 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
                                         onClick={addButton}
                                     >
                                         <img
-                                            src={
-                                                "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png"
-                                            }
+                                            src={"custom_token_logo.png"}
                                             alt={tokenSymbol}
-                                            className="w-9 h-9 mr-2"
+                                            className="w-9 h-9 mr-2 rounded-full"
                                         />
                                         <div>
                                             <div className="font-medium text-gray-700">

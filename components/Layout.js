@@ -22,8 +22,8 @@ const menuItems = [
     { href: "/docs/escrowStatus", title: "Escrow status" },
     { href: "/docs/fee", title: "Protocol fee" },
     { href: "/docs/supportedNetworks", title: "Supported networks" },
-    { href: "/docs/connectingWallet", title: "How to connect your wallet?" },
-    { href: "/docs/roadmap", title: "Roadmap" },
+
+    { href: "/docs/links", title: "Links" },
 ]
 
 export default function Layout({ children, setLayoutOpen }) {
@@ -33,7 +33,7 @@ export default function Layout({ children, setLayoutOpen }) {
         <>
             <Head>
                 <title>Elektroscrow Docs</title>
-                <meta name="description" content="Smart contract lottery" />
+                <meta name="description" content="Decentralized escrow transactions" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/elektro_adjusted.png" />
             </Head>
@@ -42,17 +42,19 @@ export default function Layout({ children, setLayoutOpen }) {
                     <nav>
                         <div className="sticky top-0 bg-white z-10">
                             <div className=" flex  bg-white w-full items-center">
-                                <img
-                                    src="/elektro_adjusted.png"
-                                    alt="Logo"
-                                    className="h-9 w-9  ml-2 mt-1"
-                                />
-                                <div
-                                    className="font-medium text-xl  py-4  text-gray-900 "
-                                    style={{ fontFamily: "'Franklin Gothic', sans-serif" }}
-                                >
-                                    Elektroscrow Docs
-                                </div>
+                                <a href="/" className="flex items-center">
+                                    <img
+                                        src="/elektro_adjusted.png"
+                                        alt="Logo"
+                                        className="h-9 w-9  ml-2 mt-1"
+                                    />
+                                    <div
+                                        className="font-medium text-xl  py-4  text-gray-900 "
+                                        style={{ fontFamily: "'Franklin Gothic', sans-serif" }}
+                                    >
+                                        Elektroscrow Docs
+                                    </div>{" "}
+                                </a>
 
                                 <button
                                     onClick={() => setLayoutOpen(false)}
@@ -63,17 +65,17 @@ export default function Layout({ children, setLayoutOpen }) {
                             </div>
                             <div className="border-b w-full border-gray-300"></div>
                         </div>
-                        <div className="custom-scrollbar overflow-y-auto max-h-[calc(100vh-65px)]">
+                        <div className="custom-scrollbar overflow-y-auto max-h-[calc(100vh-110px)]">
                             <ul className="mt-5">
                                 <div className="px-4 mb-2  opacity-50 ">GENERAL</div>
                                 {menuItems.map(({ href, title }) => (
                                     <div className="px-1">
                                         <li
                                             key={title}
-                                            className={`mb-2  border-2 border-dotted rounded-xl ${
+                                            className={`mb-2  border-2  rounded-xl ${
                                                 router.asPath == href
-                                                    ? "bg-[#ededed]"
-                                                    : "bg-gray-50"
+                                                    ? "bg-[#ededed] "
+                                                    : "bg-gray-50 border-dotted"
                                             }`}
                                         >
                                             <Link

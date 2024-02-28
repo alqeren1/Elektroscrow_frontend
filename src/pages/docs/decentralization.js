@@ -111,14 +111,14 @@ export default function Home() {
                             </div>
                             <div className="justify-between flex mt-20">
                                 <a
-                                    href="/docs/how"
+                                    href="/docs/trust"
                                     className="bg-gray-100 bg-opacity-50 rounded-lg group border-2 w-64 h-16  text-[#7d7d7d] hover:text-gray-700 items-center flex cursor-pointer "
                                 >
                                     <span className="rotate-[-90deg] ml-2 group-hover:translate-x-[-0.5rem] transition duration-300 ease-in-out">
                                         <Arrowup />{" "}
                                     </span>
                                     <div className="flex justify-center px-1 w-full text-right font-medium">
-                                        How does it work?
+                                        Why trust Elektroscrow?
                                     </div>
                                 </a>
                                 <a

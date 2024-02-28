@@ -868,15 +868,15 @@ export default function EscrowFactory({ onError }) {
 
                                             <div className="absolute bottom-full  left-0 min-w-[90px] hidden group-hover:block bg-white border shadow-lg px-2 py-1 rounded-xl  info-bar">
                                                 {/* Info bar content */}
-                                                <p className="text-gray-500 text-xs   justify-between flex">
+                                                <div className="text-gray-500 text-xs   justify-between flex">
                                                     <div className=" font-medium">Buyer </div>
                                                     {i_fee / 2}%
-                                                </p>
-                                                <p className="text-gray-500 text-xs   justify-between flex">
+                                                </div>
+                                                <div className="text-gray-500 text-xs   justify-between flex">
                                                     <div className=" font-medium">Seller </div>
                                                     {i_fee / 2}%
-                                                </p>
-                                                <p className="text-gray-500 text-xs font-bold mt-1 justify-center flex">
+                                                </div>
+                                                <div className="text-gray-500 text-xs font-bold mt-1 justify-center flex">
                                                     <div className="flex items-center text-gray-700">
                                                         {((i_amount.toString() /
                                                             10 ** tokenDecimals) *
@@ -889,7 +889,7 @@ export default function EscrowFactory({ onError }) {
                                                     <div className=" ml-2 font-medium text-gray-500">
                                                         each{" "}
                                                     </div>
-                                                </p>
+                                                </div>
                                             </div>
                                         </div>
                                     ) : s_fee != null &&
@@ -901,15 +901,15 @@ export default function EscrowFactory({ onError }) {
 
                                             <div className="absolute bottom-full  left-0 min-w-[90px] hidden group-hover:block bg-white border shadow-lg px-2 py-1 rounded-xl  info-bar">
                                                 {/* Info bar content */}
-                                                <p className="text-gray-500 text-xs   justify-between flex">
+                                                <div className="text-gray-500 text-xs   justify-between flex">
                                                     <div className=" font-medium">Buyer </div>
                                                     {s_fee / 2}%
-                                                </p>
-                                                <p className="text-gray-500 text-xs   justify-between flex">
+                                                </div>
+                                                <div className="text-gray-500 text-xs   justify-between flex">
                                                     <div className=" font-medium">Seller </div>
                                                     {s_fee / 2}%
-                                                </p>
-                                                <p className="text-gray-500 text-xs font-bold mt-1 justify-center flex">
+                                                </div>
+                                                <div className="text-gray-500 text-xs font-bold mt-1 justify-center flex">
                                                     <div className="flex items-center text-gray-700">
                                                         {(amountInput.toString() * s_fee) / 200}
                                                         <div className="ml-[3px]">
@@ -919,7 +919,7 @@ export default function EscrowFactory({ onError }) {
                                                     <div className=" ml-2 font-medium text-gray-500">
                                                         each{" "}
                                                     </div>
-                                                </p>
+                                                </div>
                                             </div>
                                         </div>
                                     ) : (
@@ -1251,12 +1251,14 @@ export default function EscrowFactory({ onError }) {
                                                 </div>
                                             </div>
                                             <div className="flex items-center mb-1">
-                                                <div className="wdefinedsm:flex w-full rounded ml-0.5 p-0.5 justify-center rounded-lg text-gray-700 bg-gray-200 border-2 items-center">
+                                                <div className="wdefinedsm:flex w-full  rounded ml-0.5 p-0.5 overflow-hidden text-ellipsis whitespace-nowrap justify-center rounded-lg text-gray-700 bg-gray-200 border-2 items-center">
                                                     <div className=" font-bold text-xxs">
                                                         Name:
                                                     </div>
-                                                    <div className="font-medium wdefinedsm:ml-2 text-xxs  ">
-                                                        {tokenName}
+                                                    <div className="font-medium  wdefinedsm:ml-2 text-xxs  ">
+                                                        {(tokenName && tokenName.length) > 12
+                                                            ? tokenName.substring(0, 11)
+                                                            : tokenName}
                                                     </div>
                                                 </div>
                                                 <div className="wdefinedsm:flex w-full rounded   justify-center ml-1 p-0.5 rounded-lg text-gray-700 bg-gray-200 border-2 items-center">

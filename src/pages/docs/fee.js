@@ -94,7 +94,7 @@ export default function Home() {
                                     <span className="rotate-[-90deg] ml-2 group-hover:translate-x-[-0.5rem] transition duration-300 ease-in-out">
                                         <Arrowup />{" "}
                                     </span>
-                                    <div className="flex justify-center wdefinedmed:mr-0 mr-1 w-full  font-medium">
+                                    <div className="flex justify-center wdefinedmed:mr-0 mr-1 w-full text-right font-medium">
                                         Escrow status
                                     </div>
                                 </a>

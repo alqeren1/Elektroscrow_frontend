@@ -5,6 +5,7 @@ import NetworkSelector from "./NetworkSelector"
 import Dots from "../svgs/dots"
 import Twitter from "../svgs/twitter"
 import Github from "../svgs/github"
+import Telegram from "../svgs/telegram"
 
 // header.js
 import { useRouter } from "next/router"
@@ -117,15 +118,30 @@ export default function Header() {
                                         <li className="  ">Twitter</li>
                                     </a>
                                     <a
-                                        href="https://github.com"
+                                        href="https://github.com/elektroscrow"
                                         target="_blank"
                                         className="flex text-gray-700 hover:text-gray-900 items-center  py-1 text-lsm  font-normal cursor-pointer hover:bg-gray-100 rounded-lg"
                                     >
                                         <Github />
                                         <li className="  ">GitHub</li>
                                     </a>
+                                    <a
+                                        href="https://t.me/elektroscrow"
+                                        target="_blank"
+                                        className="flex text-gray-700 group hover:text-gray-900 items-center ml-1 py-1 text-lsm  font-normal cursor-pointer hover:bg-gray-100 rounded-lg"
+                                    >
+                                        <div className="opacity-80 group-hover:opacity-100">
+                                            <Telegram />
+                                        </div>
+                                        <li className=" ml-1.5 ">Telegram</li>
+                                    </a>
                                     <div className="flex items-center text-gray-900 py-1 ml-[7px]  text-sm font-normal  opacity-80 ">
-                                        <span className=" mb-[1px]"> elektroscrow@proton.me</span>
+                                        <a
+                                            href="mailto:elektroscrow@proton.me"
+                                            className=" mb-[1px] hover:underline"
+                                        >
+                                            elektroscrow@proton.me
+                                        </a>
                                     </div>
                                 </ul>
                             </div>
