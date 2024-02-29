@@ -45,7 +45,7 @@ export default function Home() {
                 </button>
                 <div className="flex justify-center">
                     <div
-                        className={`text-base text-gray-800 text-justify w-full   h-screen font-base ${
+                        className={`text-xl text-gray-800 text-justify w-full   h-screen font-base ${
                             layoutOpen ? " wdefinedxl:w-[850px]" : "wdefinedlg:w-[850px]"
                         }`}
                     >
@@ -67,11 +67,13 @@ export default function Home() {
                                 </span>
                                 itself , has overarching control or access to the entire system,
                                 thereby preventing any form of centralized manipulation or
-                                vulnerability. Furthermore, the platform leverages smart contracts,
-                                which are self-executing contracts with the terms of the agreement
-                                directly written into code. These smart contracts operate
-                                independently on the blockchain, ensuring that transactions are
-                                executed{" "}
+                                vulnerability.
+                            </div>
+                            <div className="mt-14">
+                                Furthermore, the platform leverages smart contracts, which are
+                                self-executing contracts with the terms of the agreement directly
+                                written into code. These smart contracts operate independently on
+                                the blockchain, ensuring that transactions are executed{" "}
                                 <span className="font-bold text-gray-900">
                                     {" "}
                                     exactly as programmed{" "}
@@ -91,6 +93,8 @@ export default function Home() {
                                 <span className="font-bold text-gray-900"> failure </span> and{" "}
                                 <span className="font-bold text-gray-900"> security risks</span>,
                                 while also ensuring that transaction costs are kept to a minimum.
+                            </div>
+                            <div className="mt-14">
                                 Additionally, at the second phase of the development, the
                                 governance of Elektroscrow will be designed to be participatory and
                                 distributed, often allowing the community of users to have a say in
@@ -109,16 +113,16 @@ export default function Home() {
                                 </span>{" "}
                                 of finance.
                             </div>
-                            <div className="justify-between flex mt-20">
+                            <div className="justify-between text-base flex mt-20">
                                 <a
-                                    href="/docs/trust"
+                                    href="/docs/audit"
                                     className="bg-gray-100 bg-opacity-50 rounded-lg group border-2 w-64 h-16  text-[#7d7d7d] hover:text-gray-700 items-center flex cursor-pointer "
                                 >
                                     <span className="rotate-[-90deg] ml-2 group-hover:translate-x-[-0.5rem] transition duration-300 ease-in-out">
                                         <Arrowup />{" "}
                                     </span>
                                     <div className="flex justify-center px-1 w-full text-right font-medium">
-                                        Why trust Elektroscrow?
+                                        Audit
                                     </div>
                                 </a>
                                 <a

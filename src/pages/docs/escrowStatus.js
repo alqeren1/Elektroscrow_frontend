@@ -63,7 +63,7 @@ export default function Home() {
                                     />
                                 </div>
                             </div>
-                            <div className="mt-4">
+                            <div className="mt-4 text-xl">
                                 Once the parties reach a{" "}
                                 <span className="font-bold text-gray-900"> mutual decision</span>{" "}
                                 regarding the escrow outcome, the contract concludes and becomes

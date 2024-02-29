@@ -62,7 +62,7 @@ export default function Home() {
                 </button>
                 <div className="flex justify-center">
                     <div
-                        className={`text-base text-gray-800 text-justify w-full   h-screen font-base ${
+                        className={`text-xl text-gray-800 text-justify w-full   h-screen font-base ${
                             layoutOpen ? " wdefinedxl:w-[850px]" : "wdefinedlg:w-[850px]"
                         }`}
                     >
@@ -70,7 +70,7 @@ export default function Home() {
                             How does it work?
                         </h1>
                         <div className=" p-4">
-                            <h1 className="font-medium text-2xl mt-10 ">Decentralization logic</h1>
+                            <h1 className="font-bold text-2xl mt-10 ">Decentralization logic</h1>
 
                             <img
                                 src="/how_illustrate.png"
@@ -78,13 +78,13 @@ export default function Home() {
                                 className=" flex mt-4 mb-4 rounded-3xl"
                             />
                             <div className="mt-10">
-                                <div className="font-medium mb-2">
+                                <div className="font-bold mb-2">
                                     Initiating the Escrow Process:
                                 </div>
                                 <div>
                                     To initiate an escrow, the buyer is required to establish a new
                                     escrow contract by submitting accurate data. Subsequently, both
-                                    parties must transfer the stipulated amounts into the newly
+                                    parties must transfer the required amounts into the newly
                                     created contract. A pivotal feature of this system is the{" "}
                                     <span className="font-bold text-gray-900">safety deposit</span>
                                     , which is mandatory for both parties prior to activating the
@@ -97,7 +97,7 @@ export default function Home() {
                                     commitment from both parties, aligning with the core principles
                                     of decentralized finance and fostering trust in the
                                     transaction.
-                                    <div className="mt-10 mb-10 italic bg-yellow-100 bg-opacity-30 rounded-3xl p-4">
+                                    <div className="mt-10 mb-10 text-base italic bg-yellow-100 bg-opacity-30 rounded-3xl p-4">
                                         <div className="mb-6 underline decoration-dotted underline-offset-4">
                                             <span className="font-medium ">Example: </span> Lets
                                             say the escrow amount is{" "}
@@ -184,7 +184,7 @@ export default function Home() {
                                         <span className="font-bold text-gray-900">
                                             initializing
                                         </span>
-                                        . The contract is activated when{" "}
+                                        . The contract is initialized when{" "}
                                         <span className="font-bold text-gray-900">
                                             both parties
                                         </span>{" "}
@@ -196,7 +196,7 @@ export default function Home() {
                                         contract after initialization and full funding by both
                                         parties is, through a mutual decision regarding the
                                         escrow's outcome.
-                                        <div className="font-medium mt-20 mb-2">
+                                        <div className="font-bold mt-20 mb-2">
                                             Post-Initialization:
                                         </div>
                                         <div>
@@ -225,7 +225,7 @@ export default function Home() {
                                             .
                                         </div>
                                     </div>
-                                    <div className="mt-10 mb-10 italic bg-yellow-100 bg-opacity-30 rounded-3xl p-4">
+                                    <div className="mt-10 mb-10 italic text-base bg-yellow-100 bg-opacity-30 rounded-3xl p-4">
                                         <div className="mb-6 underline decoration-dotted underline-offset-4">
                                             <span className="font-medium ">
                                                 All possible scenarios after decisions are made:{" "}
@@ -401,7 +401,7 @@ export default function Home() {
                                             outcomes occur
                                         </div>
                                     </div>
-                                    <div className="justify-between flex mt-20">
+                                    <div className="justify-between text-base flex mt-20">
                                         <a
                                             href="/docs/home"
                                             className="bg-gray-100 bg-opacity-50 rounded-lg group border-2 w-64 h-16  text-[#7d7d7d] hover:text-gray-700 items-center flex cursor-pointer "

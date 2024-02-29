@@ -63,7 +63,7 @@ export default function Home() {
                 </button>
                 <div className="flex justify-center">
                     <div
-                        className={`text-base text-gray-800 text-justify w-full   h-screen font-base ${
+                        className={`text-base text-gray-800 text-justify w-full  text-xl h-screen font-base ${
                             layoutOpen ? " wdefinedxl:w-[850px]" : "wdefinedlg:w-[850px]"
                         }`}
                     >
@@ -78,24 +78,24 @@ export default function Home() {
                             />
                         </div>
                         <div className="px-4 py-4 ">
-                            <div className="mt-2 ">
+                            <div className="mt-5 ">
                                 Elektroscrow is a cutting-edge platform where trust and technology
                                 converge to facilitate secure, decentralized exchanges between
                                 buyers and sellers. It is the{" "}
                                 <span className="font-bold">first fully decentralized</span> escrow
-                                service available. In an era where digital transactions are
+                                service on the market. In an era where digital transactions are
                                 increasingly becoming the norm, Elektroscrow emerges as a beacon of
                                 innovation and security in decentralized finance to solve the
                                 problem of trusting centralized escrow services and dispose the
-                                need for trusting a third party. Electro Escrow is not just an
-                                escrow service; it is a transformative approach to facilitating
-                                secure, private transactions between buyers and sellers. Built on
-                                the robust Ethereum blockchain, Elektroscrow employs smart
+                                need for trusting a third party. Electroscrow is not just an escrow
+                                service; it is a transformative approach to facilitating secure,
+                                private transactions between buyers and sellers. Built on the
+                                several robust EVM blockchains, Elektroscrow employs smart
                                 contracts to ensure that every transaction is protected, private,
                                 and users never need to trust a third-party establishment.
                             </div>
                         </div>
-                        <div className="px-4 py-4 mt-8 ">
+                        <div className="px-4 py-4 mt-14 ">
                             <h1 className="font-medium text-3xl text-left ">
                                 The Immutable Foundation of Elektroscrow
                             </h1>
@@ -109,7 +109,7 @@ export default function Home() {
                                 trust and consistency unparalleled in traditional escrow services.
                             </div>
                         </div>
-                        <div className="px-4 py-4 mt-8">
+                        <div className="px-4 py-4 mt-14">
                             <h1 className="font-medium text-3xl text-left">
                                 Prioritizing User Privacy and Autonomy
                             </h1>
@@ -123,23 +123,24 @@ export default function Home() {
                                 fostering a secure environment for private exchanges.
                             </div>
                         </div>
-                        <div className="px-4 py-4 mt-8">
+                        <div className="px-4 py-4 mt-14">
                             <h1 className="font-medium text-3xl text-left">
                                 Elektroscrow's Operational Mechanics
                             </h1>
-                            <div className="mt-2">
+                            <div className="mt-4">
                                 <span className="font-bold">Initiating a Transaction:</span> A
                                 transaction on Elektroscrow begins with the creation of an escrow
                                 contract by the buyer. This contract includes critical details like
                                 the seller’s address, the type of payment token, and the amount
                                 involved.
                             </div>
-                            <div className="mt-2">
+                            <div className="mt-4">
                                 <span className="font-bold">Securing funds:</span> Following
-                                contract creation, the buyer or selelr deposits the specified token
-                                amount into the contract, signaling the start of the
+                                contract creation, the buyer or seller deposits the specified token
+                                amount into the contract, signaling the start of the escrow
+                                contract.
                             </div>
-                            <div className="mt-2">
+                            <div className="mt-4">
                                 <span className="font-bold">Engagement from Both Parties:</span>{" "}
                                 The escrow is set into motion once the seller matches the buyer’s
                                 commitment, or vice versa, by also depositing funds into the
@@ -147,7 +148,7 @@ export default function Home() {
                                 either party to withdraw their funds before the escrow activates,
                                 ensuring a risk-free environment for initial engagement.
                             </div>
-                            <div className="mt-2">
+                            <div className="mt-4">
                                 <span className="font-bold">Finalizing the Transaction:</span> The
                                 transaction reaches its conclusion when both parties agree on the
                                 outcome, whether it be a refund or the acceptance of terms. Upon
@@ -155,20 +156,20 @@ export default function Home() {
                                 agreed action, thus securely finalizing the transaction.
                             </div>
                         </div>
-                        <div className="px-4 py-4 mt-8">
+                        <div className="px-4 py-4 mt-14">
                             <h1 className="font-medium text-3xl text-left">
                                 Expansive Network Reach
                             </h1>
                             <div className="mt-2">
-                                Elektroscrow’s primary operations are anchored in the Ethereum
-                                network, catering to its versatility and widespread adoption.
-                                However, recognizing the diverse needs of the blockchain community,
+                                Elektroscrow’s primary operations are anchored in the BNB network,
+                                catering to its versatility and widespread adoption. However,
+                                recognizing the diverse needs of the blockchain community,
                                 Elektroscrow extends its services to various Ethereum derivative
                                 networks, thereby enhancing its accessibility and utility across
                                 different blockchain ecosystems.
                             </div>
                         </div>
-                        <div className="px-4  py-4 mt-8 ">
+                        <div className="px-4  py-4 mt-14 ">
                             <h1 className="font-medium text-3xl text-left">
                                 A Vanguard of Decentralized Escrows
                             </h1>
@@ -183,7 +184,7 @@ export default function Home() {
                                 transactions in the modern era.
                             </div>
                         </div>
-                        <div className="justify-between flex p-4 ">
+                        <div className="justify-between text-base flex p-4 ">
                             <button
                                 disabled={true}
                                 className="bg-gray-100 opacity-0 rounded-lg  border-2 w-64 h-16 mt-10 items-center flex  "

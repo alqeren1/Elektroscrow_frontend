@@ -42,7 +42,7 @@ export default function Home() {
                 >
                     <Menu />
                 </button>
-                <div className="flex justify-center">
+                <div className="flex justify-center ">
                     <div
                         className={`text-base text-gray-800 text-justify w-full   h-screen font-base ${
                             layoutOpen ? " wdefinedxl:w-[850px]" : "wdefinedlg:w-[850px]"
@@ -53,7 +53,22 @@ export default function Home() {
                         </h1>
 
                         <div className="px-4 py-4 mt-4">
-                            <div className="mt-2 ">
+                            <div className=" text-xl mt-2">
+                                Elektroscrow's smart contracts have been audited and the developers
+                                have been KYC verified by{" "}
+                                <a
+                                    href="https://x.com/solidproof_io"
+                                    target="_blank"
+                                    className="underline font-medium"
+                                >
+                                    SolidProof
+                                </a>{" "}
+                                which you can access from{" "}
+                                <a href="/docs/audit" className="underline font-medium">
+                                    here
+                                </a>
+                            </div>
+                            <div className="mt-14 text-xl">
                                 <span className="font-bold"> </span>
                                 Trust in Elektroscrow is built on{" "}
                                 <span className="font-bold"> transparency </span> and{" "}
@@ -67,7 +82,8 @@ export default function Home() {
                                 review the code to understand precisely how Elektroscrow functions,
                                 ensuring there are no hidden mechanisms or functionalities.
                             </div>
-                            <div className="mt-10 ">
+
+                            <div className="mt-14 text-xl">
                                 Further reinforcing confidence in our platform, we deploy our
                                 contracts on <span className="font-bold"> test networks </span> for{" "}
                                 <span className="font-bold"> each blockchain </span> we support,
@@ -111,26 +127,29 @@ export default function Home() {
                                     <span className="font-medium ">Example: </span> Lets verify
                                     that Ethereum mainnet and testnet codes match
                                 </div>
-                                <div className=" mt-10 font-normal text-lsm ">
+                                <div className=" mt-10 font-normal  ">
                                     We first visit the{" "}
-                                    <span className="font-medium"> mainnet contract address</span>,
-                                    then copy the
+                                    <span className="font-medium">
+                                        {" "}
+                                        bsc mainnet contract address
+                                    </span>
+                                    , then copy the
                                     <span className="font-medium"> bytecode </span> under{" "}
                                     <span className="font-medium"> Deployed Bytecode </span> title:
                                 </div>
                                 <div className="mt-2 overflow-hidden text-ellipsis whitespace-nowrap">
                                     <a
-                                        href="https://etherscan.com/address/0x47c9afc609a7cc4976ccc56c2f33b5e7352535c4#code"
+                                        href="https://bscscan.com/address/0xA0F0364ba8Bf0AC4029Ea19906743427edFF9089#code"
                                         target="_blank"
                                         style={{
                                             fontFamily: "'Franklin Gothic', sans-serif",
                                         }}
                                         className="bg-gray-100  hover:underline  border rounded-md bg-opacity-50 p-1 "
                                     >
-                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4
+                                        0xA0F0364ba8Bf0AC4029Ea19906743427edFF9089
                                     </a>{" "}
                                 </div>
-                                <div className=" mt-8 font-normal text-lsm ">
+                                <div className=" mt-8 font-normal  ">
                                     Then, we paste this code to first input field in a text
                                     comparing tool:
                                     <div className="mt-2 overflow-hidden text-ellipsis whitespace-nowrap">
@@ -146,26 +165,29 @@ export default function Home() {
                                         </a>{" "}
                                     </div>
                                 </div>
-                                <div className=" mt-10 font-normal text-lsm ">
+                                <div className=" mt-10 font-normal  ">
                                     After that, we visit the{" "}
-                                    <span className="font-medium"> testnet contract address</span>,
-                                    then copy the
+                                    <span className="font-medium">
+                                        {" "}
+                                        bsc testnet contract address
+                                    </span>
+                                    , then copy the
                                     <span className="font-medium"> bytecode </span> under{" "}
                                     <span className="font-medium"> Deployed Bytecode </span> title:
                                 </div>
                                 <div className="mt-2 overflow-hidden text-ellipsis whitespace-nowrap">
                                     <a
-                                        href="https://sepolia.etherscan.io/address/0xad4a39Ea15a8bbb828336A447D38515989D361A4#code"
+                                        href="https://testnet.bscscan.com/address/0xe761f3BFFf8a82BA01dA7264b3Edd542D8A56C45#code"
                                         target="_blank"
                                         style={{
                                             fontFamily: "'Franklin Gothic', sans-serif",
                                         }}
                                         className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
                                     >
-                                        0xad4a39Ea15a8bbb828336A447D38515989D361A4
+                                        0xe761f3BFFf8a82BA01dA7264b3Edd542D8A56C45
                                     </a>{" "}
                                 </div>
-                                <div className=" mt-8 font-normal text-lsm ">
+                                <div className=" mt-8 font-normal  ">
                                     Lastly, we paste this code to second input field in a text
                                     comparing tool and see that the difference is{" "}
                                     <span className="font-medium"> 0%</span>, which means the codes
@@ -175,7 +197,7 @@ export default function Home() {
                                 </div>
                             </div>
 
-                            <div className="mt-10 ">
+                            <div className="mt-14 text-xl ">
                                 This level of openness allows users to{" "}
                                 <span className="font-bold"> experiment </span> with Elektroscrow
                                 in a testnet environment, engaging with the smart contract{" "}
@@ -212,11 +234,11 @@ export default function Home() {
                                     </div>
                                 </a>
                                 <a
-                                    href="/docs/decentralization"
+                                    href="/docs/audit"
                                     className="bg-gray-100 bg-opacity-50 rounded-lg border-2 w-64 group h-16 mt-20 items-center  text-[#7d7d7d] hover:text-gray-700 flex cursor-pointer"
                                 >
                                     <div className="flex justify-center text-left wdefinedmed:ml-0 ml-1 w-full font-medium">
-                                        How is it decentralized?
+                                        Audit
                                     </div>
                                     <span className="rotate-[90deg] mr-2 group-hover:translate-x-2 transition duration-300 ease-in-out">
                                         <Arrowup />

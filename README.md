@@ -7,12 +7,13 @@
 -ilerde roadmap ekle
 
 
--smart contract lottery yazıyo bir yerde, onu bul düzelt
+
 
 -google seo yap, meta ekle
 !!!!!!!!!!!
 -token listelerini yap her ağ için (base ekledim, düzenle onemlileri başa al)
 
+-telegram butonu ekle teller için
 
 
 

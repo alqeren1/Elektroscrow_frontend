@@ -1,0 +1,75 @@
+[
+    
+    {
+        "chainId": 42161,
+        "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        "name": "USD Coin",
+        "symbol": "USDC",
+        "decimals": 6,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/base/assets/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+        "name": "Dai",
+        "symbol": "DAI",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/base/assets/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb/logo.png?raw=true"
+    },
+    
+    {
+        "chainId": 42161,
+        "address": "0x4200000000000000000000000000000000000006",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/base/assets/0x4200000000000000000000000000000000000006/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+        "name": "Coinbase Wrapped Staked ETH",
+        "symbol": "cbETH",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/base/assets/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22/logo.png?raw=true"
+    },
+    
+    
+    {
+        "chainId": 42161,
+        "address": "0x9EaF8C1E34F05a589EDa6BAfdF391Cf6Ad3CB239",
+        "name": "yearn.finance",
+        "symbol": "YFI",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/base/assets/0x9EaF8C1E34F05a589EDa6BAfdF391Cf6Ad3CB239/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0xE3B53AF74a4BF62Ae5511055290838050bf764Df",
+        "name": "StargateToken",
+        "symbol": "STG",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/base/assets/0xE3B53AF74a4BF62Ae5511055290838050bf764Df/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "name": "Axelar Wrapped USDC",
+        "symbol": "axlUSDC",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/base/assets/0xEB466342C4d449BC9f53A865D5Cb90586f405215/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
+        "name": "USD Base Coin",
+        "symbol": "USDC",
+        "decimals": 6,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/base/assets/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/logo.png?raw=true"
+    }
+    
+    
+
+
+    
+]

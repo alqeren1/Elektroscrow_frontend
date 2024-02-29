@@ -20,12 +20,12 @@ function How() {
         })
     }
     return (
-        <div className=" w-full px-6 wdefinedlg:px-0 wdefinedlg:w-[850px] text-justify">
-            <div className=" py-4">
+        <div className=" w-full px-6 wdefinedlg:px-2 wdefinedlg:w-[850px] text-justify">
+            <div className=" py-4 ">
                 <h1 className="font-bold text-4xl text-left">How does Elektroscrow work?</h1>
-                <h1 className="font-medium text-2xl mt-20">Elektroscrow's Ethos</h1>
+                <h1 className="font-bold text-2xl mt-20">Elektroscrow's Ethos</h1>
 
-                <div className="mt-4">
+                <div className="mt-4 text-xl">
                     <div>
                         Elektroscrow stands as the{" "}
                         <span className="font-bold text-gray-900">
@@ -69,7 +69,7 @@ function How() {
                         remarkably user-friendly; users simply connect their wallets to the
                         protocol, streamlining the experience while ensuring maximum security.
                     </div>
-                    <div className="mt-10">
+                    <div className="mt-14">
                         In terms of <span className="font-bold text-gray-900"> privacy</span>,
                         Elektroscrow sets a high standard by{" "}
                         <span className="font-bold text-gray-900"> not retaining any logs </span>{" "}
@@ -91,22 +91,22 @@ function How() {
                     </div>
                 </div>
 
-                <h1 className="font-medium text-2xl  mt-20 items-center flex">
+                <h1 className="font-medium text-2xl text-left mt-20 items-center ">
                     What to do step by step in order to do an escrow transaction{" "}
-                    <span className="font-normal text-gray-500 italic text-base mt-1 ml-2 ">
-                        {" "}
-                        (from buyer's perspective){" "}
-                    </span>
                 </h1>
+                <span className="font-normal  text-gray-500 italic text-base mt-1 ">
+                    {" "}
+                    (from buyer's perspective){" "}
+                </span>
 
-                <div className="mt-12 text-xl">
+                <div className="mt-14 text-xl">
                     <div>
                         <span className="font-medium  text-xl underline mr-2 "> Step 1: </span>{" "}
                         Find a seller/provider for the service you would like to purchase.
                         Communicate with the provider to specify the type and amount of the token
                         to be used for payment.
                     </div>
-                    <div className="mt-12">
+                    <div className="mt-14">
                         <span className="font-medium  text-xl underline mr-2"> Step 2: </span>{" "}
                         Connect your wallet to Elektroscrow, then press the buyer button to switch
                         to buyer view. Type the seller's wallet address, then fill the remaining
@@ -114,14 +114,14 @@ function How() {
                         After you input the adequate information, press the button below and create
                         a new escrow.
                     </div>
-                    <div className="mt-12">
+                    <div className="mt-14">
                         <span className="font-medium  text-xl underline mr-2"> Step 3: </span>{" "}
                         Approve the tokens for protocol to use, then fund the contract with the
                         required amount of tokens by pressing fund button. After that, inform the
                         seller that you deposited the amount and now its his turn to deposit the
                         safety-deposit.
                     </div>
-                    <div className="mt-12">
+                    <div className="mt-14">
                         <span className="font-medium  text-xl underline mr-2"> Step 4: </span>{" "}
                         Seller connects to Elektroscrow, then presses the seller button to switch
                         to seller view. Seller can automatically see the escrow contracts created
@@ -129,7 +129,7 @@ function How() {
                         contract, confirming the escrow address and the buyer's wallet address by
                         communicating with you.
                     </div>
-                    <div className="mt-12">
+                    <div className="mt-14">
                         <span className="font-medium  text-xl underline mr-2"> Step 5: </span> At
                         this step, the escrow is initialized and both users are prompted with three
                         decision buttons. These are; "Accept", "Decline" and "Refund". Both users
@@ -153,19 +153,19 @@ function How() {
                 </div>
             </div>
             <div className=" py-4">
-                <h1 className="font-medium text-2xl mt-10">Decentralization logic</h1>
+                <h1 className="font-bold text-2xl mt-10">Decentralization logic</h1>
 
                 <img
                     src="/how_illustrate.png"
                     alt="Escrow Process Illustration"
                     className=" flex mt-4 mb-4 rounded-3xl"
                 />
-                <div className="mt-10">
-                    <div className="font-medium mb-2">Initiating the Escrow Process:</div>
+                <div className="mt-14 text-xl">
+                    <div className="font-bold mb-2">Initiating the Escrow Process:</div>
                     <div>
                         To initiate an escrow, the buyer is required to establish a new escrow
                         contract by submitting accurate data. Subsequently, both parties must
-                        transfer the stipulated amounts into the newly created contract. A pivotal
+                        transfer the required amounts into the newly created contract. A pivotal
                         feature of this system is the{" "}
                         <span className="font-bold text-gray-900">safety deposit</span>, which is
                         mandatory for both parties prior to activating the escrow. This mechanism
@@ -176,7 +176,7 @@ function How() {
                         value. This process ensures enhanced security and commitment from both
                         parties, aligning with the core principles of decentralized finance and
                         fostering trust in the transaction.
-                        <div className="mt-10 mb-10 italic bg-yellow-100 bg-opacity-30 rounded-3xl p-4">
+                        <div className="mt-10 mb-10 italic text-base bg-yellow-100 bg-opacity-30 rounded-3xl p-4">
                             <div className="mb-6 underline decoration-dotted underline-offset-4">
                                 <span className="font-medium ">Example: </span> Lets say the escrow
                                 amount is <span className="font-bold">x</span> amount of tokens and{" "}
@@ -243,7 +243,7 @@ function How() {
                             </span>{" "}
                             prior to the contract{" "}
                             <span className="font-bold text-gray-900">initializing</span>. The
-                            contract is activated when{" "}
+                            contract is initialized when{" "}
                             <span className="font-bold text-gray-900">both parties</span> have
                             contributed the necessary amounts, including safety deposits. Once
                             initialized, withdrawals are disabled. However, if one party has not
@@ -251,7 +251,7 @@ function How() {
                             without incurring a protocol fee. The only way to end an escrow
                             contract after initialization and full funding by both parties is,
                             through a mutual decision regarding the escrow's outcome.
-                            <div className="font-medium mt-20 mb-2">Post-Initialization:</div>
+                            <div className="font-bold mt-14 mb-2">Post-Initialization:</div>
                             <div>
                                 After funding and initialization of the contract, there are three
                                 potential outcomes. If both participants approve the escrow, the
@@ -275,7 +275,7 @@ function How() {
                                 .
                             </div>
                         </div>
-                        <div className="mt-10 mb-10 italic bg-yellow-100 bg-opacity-30 rounded-3xl p-4">
+                        <div className="mt-10 mb-10 italic text-base bg-yellow-100 bg-opacity-30 rounded-3xl p-4">
                             <div className="mb-6 underline decoration-dotted underline-offset-4">
                                 <span className="font-medium ">
                                     All possible scenarios after decisions are made:{" "}

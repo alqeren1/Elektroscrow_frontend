@@ -5,6 +5,11 @@ import Eth from "../svgs/ethereum-logo"
 import Bsc from "../svgs/bsc-logo"
 import Polygon from "../svgs/polygon-logo"
 import Avax from "../svgs/avax-logo"
+import Op from "../svgs/op"
+import Base from "../svgs/base"
+import Celo from "../svgs/celo"
+import Arb from "../svgs/arb"
+
 import ManuelConnect from "./CustConnectButtonOnlyMetamask.jsx"
 
 import Arrowdown from "../svgs/arrow-down"
@@ -12,9 +17,13 @@ import Arrowup from "../svgs/arrow-up"
 import Error from "../svgs/error"
 import React, { useState, useRef, useEffect } from "react"
 const networks = [
-    { name: "Ethereum", chainId: "0x1" },
-    { name: "Binance Smart Chain", chainId: "0x38" },
+    { name: "BNB Chain", chainId: "0x38" },
+    { name: "Arbitrum", chainId: "0xa4b1" },
+
+    { name: "Optimism", chainId: "0xa" },
+    { name: "Base", chainId: "0x2105" },
     { name: "Polygon", chainId: "0x89" },
+    { name: "Celo", chainId: "0xa4ec" },
     { name: "Avax", chainId: "0xa86a" },
 ]
 
@@ -81,14 +90,20 @@ function NetworkSelector() {
                             >
                                 <div className="flex p-2 hover:bg-gray-100 w-full rounded-xl">
                                     <div>
-                                        {network.name == "Ethereum" ? (
-                                            <Eth />
-                                        ) : network.name == "Binance Smart Chain" ? (
+                                        {network.name == "BNB Chain" ? (
                                             <Bsc />
+                                        ) : network.name == "Arbitrum" ? (
+                                            <Arb />
+                                        ) : network.name == "Optimism" ? (
+                                            <Op />
+                                        ) : network.name == "Base" ? (
+                                            <Base />
                                         ) : network.name == "Polygon" ? (
                                             <Polygon />
                                         ) : network.name == "Avax" ? (
                                             <Avax />
+                                        ) : network.name == "Celo" ? (
+                                            <Celo />
                                         ) : (
                                             ""
                                         )}
@@ -106,12 +121,13 @@ function NetworkSelector() {
         <div className="relative " ref={dropdownRef}>
             <div>
                 {" "}
-                {(currentNetwork.chainId == "0x1" ? (
+                {(currentNetwork.chainId == "0x38" ? (
                     <button
                         onClick={() => setShowDropdown(!showDropdown)}
-                        className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200 transition duration-300 ease-in-out py-2 px-2"
+                        className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out    py-2 px-2 "
                     >
-                        <Eth />
+                        <Bsc />
+
                         <span
                             className={`transform transition-transform duration-200 ${
                                 showDropdown ? "rotate-180 " : "rotate-0"
@@ -123,12 +139,66 @@ function NetworkSelector() {
                 ) : (
                     ""
                 )) ||
-                    (currentNetwork.chainId == "0x38" ? (
+                    (currentNetwork.chainId == "0xa4b1" ? (
                         <button
                             onClick={() => setShowDropdown(!showDropdown)}
-                            className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out    py-2 px-2 "
+                            className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out  py-2 px-2 "
                         >
-                            <Bsc />
+                            <Arb />
+
+                            <span
+                                className={`transform transition-transform duration-200 ${
+                                    showDropdown ? "rotate-180 " : "rotate-0"
+                                }`}
+                            >
+                                <Arrowup />
+                            </span>
+                        </button>
+                    ) : (
+                        ""
+                    )) ||
+                    (currentNetwork.chainId == "0xa" ? (
+                        <button
+                            onClick={() => setShowDropdown(!showDropdown)}
+                            className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out  py-2 px-2 "
+                        >
+                            <Op />
+
+                            <span
+                                className={`transform transition-transform duration-200 ${
+                                    showDropdown ? "rotate-180 " : "rotate-0"
+                                }`}
+                            >
+                                <Arrowup />
+                            </span>
+                        </button>
+                    ) : (
+                        ""
+                    )) ||
+                    (currentNetwork.chainId == "0x2105" ? (
+                        <button
+                            onClick={() => setShowDropdown(!showDropdown)}
+                            className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out  py-2 px-2 "
+                        >
+                            <Base />
+
+                            <span
+                                className={`transform transition-transform duration-200 ${
+                                    showDropdown ? "rotate-180 " : "rotate-0"
+                                }`}
+                            >
+                                <Arrowup />
+                            </span>
+                        </button>
+                    ) : (
+                        ""
+                    )) ||
+                    (currentNetwork.chainId == "0xa4ec" ? (
+                        <button
+                            onClick={() => setShowDropdown(!showDropdown)}
+                            className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out  py-2 px-2 "
+                        >
+                            <Celo />
 
                             <span
                                 className={`transform transition-transform duration-200 ${
@@ -192,14 +262,20 @@ function NetworkSelector() {
                         >
                             <div className="flex p-2 hover:bg-gray-100 w-full rounded-xl">
                                 <div>
-                                    {network.name == "Ethereum" ? (
-                                        <Eth />
-                                    ) : network.name == "Binance Smart Chain" ? (
+                                    {network.name == "BNB Chain" ? (
                                         <Bsc />
+                                    ) : network.name == "Arbitrum" ? (
+                                        <Arb />
+                                    ) : network.name == "Optimism" ? (
+                                        <Op />
+                                    ) : network.name == "Base" ? (
+                                        <Base />
                                     ) : network.name == "Polygon" ? (
                                         <Polygon />
                                     ) : network.name == "Avax" ? (
                                         <Avax />
+                                    ) : network.name == "Celo" ? (
+                                        <Celo />
                                     ) : (
                                         ""
                                     )}

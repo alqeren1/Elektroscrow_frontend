@@ -53,7 +53,7 @@ export default function Home() {
                             Tokens to use for payment
                         </h1>
 
-                        <div className="px-4 py-4 mt-20">
+                        <div className="px-4 py-4 text-xl mt-20">
                             <div className="mt-2 ">
                                 Elektroscrow's approach to payments is meticulously designed to
                                 offer both <span className="font-bold"> flexibility </span> and{" "}
@@ -68,7 +68,7 @@ export default function Home() {
                                 for their reliability and stability, thus offering users peace of
                                 mind when selecting a token for their escrow transactions.
                             </div>
-                            <div className="mt-10 ">
+                            <div className="mt-14 ">
                                 In addition to the trusted tokens list, Elektroscrow uniquely
                                 empowers its users with the capability to use{" "}
                                 <span className="font-bold"> custom tokens </span> that may not be
@@ -86,7 +86,7 @@ export default function Home() {
                                 legitimacy and safety of the custom tokens they choose to transact
                                 with.
                             </div>
-                            <div className="mt-10 ">
+                            <div className="mt-14 ">
                                 The platform's native token, a pivotal addition in the second phase
                                 of Elektroscrow’s development, will introduce an even more seamless
                                 transaction experience. Transactions made using this native token
@@ -95,7 +95,7 @@ export default function Home() {
                                 to continuously enhance user experience while maintaining a high
                                 standard of transactional security and trust.
                             </div>
-                            <div className="mt-10 ">
+                            <div className="mt-14 ">
                                 In summary, Elektroscrow stands out in the decentralized finance
                                 landscape by offering a{" "}
                                 <span className="font-bold"> diverse range of token </span> options
@@ -106,7 +106,7 @@ export default function Home() {
                                 Elektroscrow is truly redefining user autonomy and security in
                                 digital transactions.
                             </div>
-                            <div className="justify-between flex ">
+                            <div className="justify-between flex text-base">
                                 <a
                                     href="/docs/newEscrow"
                                     className="bg-gray-100 bg-opacity-50 rounded-lg group border-2 w-64 h-16 mt-20 text-[#7d7d7d] hover:text-gray-700 items-center flex cursor-pointer "

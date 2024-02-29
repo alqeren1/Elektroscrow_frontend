@@ -53,7 +53,7 @@ export default function Home() {
                         </h1>
 
                         <div className="px-4 py-4 mt-4">
-                            <div className="mt-2 ">
+                            <div className="mt-2 text-xl">
                                 You can access the useful links about Elektroscrow protocol down
                                 below from the list
                                 <div className="mt-10 mb-4 text-gray-800 font-bold text-2xl">

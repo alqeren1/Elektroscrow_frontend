@@ -52,7 +52,7 @@ export default function Home() {
                             Supported networks
                         </h1>
 
-                        <div className="px-4 py-4 mt-4">
+                        <div className="px-4 py-4 mt-4 text-xl">
                             <div className="mt-2 ">
                                 Elektroscrow supports a range of blockchain networks to cater to a
                                 diverse user base. This{" "}
@@ -72,7 +72,7 @@ export default function Home() {
                                     Mainnets
                                 </div>
                                 <div className="overflow-x-auto custom-scrollbar2 mt-4">
-                                    <table className="min-w-full table-auto">
+                                    <table className="min-w-full text-base table-auto">
                                         <thead className="">
                                             <tr>
                                                 <th className="border-2  p-4 w-1/4">Networks</th>
@@ -82,31 +82,6 @@ export default function Home() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td
-                                                    style={{
-                                                        fontFamily:
-                                                            "'Franklin Gothic', sans-serif",
-                                                    }}
-                                                    className="border-2 p-4 text-lg"
-                                                >
-                                                    Ethereum
-                                                </td>
-                                                <td className="border-2 p-4 ">
-                                                    <a
-                                                        href="https://etherscan.com/address/"
-                                                        target="_blank"
-                                                        style={{
-                                                            fontFamily:
-                                                                "'Franklin Gothic', sans-serif",
-                                                        }}
-                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
-                                                    >
-                                                        {" "}
-                                                        NA{" "}
-                                                    </a>
-                                                </td>
-                                            </tr>
                                             <tr className="bg-gray-50">
                                                 <td
                                                     style={{
@@ -115,7 +90,7 @@ export default function Home() {
                                                     }}
                                                     className="border-2 text-lg p-4 whitespace-nowrap"
                                                 >
-                                                    Binance smart chain
+                                                    BNB Chain
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
@@ -165,6 +140,102 @@ export default function Home() {
                                                     }}
                                                     className="border-2 p-4 text-lg"
                                                 >
+                                                    Optimism
+                                                </td>
+                                                <td className="border-2 p-4 ">
+                                                    <a
+                                                        href="https://optimistic.etherscan.io/address/0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4#code"
+                                                        target="_blank"
+                                                        style={{
+                                                            fontFamily:
+                                                                "'Franklin Gothic', sans-serif",
+                                                        }}
+                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
+                                                    >
+                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style={{
+                                                        fontFamily:
+                                                            "'Franklin Gothic', sans-serif",
+                                                    }}
+                                                    className="border-2 p-4 text-lg"
+                                                >
+                                                    Arbitrum
+                                                </td>
+                                                <td className="border-2 p-4 ">
+                                                    <a
+                                                        href="https://arbiscan.io/address/0x47c9afc609a7cc4976ccc56c2f33b5e7352535c4#code"
+                                                        target="_blank"
+                                                        style={{
+                                                            fontFamily:
+                                                                "'Franklin Gothic', sans-serif",
+                                                        }}
+                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
+                                                    >
+                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style={{
+                                                        fontFamily:
+                                                            "'Franklin Gothic', sans-serif",
+                                                    }}
+                                                    className="border-2 p-4 text-lg"
+                                                >
+                                                    Base
+                                                </td>
+                                                <td className="border-2 p-4 ">
+                                                    <a
+                                                        href="https://basescan.org/address/0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4#code"
+                                                        target="_blank"
+                                                        style={{
+                                                            fontFamily:
+                                                                "'Franklin Gothic', sans-serif",
+                                                        }}
+                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
+                                                    >
+                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style={{
+                                                        fontFamily:
+                                                            "'Franklin Gothic', sans-serif",
+                                                    }}
+                                                    className="border-2 p-4 text-lg"
+                                                >
+                                                    Celo
+                                                </td>
+                                                <td className="border-2 p-4 ">
+                                                    <a
+                                                        href="https://celoscan.io/address/0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4#code"
+                                                        target="_blank"
+                                                        style={{
+                                                            fontFamily:
+                                                                "'Franklin Gothic', sans-serif",
+                                                        }}
+                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
+                                                    >
+                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style={{
+                                                        fontFamily:
+                                                            "'Franklin Gothic', sans-serif",
+                                                    }}
+                                                    className="border-2 p-4 text-lg"
+                                                >
                                                     Avalanche
                                                 </td>
                                                 <td className="border-2 p-4 ">
@@ -188,7 +259,7 @@ export default function Home() {
                                 <div className="mt-16 mb-4 text-gray-800 font-bold text-2xl">
                                     Testnets
                                 </div>
-                                <div className="overflow-x-auto custom-scrollbar2 mt-4">
+                                <div className="overflow-x-auto custom-scrollbar2 text-base mt-4">
                                     <table className="min-w-full table-auto">
                                         <thead className="">
                                             <tr>
@@ -199,31 +270,6 @@ export default function Home() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td
-                                                    style={{
-                                                        fontFamily:
-                                                            "'Franklin Gothic', sans-serif",
-                                                    }}
-                                                    className="border-2 p-4 text-lg"
-                                                >
-                                                    Eth - Sepolia
-                                                </td>
-                                                <td className="border-2 p-4 ">
-                                                    <a
-                                                        href="https://sepolia.etherscan.io/address/"
-                                                        target="_blank"
-                                                        style={{
-                                                            fontFamily:
-                                                                "'Franklin Gothic', sans-serif",
-                                                        }}
-                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
-                                                    >
-                                                        {" "}
-                                                        NA{" "}
-                                                    </a>
-                                                </td>
-                                            </tr>
                                             <tr className="bg-gray-50">
                                                 <td
                                                     style={{
@@ -232,7 +278,7 @@ export default function Home() {
                                                     }}
                                                     className="border-2 text-lg p-4 whitespace-nowrap"
                                                 >
-                                                    Bsc - Testnet
+                                                    BNB - Testnet
                                                 </td>
                                                 <td className="border-2 p-4 ">
                                                     <a
@@ -379,7 +425,7 @@ export default function Home() {
                                 </div>
                             </div>
 
-                            <div className="justify-between flex">
+                            <div className="justify-between flex text-base">
                                 <a
                                     href="/docs/fee"
                                     className="bg-gray-100 bg-opacity-50 rounded-lg group mr-2 border-2 w-64 h-16 mt-20 text-[#7d7d7d] hover:text-gray-700 items-center flex cursor-pointer "

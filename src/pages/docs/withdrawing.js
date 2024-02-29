@@ -62,7 +62,7 @@ export default function Home() {
                                     />
                                 </div>
                             </div>
-                            <div className="mt-4 ">
+                            <div className="mt-4 text-xl ">
                                 You have the option to withdraw your funded assets{" "}
                                 <span className="font-bold text-gray-800">prior</span> to the{" "}
                                 <span className="font-bold text-gray-800">initialization</span> of

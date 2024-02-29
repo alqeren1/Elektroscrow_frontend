@@ -63,7 +63,7 @@ export default function Home() {
                                     />
                                 </div>
                             </div>
-                            <div className="mt-4">
+                            <div className="mt-4 text-xl">
                                 The escrow contract's balance is shown under the Balance section.
                                 Users are able to see if the counterparty has funded the contract
                                 or not by monitoring this section. It provides a{" "}

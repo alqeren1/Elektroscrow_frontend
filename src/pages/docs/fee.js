@@ -52,7 +52,7 @@ export default function Home() {
                             Protocol Fee
                         </h1>
 
-                        <div className="px-4 py-4 mt-4">
+                        <div className="px-4 py-4 mt-4 text-xl">
                             <div className="mt-2 ">
                                 <span className="font-bold"> </span>
                                 Elektroscrow's escrow service incorporates a modest{" "}
@@ -67,7 +67,7 @@ export default function Home() {
                                 <span className="font-bold"> deducted </span> from the{" "}
                                 <span className="font-bold"> safety deposits </span> of each party.
                             </div>
-                            <div className="mt-4 ">
+                            <div className="mt-14 ">
                                 Importantly, users have the flexibility to{" "}
                                 <span className="font-bold"> withdraw </span> their funds
                                 <span className="font-bold"> without incurring this fee </span> if
@@ -77,7 +77,7 @@ export default function Home() {
                                 transaction prior to its full activation, providing them a{" "}
                                 <span className="font-bold"> fee-free </span> exit option.
                             </div>
-                            <div className="mt-4 ">
+                            <div className="mt-14 ">
                                 The implementation of this fee is critical for Elektroscrow's
                                 operational viability. It supports the platform's ongoing
                                 development, maintenance, and the provision of secure, reliable
@@ -86,7 +86,7 @@ export default function Home() {
                                 while maintaining the integrity and efficiency of its services.
                             </div>
 
-                            <div className="justify-between flex">
+                            <div className="justify-between flex text-base">
                                 <a
                                     href="/docs/escrowStatus"
                                     className="bg-gray-100 bg-opacity-50 rounded-lg mr-2 group border-2 w-64 h-16 mt-20 text-[#7d7d7d] hover:text-gray-700 items-center flex cursor-pointer "

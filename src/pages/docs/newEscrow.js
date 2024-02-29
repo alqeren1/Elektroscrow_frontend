@@ -54,7 +54,7 @@ export default function Home() {
                         </h1>
                         <div className="p-4">
                             <div className="flex mt-6 ">
-                                <div className="mt-4 ">
+                                <div className="mt-4 text-xl">
                                     <div className="bg-yellow-100 w-full mb-6  justify-center flex rounded-xl bg-opacity-30">
                                         <img
                                             src="/how1.png"
@@ -69,7 +69,7 @@ export default function Home() {
                                         Providers or sellers must inform the buyer to commence this
                                         process.
                                     </div>
-                                    <div className="mt-4">
+                                    <div className="mt-14">
                                         To establish an escrow contract between the receiver and
                                         the provider, the buyer must input the seller’s contract
                                         address into the designated field. Subsequently, the buyer

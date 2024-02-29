@@ -9,6 +9,7 @@ const menuItems = [
     { href: "/docs/home", title: "Introduction" },
     { href: "/docs/how", title: "How does it work?" },
     { href: "/docs/trust", title: "Why would you trust Elektroscrow?" },
+    { href: "/docs/audit", title: "Audit and KYC" },
     { href: "/docs/decentralization", title: "How is it fully decentralized?" },
     { href: "/docs/anonimity", title: "How is it anonymous?" },
     { href: "/docs/newEscrow", title: "Starting a new escrow" },

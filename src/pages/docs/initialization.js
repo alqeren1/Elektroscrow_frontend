@@ -52,7 +52,7 @@ export default function Home() {
                             Initialization
                         </h1>
 
-                        <div className="px-4 py-4 mt-4">
+                        <div className="px-4 py-4 mt-4 text-xl">
                             <div className="mt-4 flex justify-center">
                                 <div className="bg-yellow-100 w-full mb-6 mt-2 justify-center flex rounded-xl bg-opacity-30">
                                     <img
@@ -74,7 +74,7 @@ export default function Home() {
                                 <span className="font-bold"> withdrawable</span>, offering
                                 flexibility before the contract is fully established.
                             </div>
-                            <div className="mt-10 ">
+                            <div className="mt-14 ">
                                 Once the contract is{" "}
                                 <span className="font-bold"> initialized</span>, which occurs after
                                 both parties fulfill the deposit requirements, the{" "}
@@ -85,7 +85,7 @@ export default function Home() {
                                 <span className="font-bold"> reconcilation state</span>, where the
                                 funds are now firmly held within the escrow contract.
                             </div>
-                            <div className="mt-10 ">
+                            <div className="mt-14 ">
                                 Upon initialization,{" "}
                                 <span className="font-bold"> decision buttons </span> are displayed
                                 to both parties. These buttons are for{" "}
@@ -105,7 +105,7 @@ export default function Home() {
                                 and <span className="font-bold"> ensures </span> the protocol's{" "}
                                 <span className="font-bold"> decentralization</span>.
                             </div>
-                            <div className="justify-between flex">
+                            <div className="justify-between flex text-base">
                                 <a
                                     href="/docs/contractBalance"
                                     className="bg-gray-100 bg-opacity-50 rounded-lg mr-2 group border-2 w-64 h-16 mt-20 text-[#7d7d7d] hover:text-gray-700 items-center flex cursor-pointer "

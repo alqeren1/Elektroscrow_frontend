@@ -53,7 +53,7 @@ export default function Home() {
                         </h1>
 
                         <div className="px-4 py-4 mt-20">
-                            <div className="mt-2 ">
+                            <div className="mt-2 text-xl">
                                 The safety deposit is a fundamental component of Elektroscrow's
                                 transaction protocol, designed to enhance the security and
                                 integrity of each escrow transaction. When a new escrow contract is
@@ -71,8 +71,11 @@ export default function Home() {
                                 <span className="font-bold"> value </span> of the{" "}
                                 <span className="font-bold"> escrow transaction</span>, meaning the
                                 seller effectively deposits double the transaction amount, while
-                                the buyer deposits the transaction value. This structure
-                                incentivizes both parties to adhere to the{" "}
+                                the buyer deposits the transaction value.
+                                <span className="font-bold"> decentralized</span>.
+                            </div>
+                            <div className="mt-14 text-xl">
+                                This structure incentivizes both parties to adhere to the{" "}
                                 <span className="font-bold"> agreed-upon terms</span>, as any
                                 deviation or <span className="font-bold"> failure </span> to comply
                                 result in <span className="font-bold"> not </span> being able to{" "}
@@ -86,7 +89,6 @@ export default function Home() {
                                 <span className="font-bold"> enforcing safety rules </span> to
                                 participants <span className="font-bold"> without having </span> a
                                 mediator to govern the process thus being fully{" "}
-                                <span className="font-bold"> decentralized</span>.
                             </div>
                             <div className="mt-10  italic bg-yellow-100 bg-opacity-30 rounded-3xl p-4">
                                 <div className="mb-6 underline decoration-dotted underline-offset-4">

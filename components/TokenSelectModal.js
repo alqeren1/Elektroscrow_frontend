@@ -7,6 +7,10 @@ import tokens_sepolia from "../default_tokens/sepolia.json"
 import tokens_avax from "../default_tokens/avax.json"
 import tokens_polygon from "../default_tokens/polygon.json"
 import tokens_bnb from "../default_tokens/bnb.json"
+import tokens_celo from "../default_tokens/celo.json"
+import tokens_arb from "../default_tokens/arbitrum.json"
+import tokens_op from "../default_tokens/optimism.json"
+import tokens_base from "../default_tokens/base.json"
 import tokens_hardhat from "../default_tokens/hardhat.json"
 
 const abi_ERC20 = require("../constants1/abi_ERC20.json")
@@ -41,10 +45,13 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
         //Polygon testnet
         tokens = tokens_sepolia
     }
+    if (chainId == "42220") {
+        tokens = tokens_celo
+    }
 
     if (chainId == "42161") {
         //Arbitrum
-        tokens = tokens_sepolia
+        tokens = tokens_arb
     }
     if (chainId == "421614") {
         //Arbitrum testnet
@@ -62,7 +69,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
 
     if (chainId == "10") {
         //Optimism
-        tokens = tokens_sepolia
+        tokens = tokens_op
     }
     if (chainId == "11155420") {
         //Optimism testnet
@@ -71,17 +78,13 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
 
     if (chainId == "8453") {
         //Base
-        tokens = tokens_sepolia
+        tokens = tokens_base
     }
     if (chainId == "84532") {
         //Base sepolia testnet
         tokens = tokens_sepolia
     }
 
-    if (chainId == "42220") {
-        //Celo
-        tokens = tokens_sepolia
-    }
     if (chainId == "44787") {
         //Celo testnet
         tokens = tokens_sepolia
@@ -264,6 +267,7 @@ const TokenInput = ({ setTokenContract, onTokenValidation, setTokenSymbolParent,
 
     useEffect(() => {
         const searchLowerCase = searchTerm.toLowerCase()
+        console.log(chainId)
         const filtered = tokens.filter(
             (token) =>
                 token.name.toLowerCase().includes(searchLowerCase) ||

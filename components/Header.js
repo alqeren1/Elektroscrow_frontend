@@ -31,6 +31,9 @@ export default function Header() {
     const navigateToEscrow = () => {
         router.push("/")
     }
+    const navigateToAudit = () => {
+        router.push("/audit")
+    }
     function dotsButton() {
         if (dotsClicked) {
         } else {
@@ -90,6 +93,16 @@ export default function Header() {
                         <a href="/docs/home" target="_blank" rel="noopener noreferrer">
                             Docs
                         </a>
+                    </div>
+                    <div
+                        onClick={navigateToAudit}
+                        className={`ml-2 cursor-pointer font-medium py-2 px-2 rounded-xl transition duration-300 ease-in-out hover:bg-gray-200  ${
+                            currentPage == "/audit"
+                                ? "text-gray-700 opacity-100 "
+                                : "text-gray-500 opacity-70"
+                        }`}
+                    >
+                        Audit
                     </div>
                     <div>
                         <button

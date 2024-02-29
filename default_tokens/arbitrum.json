@@ -1,0 +1,207 @@
+[
+    {
+        "chainId": 42161,
+        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "name": "USD Coin",
+        "symbol": "USDC",
+        "decimals": 6,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0xaf88d065e77c8cC2239327C5EDb3A432268e5831/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+        "name": "Dai Stablecoin",
+        "symbol": "DAI",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1/logo.png?raw=true"
+    },
+    
+    {
+        "chainId": 42161,
+        "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+        "name": "Tether USD",
+        "symbol": "USDT",
+        "decimals": 6,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9/logo.png?raw=true"
+    },
+    
+    {
+        "chainId": 42161,
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "name": "Arbitrum",
+        "symbol": "ARB",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0x912CE59144191C1204E64559FE8253a0e49E6548/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+        "decimals": 18,
+        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png"
+    },
+    {
+        "chainId": 42161,
+        "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+        "name": "Wrapped Bitcoin",
+        "symbol": "WBTC",
+        "decimals": 8,
+        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599/logo.png"
+    },
+    {
+        "chainId": 42161,
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "name": "Axelar Wrapped USDC",
+        "symbol": "axlUSDC",
+        "decimals": 6,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0xEB466342C4d449BC9f53A865D5Cb90586f405215/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+        "name": "Bridged USDC",
+        "symbol": "USDC.e",
+        "decimals": 6,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0x040d1EdC9569d4Bab2D15287Dc5A4F10F56a56B8",
+        "name": "Balancer",
+        "symbol": "BAL",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0x040d1EdC9569d4Bab2D15287Dc5A4F10F56a56B8/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0x080F6AEd32Fc474DD5717105Dba5ea57268F46eb",
+        "name": "Synapse",
+        "symbol": "SYN",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0x080F6AEd32Fc474DD5717105Dba5ea57268F46eb/logo.png?raw=true"
+    },
+
+    {
+        "chainId": 42161,
+        "address": "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
+        "name": "Gains Network",
+        "symbol": "GNS",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0x18c11FD286C5EC11c3b683Caa813B77f5163A122/logo.png?raw=true"
+    },
+
+    {
+        "chainId": 42161,
+        "address": "0x23ee2343B892b1BB63503a4FAbc840E0e2C6810f",
+        "name": "Axelar",
+        "symbol": "AXL",
+        "decimals": 6,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0x23ee2343B892b1BB63503a4FAbc840E0e2C6810f/logo.png?raw=true"
+    },
+
+    {
+        "chainId": 42161,
+        "address": "0x3082CC23568eA640225c2467653dB90e9250AaA0",
+        "name": "Radiant",
+        "symbol": "RDNT",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0x3082CC23568eA640225c2467653dB90e9250AaA0/logo.png?raw=true"
+    },
+
+    {
+        "chainId": 42161,
+        "address": "0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07",
+        "name": "JOE",
+        "symbol": "JOE",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
+        "name": "Xai",
+        "symbol": "XAI",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0x560363BdA52BC6A44CA6C8c9B4a5FadbDa32fa60",
+        "name": "SeedifyFund",
+        "symbol": "SFUND",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0x560363BdA52BC6A44CA6C8c9B4a5FadbDa32fa60/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
+        "name": "Stargate",
+        "symbol": "STG",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0x6694340fc020c5E6B96567843da2df01b2CE1eb6/logo.png?raw=true"
+    },
+    
+    {
+        "chainId": 42161,
+        "address": "0x82e3A8F066a6989666b031d916c43672085b1582",
+        "name": "yearn.finance",
+        "symbol": "YFI",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0x82e3A8F066a6989666b031d916c43672085b1582/logo.png?raw=true"
+    },
+    
+    {
+        "chainId": 42161,
+        "address": "0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
+        "name": "The Graph",
+        "symbol": "GRT",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0x9623063377AD1B27544C965cCd7342f7EA7e88C7/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0xBfa641051Ba0a0Ad1b0AcF549a89536A0D76472E",
+        "name": "Badger",
+        "symbol": "BADGER",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0xBfa641051Ba0a0Ad1b0AcF549a89536A0D76472E/logo.png?raw=true"
+    },
+    
+    {
+        "chainId": 42161,
+        "address": "0xa0b862F60edEf4452F25B4160F177db44DeB6Cf1",
+        "name": "Gnosis",
+        "symbol": "GNO",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0xa0b862F60edEf4452F25B4160F177db44DeB6Cf1/logo.png?raw=true"
+    },
+    
+    {
+        "chainId": 42161,
+        "address": "0xd4d42F0b6DEF4CE0383636770eF773390d85c61A",
+        "name": "SushiSwap",
+        "symbol": "SUSHI",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0xd4d42F0b6DEF4CE0383636770eF773390d85c61A/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4",
+        "name": "Chainlink",
+        "symbol": "LINK",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0xf97f4df75117a78c1A5a0DBb814Af92458539FB4/logo.png?raw=true"
+    },
+    {
+        "chainId": 42161,
+        "address": "0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
+        "name": "GMX",
+        "symbol": "GMX",
+        "decimals": 18,
+        "logoURI": "https://github.com/trustwallet/assets/blob/master/blockchains/arbitrum/assets/0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a/logo.png?raw=true"
+    }
+    
+
+    
+]

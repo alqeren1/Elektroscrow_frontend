@@ -53,7 +53,7 @@ export default function Home() {
                             How is the protocol anonymous?
                         </h1>
 
-                        <div className="px-4 py-4 mt-20">
+                        <div className="px-4 py-4 mt-20 text-xl">
                             <div className="mt-2 ">
                                 Elektroscrow stands as a paragon of anonymity in the realm of
                                 decentralized finance, emphasizing the importance of{" "}
@@ -67,12 +67,15 @@ export default function Home() {
                                 <span className="font-bold"> process</span>, or even ask for{" "}
                                 <span className="font-bold"> any data </span> beyond the essential
                                 blockchain addresses, thereby upholding the highest standards of
-                                privacy. The transactions themselves are conducted purely on the
-                                basis of smart contracts, which operate autonomously and
-                                transparently on the blockchain, further ensuring that no
-                                individual or entity can access user information. This system
-                                guarantees that the <span className="font-bold"> specifics </span>{" "}
-                                of an <span className="font-bold"> escrow agreement </span> remain{" "}
+                                privacy.
+                            </div>
+                            <div className="mt-14 ">
+                                The transactions themselves are conducted purely on the basis of
+                                smart contracts, which operate autonomously and transparently on
+                                the blockchain, further ensuring that no individual or entity can
+                                access user information. This system guarantees that the{" "}
+                                <span className="font-bold"> specifics </span> of an{" "}
+                                <span className="font-bold"> escrow agreement </span> remain{" "}
                                 <span className="font-bold">
                                     {" "}
                                     known only to the involved parties
@@ -83,7 +86,7 @@ export default function Home() {
                                 trust-based environment where transactions are conducted without
                                 fear of data compromise or privacy invasion.
                             </div>
-                            <div className="justify-between flex mt-20">
+                            <div className="justify-between text-base flex mt-20">
                                 <a
                                     href="/docs/decentralization"
                                     className="bg-gray-100 bg-opacity-50 rounded-lg group border-2 w-64 h-16  text-[#7d7d7d] hover:text-gray-700 items-center flex cursor-pointer "

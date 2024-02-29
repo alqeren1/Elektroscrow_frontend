@@ -62,7 +62,7 @@ export default function Home() {
                                     />
                                 </div>
                             </div>
-                            <div className="mt-4 ">
+                            <div className="mt-4 text-xl">
                                 Once the escrow contract has been approved, the next crucial step
                                 is funding it. The specific deposit amount required from you is
                                 displayed in the{" "}
