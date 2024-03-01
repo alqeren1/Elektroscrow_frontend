@@ -26,7 +26,7 @@ export default function Home() {
                     name="description"
                     content="Discover Elektroscrow's decentralized crypto escrow services, providing secure, private transactions across blockchain networks. Our platform leverages smart contracts for trustless exchanges without intermediaries, ensuring user autonomy and enhanced security."
                 />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
+
                 <meta name="twitter:card" content="summary_large_image"></meta>
                 <meta name="twitter:site" content="@elektroscrow"></meta>
                 <meta name="twitter:title" content="Crypto Escrow"></meta>
@@ -38,7 +38,6 @@ export default function Home() {
                     name="twitter:image"
                     content="https://elektroscrow.com/elektrodocs.png"
                 ></meta>
-                <link rel="icon" href="/elektro_adjusted.png" />
             </Head>
             <div className="bg-[#fffffd] flex flex-col min-h-screen">
                 <div className="z-10">

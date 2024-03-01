@@ -13,10 +13,8 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>Elektroscrow</title>
-                <meta name="description" content="Decentralized escrow transactions" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/elektro_adjusted.png" />
+                <title>Elektroscrow Audit</title>
+                <meta name="description" content="Elektroscrow Audit and KYC info" />
             </Head>
             <div className="bg-[#fffffd] ">
                 <Header />

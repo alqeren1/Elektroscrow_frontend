@@ -14,6 +14,9 @@ export default function BottomBar() {
     const navigateToHow = () => {
         router.push("/how")
     }
+    const navigateToAudit = () => {
+        router.push("/audit")
+    }
     return (
         <div className="flex items-center justify-center wdefined:px-5 px-2">
             <div className="md:hidden bg-white rounded-3xl w-full border py-1 ">
@@ -53,14 +56,12 @@ export default function BottomBar() {
                         </div>
                         <div
                             className={` cursor-pointer font-medium py-2 px-3 flex justify-center  rounded-xl transition duration-300 ease-in-out hover:bg-gray-200  ${
-                                currentPage == "/docs"
+                                currentPage == "/audit"
                                     ? "text-gray-700 opacity-100"
                                     : "text-gray-500 opacity-70"
                             }`}
                         >
-                            <a href="/audit" target="_blank" rel="noopener noreferrer">
-                                Audit
-                            </a>
+                            <a href="/audit">Audit</a>
                         </div>
                     </div>
                     <div className="flex justify-end px-2 ">

@@ -15,7 +15,9 @@
 
 -telegram butonu ekle teller için
 
+-fathom analytics layoutdan geçiş yapınca okumuyor. 
 
+-mobilde yan bar düğmesi düzgün calısmıyor docs
 
 
 LATER:
