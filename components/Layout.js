@@ -34,9 +34,7 @@ export default function Layout({ children, setLayoutOpen }) {
         <>
             <Head>
                 <title>Elektroscrow Docs</title>
-                <meta name="description" content="Decentralized escrow transactions" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/elektro_adjusted.png" />
+                <meta name="description" content="Elektroscrow Documents" />
             </Head>
             <div className="min-h-screen flex">
                 <aside className="bg-[#f7f7f7] w-[300px]  fixed inset-0  border-r border-gray-300  ">

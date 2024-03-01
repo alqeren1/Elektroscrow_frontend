@@ -53,12 +53,18 @@ export default function Home() {
     async function connectWallet() {
         setIsMetaMask(window.ethereum && window.ethereum.isMetaMask)
         if (!window.ethereum || !window.ethereum.isMetaMask) {
+            if (window.fathom) {
+                window.fathom.trackEvent('connect-nometamask');
+              }
             return;
         }
 
         try {
             await enableWeb3();
             window.localStorage.setItem("connected", "injected");
+            if (window.fathom) {
+                window.fathom.trackEvent('connected');
+              }
         } catch (error) {
             console.error(error);
         }

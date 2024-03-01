@@ -49,6 +49,29 @@ function NetworkSelector() {
     const currentNetwork = networks.find((network) => network.chainId === chainId)
 
     const handleNetworkChange = async (newChainId) => {
+        if (window.fathom) {
+            if (newChainId == "0x38") {
+                window.fathom.trackEvent("BNBchain-click")
+            }
+            if (newChainId == "0xa4b1") {
+                window.fathom.trackEvent("ArbChain-click")
+            }
+            if (newChainId == "0xa") {
+                window.fathom.trackEvent("OpChain-click")
+            }
+            if (newChainId == "0x2105") {
+                window.fathom.trackEvent("BaseChain-click")
+            }
+            if (newChainId == "0x89") {
+                window.fathom.trackEvent("PolyChain-click")
+            }
+            if (newChainId == "0xa4ec") {
+                window.fathom.trackEvent("CeloChain-click")
+            }
+            if (newChainId == "0xa86a") {
+                window.fathom.trackEvent("AvaChain-click")
+            }
+        }
         try {
             await switchNetwork(newChainId)
         } catch (error) {
@@ -57,12 +80,16 @@ function NetworkSelector() {
         setShowDropdown(false)
     }
 
+    const handleDropdown = async () => {
+        setShowDropdown(!showDropdown)
+    }
+
     if (currentNetwork == null) {
         return (
             <div className="relative " ref={dropdownRef}>
                 <div className="ml-6">
                     <button
-                        onClick={() => setShowDropdown(!showDropdown)}
+                        onClick={handleDropdown}
                         className="flex items-center wdefined:mr-2 rounded-2xl transition duration-300 ease-in-out hover:bg-gray-200   py-2 px-2 "
                     >
                         <Error />
@@ -123,7 +150,7 @@ function NetworkSelector() {
                 {" "}
                 {(currentNetwork.chainId == "0x38" ? (
                     <button
-                        onClick={() => setShowDropdown(!showDropdown)}
+                        onClick={handleDropdown}
                         className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out    py-2 px-2 "
                     >
                         <Bsc />

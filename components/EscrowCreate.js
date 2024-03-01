@@ -554,6 +554,9 @@ export default function EscrowFactory({ onError }) {
     }
     const startEscrowButton = async () => {
         // Call your contract function here using the inputs as parameters
+        if (window.fathom) {
+            window.fathom.trackEvent("startEscrow-click")
+        }
         setIsStarting(true)
         if (!ethers.isAddress(seller)) {
             console.error("Invalid seller contract address")
@@ -644,6 +647,9 @@ export default function EscrowFactory({ onError }) {
         }
     }
     const buyerStateButton = () => {
+        if (window.fathom) {
+            window.fathom.trackEvent("buyerSwitch-click")
+        }
         if (buyerState) {
             setBuyerState(false)
         } else {

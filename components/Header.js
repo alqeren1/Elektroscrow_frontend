@@ -16,7 +16,21 @@ export default function Header() {
     const modalRef = useRef(null)
     const router = useRouter()
     const currentPage = router.pathname
-
+    const twitterClick = () => {
+        if (window.fathom) {
+            window.fathom.trackEvent("twitter-click")
+        }
+    }
+    const telegramClick = () => {
+        if (window.fathom) {
+            window.fathom.trackEvent("telegram-click")
+        }
+    }
+    const githubClick = () => {
+        if (window.fathom) {
+            window.fathom.trackEvent("github-click")
+        }
+    }
     const handleClickOutside = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
             setDotsClicked(false)
@@ -124,6 +138,7 @@ export default function Header() {
                                 <ul className="p-2  ">
                                     <a
                                         href="https://twitter.com/elektroscrow"
+                                        onclick={twitterClick}
                                         target="_blank"
                                         className="flex items-center text-gray-700 hover:text-gray-900 py-1 text-lsm  font-normal cursor-pointer hover:bg-gray-100 rounded-lg"
                                     >
@@ -133,6 +148,7 @@ export default function Header() {
                                     <a
                                         href="https://github.com/elektroscrow"
                                         target="_blank"
+                                        onclick={githubClick}
                                         className="flex text-gray-700 hover:text-gray-900 items-center  py-1 text-lsm  font-normal cursor-pointer hover:bg-gray-100 rounded-lg"
                                     >
                                         <Github />
@@ -141,6 +157,7 @@ export default function Header() {
                                     <a
                                         href="https://t.me/elektroscrow"
                                         target="_blank"
+                                        onclick={telegramClick}
                                         className="flex text-gray-700 group hover:text-gray-900 items-center ml-1 py-1 text-lsm  font-normal cursor-pointer hover:bg-gray-100 rounded-lg"
                                     >
                                         <div className="opacity-80 group-hover:opacity-100">
