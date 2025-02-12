@@ -43,6 +43,9 @@ export default function Header() {
     }, [])
 
     const navigateToEscrow = () => {
+        router.push("/app")
+    }
+    const navigateToFrontpage = () => {
         router.push("/")
     }
     const navigateToAudit = () => {
@@ -58,9 +61,9 @@ export default function Header() {
         router.push("/how")
     }
     return (
-        <div className="sticky top-0 p-2  flex flex-row bg-[#fffffd]  justify-between items-center">
+        <div className="sticky top-0 p-2 z-50 flex flex-row bg-[#fffffd]  justify-between items-center">
             <div className="flex items-center">
-                <div className="cursor-pointer flex items-center" onClick={navigateToEscrow}>
+                <div className="cursor-pointer flex items-center" onClick={navigateToFrontpage}>
                     <img
                         src="/elektro_adjusted.png"
                         alt="Logo"
@@ -78,12 +81,12 @@ export default function Header() {
                     <div
                         onClick={navigateToEscrow}
                         className={`ml-2 cursor-pointer font-medium py-2 px-2 rounded-xl transition duration-300 ease-in-out hover:bg-gray-200  ${
-                            currentPage == "/"
+                            currentPage == "/app"
                                 ? "text-gray-700 opacity-100 "
                                 : "text-gray-500 opacity-70"
                         }`}
                     >
-                        Escrow
+                        App
                     </div>
                     <div
                         onClick={navigateToHow}
@@ -146,7 +149,7 @@ export default function Header() {
                                         <li className="  ">Twitter</li>
                                     </a>
                                     <a
-                                        href="https://github.com/elektroscrow"
+                                        href="https://github.com/elektroscrow/Elektroscrow_v1"
                                         target="_blank"
                                         onclick={githubClick}
                                         className="flex text-gray-700 hover:text-gray-900 items-center  py-1 text-lsm  font-normal cursor-pointer hover:bg-gray-100 rounded-lg"

@@ -22,14 +22,14 @@ export default function Home() {
         }
     }, []);
 
-    useEffect(() => {
-        if (isWeb3Enabled) return;
-        if (typeof window !== "undefined" && window.ethereum) {
-            if (window.localStorage.getItem("connected") && window.ethereum.isMetaMask) {
-                enableWeb3();
-            }
-        }
-    }, [isWeb3Enabled, enableWeb3]);
+    //useEffect(() => {
+    //    if (isWeb3Enabled) return;
+    //    if (typeof window !== "undefined" && window.ethereum) {
+    //        if (window.localStorage.getItem("connected") && window.ethereum.isMetaMask) {
+    //            enableWeb3();
+    //       }
+    //    }
+    //}, [isWeb3Enabled, enableWeb3]);
 
     useEffect(() => {
         const handleAccountChanged = (accounts) => {

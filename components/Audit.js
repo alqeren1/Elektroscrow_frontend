@@ -29,7 +29,7 @@ function How() {
                         Elektroscrow's smart contracts have been audited and the developers have
                         been KYC verified by{" "}
                         <a
-                            href="https://x.com/solidproof_io"
+                            href="https://x.com/SolidProof_io/status/1763958258165764441"
                             target="_blank"
                             className="underline font-medium"
                         >

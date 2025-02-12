@@ -90,6 +90,31 @@ export default function Home() {
                                                     }}
                                                     className="border-2 text-lg p-4 whitespace-nowrap"
                                                 >
+                                                    Ethereum
+                                                </td>
+                                                <td className="border-2 p-4 ">
+                                                    <a
+                                                        href="https://etherscan.io/address/0xaD25Bdd6b786C76AF5C4F88F7223605AB4a58Af5#code"
+                                                        target="_blank"
+                                                        style={{
+                                                            fontFamily:
+                                                                "'Franklin Gothic', sans-serif",
+                                                        }}
+                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
+                                                    >
+                                                        {" "}
+                                                        0xaD25Bdd6b786C76AF5C4F88F7223605AB4a58Af5{" "}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr className="bg-gray-50">
+                                                <td
+                                                    style={{
+                                                        fontFamily:
+                                                            "'Franklin Gothic', sans-serif",
+                                                    }}
+                                                    className="border-2 text-lg p-4 whitespace-nowrap"
+                                                >
                                                     BNB Chain
                                                 </td>
                                                 <td className="border-2 p-4 ">
@@ -105,6 +130,20 @@ export default function Home() {
                                                         {" "}
                                                         0xA0F0364ba8Bf0AC4029Ea19906743427edFF9089{" "}
                                                     </a>
+                                                </td>
+                                            </tr>
+                                            <tr className="bg-gray-50">
+                                                <td
+                                                    style={{
+                                                        fontFamily:
+                                                            "'Franklin Gothic', sans-serif",
+                                                    }}
+                                                    className="border-2 text-lg p-4 whitespace-nowrap"
+                                                >
+                                                    Solana
+                                                </td>
+                                                <td className="border-2 p-4 ">
+                                                    <a className=" p-1 "> Soon </a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -270,6 +309,31 @@ export default function Home() {
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <tr className="bg-gray-50">
+                                                <td
+                                                    style={{
+                                                        fontFamily:
+                                                            "'Franklin Gothic', sans-serif",
+                                                    }}
+                                                    className="border-2 text-lg p-4 whitespace-nowrap"
+                                                >
+                                                    ETH - Sepolia
+                                                </td>
+                                                <td className="border-2 p-4 ">
+                                                    <a
+                                                        href="https://sepolia.etherscan.io/address/0x47c9afc609a7cc4976ccc56c2f33b5e7352535c4#code"
+                                                        target="_blank"
+                                                        style={{
+                                                            fontFamily:
+                                                                "'Franklin Gothic', sans-serif",
+                                                        }}
+                                                        className="bg-gray-100 hover:underline  border rounded-md bg-opacity-50 p-1 "
+                                                    >
+                                                        {" "}
+                                                        0x47c9aFc609A7cC4976CCc56C2F33B5e7352535C4{" "}
+                                                    </a>
+                                                </td>
+                                            </tr>
                                             <tr className="bg-gray-50">
                                                 <td
                                                     style={{

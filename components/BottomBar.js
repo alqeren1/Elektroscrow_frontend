@@ -73,7 +73,7 @@ export default function BottomBar() {
                             <Twitter />
                         </a>
                         <a
-                            href="https://github.com/elektroscrow"
+                            href="https://github.com/elektroscrow/Elektroscrow_v1"
                             target="_blank"
                             className="text-gray-500 opacity-70 px-2 hidden wdefined:flex py-1 flex justify-center rounded-3xl transition duration-300 ease-in-out hover:bg-gray-200"
                         >

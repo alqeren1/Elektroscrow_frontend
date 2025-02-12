@@ -443,7 +443,9 @@ export default function EscrowFactory({ onError }) {
     }
     async function gets_feeFunction() {
         const s_fee_ = await gets_fee({ params: { contractAddress: factoryAddress } })
-        sets_fee(s_fee_.toString() / 10)
+        if (s_fee_) {
+            sets_fee(s_fee_.toString() / 10)
+        }
     }
     async function geti_feeFunction() {
         try {

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
 import Arrow from "../svgs/arrow-up"
+
 function How() {
     const [showTopBtn, setShowTopBtn] = useState(false)
 
@@ -19,10 +20,34 @@ function How() {
             behavior: "smooth",
         })
     }
+
     return (
         <div className=" w-full px-6 wdefinedlg:px-2 wdefinedlg:w-[850px] text-justify">
             <div className=" py-4 ">
                 <h1 className="font-bold text-4xl text-left">How does Elektroscrow work?</h1>
+                <div
+                    className="video-wrapper mt-10"
+                    style={{
+                        position: "relative",
+                        paddingBottom: "56.25%",
+                        height: 0,
+                        overflow: "hidden",
+                    }}
+                >
+                    <iframe
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                        }}
+                        src="https://www.youtube.com/embed/_hPrh5cSPww"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    ></iframe>
+                </div>
                 <h1 className="font-bold text-2xl mt-20">Elektroscrow's Ethos</h1>
 
                 <div className="mt-4 text-xl">
@@ -37,7 +62,7 @@ function How() {
                             {" "}
                             privacy, decentralization,{" "}
                         </span>{" "}
-                        and <span className="font-bold text-gray-900"> security </span>. Distinct
+                        and <span className="font-bold text-gray-900"> security</span>. Distinct
                         from its competitors, Elektroscrow achieves an unparalleled level of
                         decentralization, bolstering trustworthiness by automating dispute
                         resolution{" "}

@@ -2,6 +2,8 @@ import { useMoralis, useChain } from "react-moralis"
 import { ConnectButton } from "web3uikit"
 import WalletConnect from "./ConnectButtonWC"
 import Eth from "../svgs/ethereum-logo"
+import Sol from "../svgs/sol-logo"
+
 import Bsc from "../svgs/bsc-logo"
 import Polygon from "../svgs/polygon-logo"
 import Avax from "../svgs/avax-logo"
@@ -10,6 +12,8 @@ import Base from "../svgs/base"
 import Celo from "../svgs/celo"
 import Arb from "../svgs/arb"
 
+import { AiOutlineDisconnect } from "react-icons/ai"
+
 import ManuelConnect from "./CustConnectButtonOnlyMetamask.jsx"
 
 import Arrowdown from "../svgs/arrow-down"
@@ -17,7 +21,9 @@ import Arrowup from "../svgs/arrow-up"
 import Error from "../svgs/error"
 import React, { useState, useRef, useEffect } from "react"
 const networks = [
+    { name: "Ethereum", chainId: "0x1" },
     { name: "BNB Chain", chainId: "0x38" },
+    { name: "Solana", chainId: "" },
     { name: "Arbitrum", chainId: "0xa4b1" },
 
     { name: "Optimism", chainId: "0xa" },
@@ -30,6 +36,7 @@ const networks = [
 function NetworkSelector() {
     const { switchNetwork } = useChain()
     const { chainId } = useMoralis()
+    const { account } = useMoralis()
     const [showDropdown, setShowDropdown] = useState(false)
     const dropdownRef = useRef(null) // Ref for the dropdown
 
@@ -50,6 +57,9 @@ function NetworkSelector() {
 
     const handleNetworkChange = async (newChainId) => {
         if (window.fathom) {
+            if (newChainId == "0x1") {
+                window.fathom.trackEvent("ETHchain-click")
+            }
             if (newChainId == "0x38") {
                 window.fathom.trackEvent("BNBchain-click")
             }
@@ -86,14 +96,22 @@ function NetworkSelector() {
 
     if (currentNetwork == null) {
         return (
-            <div className="relative " ref={dropdownRef}>
+            <div className="relative  " ref={dropdownRef}>
                 <div className="ml-6">
                     <button
                         onClick={handleDropdown}
                         className="flex items-center wdefined:mr-2 rounded-2xl transition duration-300 ease-in-out hover:bg-gray-200   py-2 px-2 "
                     >
-                        <Error />
-
+                        {account && (
+                            <div className="text-[#7d7d7d] text-2xl">
+                                <Error />
+                            </div>
+                        )}
+                        {!account && (
+                            <div className="text-[#7d7d7d] text-2xl">
+                                <AiOutlineDisconnect />
+                            </div>
+                        )}
                         <span
                             className={`transform transition-transform duration-200 ${
                                 showDropdown ? "rotate-180 " : "rotate-0"
@@ -131,11 +149,24 @@ function NetworkSelector() {
                                             <Avax />
                                         ) : network.name == "Celo" ? (
                                             <Celo />
+                                        ) : network.name == "Ethereum" ? (
+                                            <Eth />
+                                        ) : network.name == "Solana" ? (
+                                            <Sol />
                                         ) : (
                                             ""
                                         )}
                                     </div>
-                                    <div>{network.name}</div>
+                                    <div>
+                                        {network.name}{" "}
+                                        <a
+                                            className={` ${
+                                                network.name == "Solana" ? "italic " : " hidden"
+                                            }`}
+                                        >
+                                            (Soon)
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -144,6 +175,7 @@ function NetworkSelector() {
             </div>
         )
     }
+
     return (
         <div className="relative " ref={dropdownRef}>
             <div>
@@ -273,6 +305,24 @@ function NetworkSelector() {
                         </button>
                     ) : (
                         ""
+                    )) ||
+                    (currentNetwork.chainId == "0x1" ? (
+                        <button
+                            onClick={() => setShowDropdown(!showDropdown)}
+                            className="flex items-center wdefined:mr-2 rounded-2xl hover:bg-gray-200  transition duration-300 ease-in-out  py-2 px-2 "
+                        >
+                            <Eth />
+
+                            <span
+                                className={`transform transition-transform duration-200 ${
+                                    showDropdown ? "rotate-180 " : "rotate-0"
+                                }`}
+                            >
+                                <Arrowup />
+                            </span>
+                        </button>
+                    ) : (
+                        ""
                     ))}
             </div>
 
@@ -303,6 +353,10 @@ function NetworkSelector() {
                                         <Avax />
                                     ) : network.name == "Celo" ? (
                                         <Celo />
+                                    ) : network.name == "Ethereum" ? (
+                                        <Eth />
+                                    ) : network.name == "Solana" ? (
+                                        <Sol />
                                     ) : (
                                         ""
                                     )}
@@ -312,7 +366,14 @@ function NetworkSelector() {
                                         chainId == network.chainId ? "font-medium " : ""
                                     }`}
                                 >
-                                    {network.name}
+                                    {network.name}{" "}
+                                    <a
+                                        className={` ${
+                                            network.name == "Solana" ? "italic " : " hidden"
+                                        }`}
+                                    >
+                                        (Soon)
+                                    </a>
                                 </div>
                             </div>
                         </div>

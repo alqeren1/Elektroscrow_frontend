@@ -20,6 +20,8 @@
 constants1
 /constants1/
 
+out.zip
+
 # misc
 .DS_Store
 *.pem
